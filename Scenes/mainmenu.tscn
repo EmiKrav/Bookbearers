@@ -1,3 +1,75 @@
-[gd_scene format=3 uid="uid://c3py6c0q7yn36"]
+[gd_scene load_steps=5 format=3 uid="uid://c3py6c0q7yn36"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_jg6r3"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_87gav"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_c2cqu"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_grrvp"]
 
 [node name="Mainmenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("ImageTexture_jg6r3")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("ImageTexture_87gav")
+
+[node name="Button" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("ImageTexture_c2cqu")
+
+[node name="Button2" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("ImageTexture_grrvp")
+
+[node name="Button3" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("ImageTexture_grrvp")
+
+[node name="Button4" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("ImageTexture_grrvp")
