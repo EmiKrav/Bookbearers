@@ -1,5 +1,7 @@
 extends TextureButton
 
+@onready var cinematic = preload("res://Bookbearers/Scenes/cinematicvideo.tscn")
+
 
 func  _ready():
 	$".".disabled = true
@@ -7,7 +9,7 @@ func  _ready():
 
 func _on_pressed():
 	Global.AddName($"../LineEdit".text)
-	print(Global.childName)
+	get_tree().change_scene_to_packed(cinematic)
 
 
 func _on_line_edit_text_changed(new_text):

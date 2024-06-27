@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://y17k3joujnjk"]
+
+[ext_resource type="VideoStream" path="res://Bookbearers/Code/Untitled design.ogv" id="1_wdqi5"]
+[ext_resource type="Script" path="res://Bookbearers/Code/cinematicvideo.gd" id="2_msuqa"]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_wdqi5")
+autoplay = true
+expand = true
+script = ExtResource("2_msuqa")
