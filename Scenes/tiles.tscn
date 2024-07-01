@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://djlnaa1om74it"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_klkoj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3lnx"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tmi7m"]
+points = PackedVector3Array(-1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, 1)
+
+[node name="Tiles" type="Node3D"]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("PlaneMesh_klkoj")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_j3lnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/MeshInstance3D"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_tmi7m")

@@ -1,38 +1,30 @@
-extends Camera3D
+extends CharacterBody3D
 
 @export var speed = 10
-@export var rotationspeed = 0.25
-@export var upriba = 10
-@export var dpriba = 1
-@export var lriba = -5
-@export var rriba = 5
-@export var friba = -5
-@export var briba = 5
+@export var rotationspeed = 0.5
+
+@export var upriba = 25
+@export var dpriba = 2
+
 @export var rdriba = -0.5
 @export var ruriba = -1.5
 
-func _process(delta):
 
+func _process(delta):
+	var left = transform.basis.z.normalized() * speed
+	var backward = transform.basis.x.normalized() * speed
+	
+	
 	if Input.is_action_pressed("left"):
-		if position.x - speed * delta > lriba:
-			position.x -= speed * delta
-		else:
-			position.x = lriba 
+		transform.origin += left.cross(Vector3.UP) / 35
 	if Input.is_action_pressed("right"):
-		if position.x + speed * delta < rriba:
-			position.x += speed * delta
-		else:
-			position.x = rriba 
+		transform.origin -= left.cross(Vector3.UP) / 35
 	if Input.is_action_pressed("forward"):
-		if position.z - speed * delta > friba:
-			position.z -= speed * delta
-		else:
-			position.z = friba 
+		transform.origin -= backward.cross(Vector3.UP) / 35
 	if Input.is_action_pressed("backward"):
-		if position.z + speed * delta < briba:
-			position.z += speed * delta
-		else:
-			position.z = briba 
+		transform.origin += backward.cross(Vector3.UP) / 35
+		
+		
 	if Input.is_action_pressed("up") :
 		if position.y + speed * delta < upriba:
 			position.y += speed * delta
@@ -56,6 +48,10 @@ func _process(delta):
 			rotation.x = ruriba 
 	if Input.is_action_pressed("rotate_left"):
 		rotation.y += rotationspeed * delta
+		
 	if Input.is_action_pressed("rotate_right"):
 		rotation.y -= rotationspeed * delta
+		
+	move_and_slide()
+
 
