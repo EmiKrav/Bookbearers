@@ -1,14 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3py6c0q7yn36"]
+[gd_scene load_steps=14 format=3 uid="uid://c3py6c0q7yn36"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Newgamepress.gd" id="1_jjpvw"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_jg6r3"]
+[sub_resource type="Gradient" id="Gradient_g27yw"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_87gav"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jeedd"]
+gradient = SubResource("Gradient_g27yw")
 
-[sub_resource type="ImageTexture" id="ImageTexture_c2cqu"]
+[sub_resource type="Gradient" id="Gradient_vci3g"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_grrvp"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3h8nu"]
+gradient = SubResource("Gradient_vci3g")
+width = 284
+
+[sub_resource type="Gradient" id="Gradient_n1n8o"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wbge1"]
+gradient = SubResource("Gradient_n1n8o")
+width = 314
+
+[sub_resource type="Gradient" id="Gradient_fefmr"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p7qui"]
+gradient = SubResource("Gradient_fefmr")
+width = 309
+
+[sub_resource type="Gradient" id="Gradient_04dpu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6knu4"]
+gradient = SubResource("Gradient_04dpu")
+width = 304
+
+[sub_resource type="Gradient" id="Gradient_aftvf"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aer10"]
+gradient = SubResource("Gradient_aftvf")
+width = 299
 
 [node name="Mainmenu" type="Node2D"]
 
@@ -36,7 +63,7 @@ size_flags_horizontal = 3
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = SubResource("ImageTexture_jg6r3")
+texture = SubResource("GradientTexture1D_jeedd")
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
 layout_mode = 2
@@ -46,14 +73,14 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture = SubResource("ImageTexture_87gav")
+texture = SubResource("GradientTexture2D_3h8nu")
 
 [node name="Button" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture_normal = SubResource("ImageTexture_c2cqu")
+texture_normal = SubResource("GradientTexture2D_wbge1")
 script = ExtResource("1_jjpvw")
 
 [node name="Button2" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
@@ -61,20 +88,21 @@ custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture_normal = SubResource("ImageTexture_grrvp")
+texture_normal = SubResource("GradientTexture2D_p7qui")
 
 [node name="Button3" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture_normal = SubResource("ImageTexture_grrvp")
+texture_normal = SubResource("GradientTexture2D_6knu4")
 
 [node name="Button4" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture_normal = SubResource("ImageTexture_grrvp")
+texture_normal = SubResource("GradientTexture2D_aer10")
 
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button4" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_4_pressed"]

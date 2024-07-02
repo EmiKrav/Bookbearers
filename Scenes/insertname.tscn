@@ -1,8 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkiovkes8q8qn"]
+[gd_scene load_steps=5 format=3 uid="uid://bkiovkes8q8qn"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/NameEdit.gd" id="1_q6hwd"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_u6ptv"]
+
+[sub_resource type="Gradient" id="Gradient_obk28"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l32q6"]
+gradient = SubResource("Gradient_obk28")
+width = 504
+height = 109
 
 [node name="Node2D" type="Node2D"]
 
@@ -44,6 +51,7 @@ expand_to_text_length = true
 [node name="TextureRect2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+texture_normal = SubResource("GradientTexture2D_l32q6")
 script = ExtResource("1_q6hwd")
 
 [connection signal="text_changed" from="CanvasLayer/Panel/VBoxContainer/LineEdit" to="CanvasLayer/Panel/VBoxContainer/TextureRect2" method="_on_line_edit_text_changed"]
