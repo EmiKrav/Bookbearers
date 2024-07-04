@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=19 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/Tiles.tres" id="2_348gl"]
@@ -16,7 +16,25 @@ albedo_color = Color(0.133333, 0.447059, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_niyws"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6en0s"]
+albedo_color = Color(0.0799552, 0.44378, 0.272325, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_jftun"]
+material = SubResource("StandardMaterial3D_6en0s")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mclb5"]
+albedo_color = Color(1, 0.952941, 0.0745098, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crccq"]
+albedo_color = Color(1, 0.0823529, 0.0745098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_enma1"]
+material = SubResource("StandardMaterial3D_crccq")
+
+[sub_resource type="BoxMesh" id="BoxMesh_vuloo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0bfc"]
+albedo_color = Color(0.0470588, 0.137255, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_a84c7"]
 offsets = PackedFloat32Array(0, 0.0863787, 1)
@@ -71,6 +89,23 @@ shape = SubResource("BoxShape3D_niyws")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -15)
 mesh = SubResource("BoxMesh_jftun")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_mclb5")
+
+[node name="enemy2" type="MeshInstance3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, -15)
+mesh = SubResource("BoxMesh_jftun")
+skeleton = NodePath("")
+
+[node name="enemy3" type="MeshInstance3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -12.8)
+mesh = SubResource("BoxMesh_enma1")
+skeleton = NodePath("")
+
+[node name="enemy4" type="MeshInstance3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, -12.8)
+mesh = SubResource("BoxMesh_vuloo")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_o0bfc")
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
