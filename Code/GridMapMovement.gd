@@ -4,7 +4,7 @@ extends GridMap
 
 @export var playermovementPoints = 4
 @export var enemymovementPoints = 3
-@export var enemyattackrange = 2
+@export var enemyattackrange = 1
 
 var selected = false
 var pcurrentpos : Vector3i
@@ -120,6 +120,9 @@ func _on_area_3d_input_event(camera, event, position, normal, shape_idx):
 			
 func enemyMove(ecurrentposi, enemyi):
 	if !turn:
+		for i in range(1, langeliai.get_child_count()):
+			if langeliai.get_child(i) != null:
+				langeliai.get_child(i).queue_free()
 		var othenemypos: Array = [Vector3i()]
 		var ppos = pcurrentpos
 		var epos = ecurrentposi
@@ -135,7 +138,7 @@ func enemyMove(ecurrentposi, enemyi):
 		othenemypos.append(ecurrentpos3)
 		othenemypos.append(ecurrentpos4)
 		othenemypos.erase(ecurrentposi)
-#1 simple movement
+#1 simple movement find optimal position
 		if abs(atstumasx) > enemyattackrange || abs(atstumasz) > enemyattackrange:
 			if abs(atstumasx) > enemyattackrange:	
 				if abs(atstumasx) <= enemymovementPoints + enemyattackrange:
@@ -161,61 +164,70 @@ func enemyMove(ecurrentposi, enemyi):
 						movz = epos.z - enemymovementPoints
 		else:
 			ecurrentposi = ecurrentposi
-		print(enemyi)
 		if  !othenemypos.has(Vector3i(movx,0,movz)) and Vector3i(movx,0,movz) != pcurrentpos and cells.has(Vector3i(movx,0,movz)):
 			ecurrentposi = Vector3i(movx,0,movz) 
-			
 		else:
-			#2 choose space near optimal
+			
+			
 			var atstumasnx = ppos.x - movx
 			var atstumasnz = ppos.z - movz
 			var ejimuskx = enemymovementPoints - abs((atstumasx - atstumasnx))
 			var ejimuskz = enemymovementPoints - abs((atstumasz - atstumasnz))
-			for i in range(1,ejimuskx+1):
+
+			var twofailed = true
+			#2 choose diagonal space near optimal
+			if  othenemypos.has(Vector3i(movx,0,movz)) || Vector3i(movx,0,movz) == pcurrentpos || !cells.has(Vector3i(movx,0,movz)):
 				if atstumasnx >= 0:
-					movx = movx + 1
-					if  !othenemypos.has(Vector3i(movx,0,movz)) and Vector3i(movx,0,movz) != pcurrentpos and cells.has(Vector3i(movx,0,movz)):
-						ecurrentposi = Vector3i(movx,0,movz) 
-						break
+					paieskax = +1
 				if atstumasnx < 0:
-					movx = movx - 1
-					if  !othenemypos.has(Vector3i(movx,0,movz)) and Vector3i(movx,0,movz) != pcurrentpos and cells.has(Vector3i(movx,0,movz)):
-						ecurrentposi = Vector3i(movx,0,movz) 
-						break
-			if  othenemypos.has(Vector3i(movx,0,movz)) || Vector3i(movx,0,movz) == pcurrentpos || !cells.has(Vector3i(movx,0,movz)):
-				for i in range(1,ejimuskz+1):
-					if atstumasnz >= 0:
-							movz = movz + 1
-							if  !othenemypos.has(Vector3i(movx,0,movz)) and Vector3i(movx,0,movz) != pcurrentpos and cells.has(Vector3i(movx,0,movz)):
-								ecurrentposi = Vector3i(movx,0,movz) 
-								break
-					if atstumasnz < 0:
-							movz = movz - 1
-							if  !othenemypos.has(Vector3i(movx,0,movz)) and Vector3i(movx,0,movz) != pcurrentpos and cells.has(Vector3i(movx,0,movz)):
-								ecurrentposi = Vector3i(movx,0,movz) 
-								break
-			var threefailed = true
-			#3 choose diagonal space near optimal
-			if  othenemypos.has(Vector3i(movx,0,movz)) || Vector3i(movx,0,movz) == pcurrentpos || !cells.has(Vector3i(movx,0,movz)):
-				if atstumasnx >= 0:
 					paieskax = -1
-				if atstumasnx < 0:
-					paieskax = 1
 				if atstumasnz >= 0:
-					paieskaz = -1
+					paieskaz = +1
 				if atstumasnz < 0:
-					paieskaz = 1
-				for y in range(1, ejimuskz+1):
-					for i in range(1, ejimuskx+1):
+					paieskaz = -1
+					
+				var ejimai: Array = [Vector3i()]
+				var atstumai: Array = [Vector3i()]
+				ejimai.clear()
+				atstumai.clear()
+				for y in range(-ejimuskx, ejimuskx+1):
+					for i in range(-ejimuskz, ejimuskz+1):
 						var mappos = Vector3i(movx,0,movz) + Vector3i(paieskax*y,0,paieskaz*i)
 						if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
-							ecurrentposi = mappos
-							threefailed = false
-							break
-				
-				#4 recallculate optimal by changing starting space
-				if othenemypos.has(ecurrentposi) || ecurrentposi == pcurrentpos || !cells.has(ecurrentposi) || threefailed:	
-					enemyMove(Vector3i(ecurrentposi.x - paieskax,0,ecurrentposi.z - paieskaz), enemyi)
+							ejimai.append(mappos)
+							atstumai.append(abs(ppos - mappos))
+						
+				#for i in ejimai:
+					#var pos2 = map_to_local(i)
+					#pos2 += Vector3(0,0.01,0)
+					#var lang = langelis.instantiate()
+					#langeliai.add_child(lang)
+					#lang.position = pos2
+					#
+				#await get_tree().create_timer(5).timeout
+				if atstumai.size() != 0:
+					var maziaus = atstumai[0]
+					for i in atstumai:
+						if i.x <= maziaus.x && i.z <= maziaus.z:
+							maziaus= i
+						else:
+							if i.x + i.z < maziaus.x + maziaus.z:
+								maziaus= i
+							elif i.x + i.z == maziaus.x + maziaus.z:
+								if abs(i.x - i.z) < abs(maziaus.x - maziaus.z):
+									maziaus= i
+					
+					for i in range(1, langeliai.get_child_count()):
+						if langeliai.get_child(i) != null:
+							langeliai.get_child(i).queue_free()
+					if atstumai.size() != null:
+						ecurrentposi = ejimai[atstumai.find(maziaus)]
+						twofailed = false
+						ejimai.clear()
+						atstumai.clear()
+				#3 recallculate optimal by changing starting space
+				if othenemypos.has(ecurrentposi) || ecurrentposi == pcurrentpos || !cells.has(ecurrentposi) || twofailed:	
+					ecurrentposi = await enemyMove(Vector3i(ecurrentposi.x - paieskax,0,ecurrentposi.z - paieskaz), enemyi)
 					
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
 		var tween = create_tween()
@@ -228,22 +240,6 @@ func enemyMove(ecurrentposi, enemyi):
 func showMovement():
 #draw around
 	movemcellls.clear()
-	for i in range(1, playermovementPoints+1):
-		var mappos = pcurrentpos + Vector3i(0,0,i)
-		if cells.has(mappos):
-			movemcellls.append(mappos)
-	for i in range(1, playermovementPoints+1):
-		var mappos = pcurrentpos + Vector3i(0,0,-i)
-		if cells.has(mappos):
-			movemcellls.append(mappos)
-	for i in range(1, playermovementPoints+1):
-		var mappos = pcurrentpos + Vector3i(i,0,0)
-		if cells.has(mappos):
-			movemcellls.append(mappos)
-	for i in range(1, playermovementPoints+1):
-		var mappos = pcurrentpos + Vector3i(-i,0,0)
-		if cells.has(mappos):
-			movemcellls.append(mappos)
 #apacia desine
 	for y in range(1, playermovementPoints+1):
 		for i in range(1, playermovementPoints+1):
@@ -251,32 +247,32 @@ func showMovement():
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus kaire
-	for y in range(1, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+	for y in range(0, playermovementPoints+1):
+		for i in range(0, playermovementPoints+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #apacia kaire
-	for y in range(1, playermovementPoints+1):
+	for y in range(0, playermovementPoints+1):
 		for i in range(1, playermovementPoints+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus desine
 	for y in range(1, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+		for i in range(0, playermovementPoints+1):
 			var mappos = pcurrentpos + Vector3i(y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 				
-	if movemcellls.has(ecurrentpos):
-		movemcellls.erase(ecurrentpos)
-	if movemcellls.has(ecurrentpos2):
-		movemcellls.erase(ecurrentpos2)
-	if movemcellls.has(ecurrentpos3):
-		movemcellls.erase(ecurrentpos3)
-	if movemcellls.has(ecurrentpos4):
-		movemcellls.erase(ecurrentpos4)
+	#if movemcellls.has(ecurrentpos):
+	movemcellls.erase(ecurrentpos)
+	#if movemcellls.has(ecurrentpos2):
+	movemcellls.erase(ecurrentpos2)
+	#if movemcellls.has(ecurrentpos3):
+	movemcellls.erase(ecurrentpos3)
+	#if movemcellls.has(ecurrentpos4):
+	movemcellls.erase(ecurrentpos4)
 		
 	for i in movemcellls:
 		var pos2 = map_to_local(i)
