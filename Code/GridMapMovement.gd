@@ -4,7 +4,7 @@ extends GridMap
 
 @export var playermovementPoints = 4
 @export var enemymovementPoints = 3
-@export var enemyattackrange = 1
+@export var enemyattackrange = 2
 
 var selected = false
 var pcurrentpos : Vector3i
@@ -16,14 +16,15 @@ var moving = false
 var redraw = false
 var click = false
 var cells
-var movemcellls: Array = [Vector3i()]
+var movemcellls: Array
+var othenemypos: Array
 var turn = true
+var canmove = true
 @onready var player = $player
 @onready var enemy = $enemy
 @onready var enemy2 = $enemy2
 @onready var enemy3 = $enemy3
 @onready var enemy4 = $enemy4
-@onready var sprite = %Sprite3D
 @onready var langeliai = $Node3D
 
 func _ready():
@@ -44,19 +45,15 @@ func _ready():
 	ecurrentpos4 = pos
 	cells = get_used_cells()
 	
-func _process(delta):
+func _process(_delta):
 	if redraw:
 		if selected:
 			redraw = false
-			var pos = map_to_local(pcurrentpos)
-			var possprite = pos + Vector3(0,0.01,0)
-			sprite.position = possprite
 			showMovement()
 			selected = true
 		if !selected:
 			redraw = false
-			sprite.position = Vector3(0,0,0)
-			for i in range(1, langeliai.get_child_count()):
+			for i in range(0, langeliai.get_child_count()):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 			selected = false
@@ -64,23 +61,22 @@ func _process(delta):
 	if !click && !moving && selected:
 		if Input.is_action_pressed("Click"):
 			if shoot_ray() != null:
-				var langelis = shoot_ray()
-				if movemcellls.has(langelis):
-					var pos = map_to_local(langelis)
+				var langelistomove = shoot_ray()
+				if movemcellls.has(langelistomove):
+					$"../StaticBody3D2/Camera3D".current = false
+					$player/Camera3D2.current = true
+					var pos = map_to_local(langelistomove)
 					moving = true
 					selected = false
 					redraw = true
+					canmove = false
 					var tween = create_tween()
 					tween.tween_property(player, "position", Vector3(pos.x, 1.5, pos.z), 1)
 					await tween.finished
-					pcurrentpos = langelis
+					$player/Camera3D2.current = false
+					$"../StaticBody3D2/Camera3D".current = true
+					pcurrentpos = langelistomove
 					moving = false
-					turn = false
-					ecurrentpos = await enemyMove(ecurrentpos, enemy)
-					ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
-					ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
-					ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
-					turn = true
 					
 	
 		
@@ -105,8 +101,8 @@ func map_selection(selection: Dictionary):
 		var pos = gridmap.local_to_map(locsel)
 		return pos
 
-func _on_area_3d_input_event(camera, event, position, normal, shape_idx):
-	if turn:
+func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
+	if turn && canmove:
 		if event is InputEventMouseButton:
 			click = true
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !selected and !moving:
@@ -120,10 +116,9 @@ func _on_area_3d_input_event(camera, event, position, normal, shape_idx):
 			
 func enemyMove(ecurrentposi, enemyi):
 	if !turn:
-		for i in range(1, langeliai.get_child_count()):
+		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
-		var othenemypos: Array = [Vector3i()]
 		var ppos = pcurrentpos
 		var epos = ecurrentposi
 		var atstumasx = ppos.x - epos.x
@@ -132,7 +127,7 @@ func enemyMove(ecurrentposi, enemyi):
 		var movz = ecurrentposi.z
 		var paieskax
 		var paieskaz
-		
+		othenemypos.clear()
 		othenemypos.append(ecurrentpos)
 		othenemypos.append(ecurrentpos2)
 		othenemypos.append(ecurrentpos3)
@@ -171,8 +166,8 @@ func enemyMove(ecurrentposi, enemyi):
 			
 			var atstumasnx = ppos.x - movx
 			var atstumasnz = ppos.z - movz
-			var ejimuskx = enemymovementPoints - abs((atstumasx - atstumasnx))
-			var ejimuskz = enemymovementPoints - abs((atstumasz - atstumasnz))
+			#var ejimuskx = enemymovementPoints - abs((atstumasx - atstumasnx))
+			#var ejimuskz = enemymovementPoints - abs((atstumasz - atstumasnz))
 
 			var twofailed = true
 			#2 choose diagonal space near optimal
@@ -190,9 +185,37 @@ func enemyMove(ecurrentposi, enemyi):
 				var atstumai: Array = [Vector3i()]
 				ejimai.clear()
 				atstumai.clear()
-				for y in range(-ejimuskx, ejimuskx+1):
-					for i in range(-ejimuskz, ejimuskz+1):
-						var mappos = Vector3i(movx,0,movz) + Vector3i(paieskax*y,0,paieskaz*i)
+				#for y in range(-ejimuskx, ejimuskx+1):
+					#for i in range(-ejimuskz, ejimuskz+1):
+						#var mappos = Vector3i(movx,0,movz) + Vector3i(y,0,i)
+						#if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
+							#ejimai.append(mappos)
+							#atstumai.append(abs(ppos - mappos))
+				#apacia desine
+				for y in range(1, enemymovementPoints+1):
+					for i in range(1, enemymovementPoints+1):
+						var mappos = ecurrentposi + Vector3i(y,0,i)
+						if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
+							ejimai.append(mappos)
+							atstumai.append(abs(ppos - mappos))
+			#virsus kaire
+				for y in range(0, enemymovementPoints+1):
+					for i in range(0, enemymovementPoints+1):
+						var mappos = ecurrentposi  + Vector3i(-y,0,-i)
+						if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
+							ejimai.append(mappos)
+							atstumai.append(abs(ppos - mappos))
+			#apacia kaire
+				for y in range(0, enemymovementPoints+1):
+					for i in range(1, enemymovementPoints+1):
+						var mappos = ecurrentposi  + Vector3i(-y,0,i)
+						if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
+							ejimai.append(mappos)
+							atstumai.append(abs(ppos - mappos))
+			#virsus desine
+				for y in range(1, enemymovementPoints+1):
+					for i in range(0, enemymovementPoints+1):
+						var mappos = ecurrentposi  + Vector3i(y,0,-i)
 						if  !othenemypos.has(mappos) and mappos != pcurrentpos and cells.has(mappos):
 							ejimai.append(mappos)
 							atstumai.append(abs(ppos - mappos))
@@ -210,6 +233,8 @@ func enemyMove(ecurrentposi, enemyi):
 					for i in atstumai:
 						if i.x <= maziaus.x && i.z <= maziaus.z:
 							maziaus= i
+							if i.x <= enemyattackrange && i.z <= enemyattackrange:
+								break
 						else:
 							if i.x + i.z < maziaus.x + maziaus.z:
 								maziaus= i
@@ -217,7 +242,7 @@ func enemyMove(ecurrentposi, enemyi):
 								if abs(i.x - i.z) < abs(maziaus.x - maziaus.z):
 									maziaus= i
 					
-					for i in range(1, langeliai.get_child_count()):
+					for i in range(0, langeliai.get_child_count()):
 						if langeliai.get_child(i) != null:
 							langeliai.get_child(i).queue_free()
 					if atstumai.size() != null:
@@ -228,11 +253,14 @@ func enemyMove(ecurrentposi, enemyi):
 				#3 recallculate optimal by changing starting space
 				if othenemypos.has(ecurrentposi) || ecurrentposi == pcurrentpos || !cells.has(ecurrentposi) || twofailed:	
 					ecurrentposi = await enemyMove(Vector3i(ecurrentposi.x - paieskax,0,ecurrentposi.z - paieskaz), enemyi)
-					
+		$"../StaticBody3D2/Camera3D".current = false
+		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
 		var tween = create_tween()
 		tween.tween_property(enemyi, "position", Vector3(locsel.x, 1.5, locsel.z), 1)
 		await tween.finished
+		enemyi.get_child(0).current = false
+		$"../StaticBody3D2/Camera3D".current = true
 		
 		return ecurrentposi
 		
@@ -280,3 +308,13 @@ func showMovement():
 		var lang = langelis.instantiate()
 		langeliai.add_child(lang)
 		lang.position = pos2
+
+
+func _on_texture_rect_pressed():
+	turn = false
+	ecurrentpos = await enemyMove(ecurrentpos, enemy)
+	ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
+	ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
+	ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
+	turn = true
+	canmove = true

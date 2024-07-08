@@ -4,10 +4,10 @@
 
 [sub_resource type="ImageTexture" id="ImageTexture_u6ptv"]
 
-[sub_resource type="Gradient" id="Gradient_obk28"]
+[sub_resource type="Gradient" id="Gradient_kil08"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_l32q6"]
-gradient = SubResource("Gradient_obk28")
+gradient = SubResource("Gradient_kil08")
 width = 504
 height = 109
 
