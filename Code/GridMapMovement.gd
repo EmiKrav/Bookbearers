@@ -3,6 +3,8 @@ extends GridMap
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 
 @export var playermovementPoints = 4
+@export var playerattackrange = 3
+@export var playerhealth = 10
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
 
@@ -20,6 +22,10 @@ var movemcellls: Array
 var othenemypos: Array
 var turn = true
 var canmove = true
+var skill = false
+var skillusage = true
+var skilling = true
+
 @onready var player = $player
 @onready var enemy = $enemy
 @onready var enemy2 = $enemy2
@@ -44,6 +50,11 @@ func _ready():
 	pos = local_to_map(Vector3(-1,1.5,-12.8))
 	ecurrentpos4 = pos
 	cells = get_used_cells()
+	othenemypos.clear()
+	othenemypos.append(ecurrentpos)
+	othenemypos.append(ecurrentpos2)
+	othenemypos.append(ecurrentpos3)
+	othenemypos.append(ecurrentpos4)
 	
 func _process(_delta):
 	if redraw:
@@ -77,8 +88,62 @@ func _process(_delta):
 					$"../StaticBody3D2/Camera3D".current = true
 					pcurrentpos = langelistomove
 					moving = false
-					
 	
+	if skill == true and skillusage and skilling:
+		var langelistomove = shoot_ray()
+		var ppos = pcurrentpos
+		if langelistomove != null :
+			var atstumasx = ppos.x -langelistomove.x
+			var atstumasz = ppos.z -langelistomove.z
+			if abs(atstumasx) <= playerattackrange and abs(atstumasz) <= playerattackrange:
+				var pos = map_to_local(langelistomove)
+				pos += Vector3(0,0.01,0)
+				var lang = langelis.instantiate()
+				langeliai.add_child(lang)
+				lang.position = pos
+				for i in range(0, langeliai.get_child_count()-1):
+						if langeliai.get_child(i) != null:
+							langeliai.get_child(i).queue_free()
+		else:
+			for i in range(0, langeliai.get_child_count()):
+					if langeliai.get_child(i) != null:
+						langeliai.get_child(i).queue_free()
+		if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
+			skill = false
+			skillusage = false
+			$"../CanvasLayer/Panel/TextureButton"["self_modulate"] = "ffffff71"
+			if enemy != null && langelistomove == ecurrentpos:
+				enemy.queue_free()
+				var pos2 = map_to_local(ecurrentpos)
+				pos2 += Vector3(0,0.01,0)
+				var lang = langelis.instantiate()
+				$".".add_child(lang)
+				lang.position = pos2
+				lang["modulate"] = "611705"
+			if enemy2 != null && langelistomove == ecurrentpos2:
+				enemy2.queue_free()
+				var pos2 = map_to_local(ecurrentpos2)
+				pos2 += Vector3(0,0.01,0)
+				var lang = langelis.instantiate()
+				$".".add_child(lang)
+				lang.position = pos2
+				lang["modulate"] = "611705"
+			if enemy3 != null && langelistomove == ecurrentpos3:
+				enemy3.queue_free()
+				var pos2 = map_to_local(ecurrentpos3)
+				pos2 += Vector3(0,0.01,0)
+				var lang = langelis.instantiate()
+				$".".add_child(lang)
+				lang.position = pos2
+				lang["modulate"] = "611705"
+			if enemy4 != null && langelistomove == ecurrentpos4:
+				enemy4.queue_free()
+				var pos2 = map_to_local(ecurrentpos4)
+				pos2 += Vector3(0,0.01,0)
+				var lang = langelis.instantiate()
+				$".".add_child(lang)
+				lang.position = pos2
+				lang["modulate"] = "611705"
 		
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
@@ -264,7 +329,17 @@ func enemyMove(ecurrentposi, enemyi):
 		
 		return ecurrentposi
 		
-
+func enemyAttack(enemyi):
+	$"../StaticBody3D2/Camera3D".current = false
+	$player/Camera3D2.current = true
+	await get_tree().create_timer(1).timeout
+	playerhealth= playerhealth-2
+	if player != null:
+		$player/Camera3D2.current = false
+	$"../StaticBody3D2/Camera3D".current = true
+	if playerhealth <= 0:
+		if player != null:
+			player.queue_free()
 func showMovement():
 #draw around
 	movemcellls.clear()
@@ -292,7 +367,7 @@ func showMovement():
 			var mappos = pcurrentpos + Vector3i(y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
-				
+	
 	#if movemcellls.has(ecurrentpos):
 	movemcellls.erase(ecurrentpos)
 	#if movemcellls.has(ecurrentpos2):
@@ -301,7 +376,10 @@ func showMovement():
 	movemcellls.erase(ecurrentpos3)
 	#if movemcellls.has(ecurrentpos4):
 	movemcellls.erase(ecurrentpos4)
-		
+	
+	for i in range(0, langeliai.get_child_count()):
+			if langeliai.get_child(i) != null:
+				langeliai.get_child(i).queue_free()
 	for i in movemcellls:
 		var pos2 = map_to_local(i)
 		pos2 += Vector3(0,0.01,0)
@@ -311,10 +389,51 @@ func showMovement():
 
 
 func _on_texture_rect_pressed():
-	turn = false
-	ecurrentpos = await enemyMove(ecurrentpos, enemy)
-	ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
-	ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
-	ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
-	turn = true
-	canmove = true
+	if !moving:
+		skillusage = false
+		skill = false
+		skilling = false
+		$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
+		$"../CanvasLayer/Panel/TextureRect"["disabled"]= true
+		turn = false
+		if enemy != null:
+			ecurrentpos = await enemyMove(ecurrentpos, enemy)
+			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
+				await enemyAttack(enemy)
+		if enemy2 != null:
+			ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
+			if abs(pcurrentpos.x -ecurrentpos2.x) <= enemyattackrange and abs(pcurrentpos.z -ecurrentpos2.z) <= enemyattackrange:
+				await enemyAttack(enemy2)
+		if enemy3 != null:
+			ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
+			if abs(pcurrentpos.x -ecurrentpos3.x) <= enemyattackrange and abs(pcurrentpos.z -ecurrentpos3.z) <= enemyattackrange:
+				await enemyAttack(enemy3)
+		if enemy4 != null:
+			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
+			if abs(pcurrentpos.x -ecurrentpos4.x )<= enemyattackrange and abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
+				await enemyAttack(enemy4)
+		turn = true
+		canmove = true
+		skillusage = true
+		$"../CanvasLayer/Panel/TextureRect"["disabled"]= false
+		$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff"
+		$"../CanvasLayer/Panel/TextureButton"["self_modulate"] = "ffffff"
+
+func _on_texture_button_pressed():
+	if skillusage:
+		if skill == false:
+			skill=true
+		elif skill == true:
+			skill = false
+
+func _on_texture_button_mouse_entered():
+	skilling = false
+	selected = false
+	if skillusage == true:
+		for i in range(0, langeliai.get_child_count()):
+			if langeliai.get_child(i) != null:
+				langeliai.get_child(i).queue_free()
+
+
+func _on_texture_button_mouse_exited():
+	skilling = true
