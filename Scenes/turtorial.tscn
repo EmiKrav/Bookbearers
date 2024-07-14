@@ -16,20 +16,20 @@ albedo_color = Color(0.133333, 0.447059, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_niyws"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6en0s"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32s02"]
 albedo_color = Color(0.0799552, 0.44378, 0.272325, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jftun"]
-material = SubResource("StandardMaterial3D_6en0s")
+material = SubResource("StandardMaterial3D_32s02")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mclb5"]
 albedo_color = Color(1, 0.952941, 0.0745098, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crccq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10wfh"]
 albedo_color = Color(1, 0.0823529, 0.0745098, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_enma1"]
-material = SubResource("StandardMaterial3D_crccq")
+material = SubResource("StandardMaterial3D_10wfh")
 
 [sub_resource type="BoxMesh" id="BoxMesh_vuloo"]
 
@@ -39,18 +39,18 @@ albedo_color = Color(0.0470588, 0.137255, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="Gradient" id="Gradient_qipgx"]
+[sub_resource type="Gradient" id="Gradient_wau2e"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0jhg0"]
-gradient = SubResource("Gradient_qipgx")
+gradient = SubResource("Gradient_wau2e")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Gradient" id="Gradient_17ngm"]
+[sub_resource type="Gradient" id="Gradient_nia1v"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_x1h1v"]
-gradient = SubResource("Gradient_17ngm")
+gradient = SubResource("Gradient_nia1v")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)

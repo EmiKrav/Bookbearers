@@ -15,3 +15,5 @@ stream = ExtResource("1_7uq86")
 autoplay = true
 expand = true
 script = ExtResource("2_msuqa")
+
+[connection signal="finished" from="." to="." method="_on_finished"]
