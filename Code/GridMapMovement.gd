@@ -1,6 +1,8 @@
 extends GridMap
 
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
+@onready var langeliomat = preload("res://Bookbearers/Materials/ejimolangelis.tres")
+@onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 
 @export var playermovementPoints = 4
 @export var playerattackrange = 3
@@ -34,7 +36,7 @@ var skilling = true
 @onready var langeliai = $Node3D
 
 func _ready():
-	player.position = Vector3(1,1.5,15)
+	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
 	enemy.position = Vector3(1,1.5,-15)
@@ -82,7 +84,7 @@ func _process(_delta):
 					redraw = true
 					canmove = false
 					var tween = create_tween()
-					tween.tween_property(player, "position", Vector3(pos.x, 1.5, pos.z), 1)
+					tween.tween_property(player, "position", Vector3(pos.x, 2, pos.z), 1)
 					await tween.finished
 					$player/Camera3D2.current = false
 					$"../StaticBody3D2/Camera3D".current = true
@@ -112,6 +114,14 @@ func _process(_delta):
 			skill = false
 			skillusage = false
 			$"../CanvasLayer/Panel/TextureButton"["self_modulate"] = "ffffff71"
+			await get_tree().create_timer(1).timeout
+			for i in range(0, langeliai.get_child_count()):
+				if langeliai.get_child(i) != null:
+					var tween = create_tween()
+					tween.tween_property(langeliai.get_child(i), "material_override:albedo_color:a", 0, 1)
+					#tween.tween_property(langeliomat, "albedo_color:a", 0, 3)
+					await tween.finished
+					langeliai.get_child(i).queue_free()
 			if enemy != null && langelistomove == ecurrentpos:
 				enemy.queue_free()
 				var pos2 = map_to_local(ecurrentpos)
@@ -119,7 +129,7 @@ func _process(_delta):
 				var lang = langelis.instantiate()
 				$".".add_child(lang)
 				lang.position = pos2
-				lang["modulate"] = "611705"
+				lang["material_override"] = langelimiromat
 			if enemy2 != null && langelistomove == ecurrentpos2:
 				enemy2.queue_free()
 				var pos2 = map_to_local(ecurrentpos2)
@@ -127,7 +137,7 @@ func _process(_delta):
 				var lang = langelis.instantiate()
 				$".".add_child(lang)
 				lang.position = pos2
-				lang["modulate"] = "611705"
+				lang["material_override"] = langelimiromat
 			if enemy3 != null && langelistomove == ecurrentpos3:
 				enemy3.queue_free()
 				var pos2 = map_to_local(ecurrentpos3)
@@ -135,7 +145,7 @@ func _process(_delta):
 				var lang = langelis.instantiate()
 				$".".add_child(lang)
 				lang.position = pos2
-				lang["modulate"] = "611705"
+				lang["material_override"] = langelimiromat
 			if enemy4 != null && langelistomove == ecurrentpos4:
 				enemy4.queue_free()
 				var pos2 = map_to_local(ecurrentpos4)
@@ -143,7 +153,7 @@ func _process(_delta):
 				var lang = langelis.instantiate()
 				$".".add_child(lang)
 				lang.position = pos2
-				lang["modulate"] = "611705"
+				lang["material_override"] = langelimiromat
 		
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
@@ -170,6 +180,7 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 	if turn && canmove:
 		if event is InputEventMouseButton:
 			click = true
+			langeliomat.albedo_color.a = 1
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !selected and !moving:
 				selected = true
 				redraw = true
@@ -386,7 +397,7 @@ func showMovement():
 		var lang = langelis.instantiate()
 		langeliai.add_child(lang)
 		lang.position = pos2
-
+		lang["material_override"]= langeliomat
 
 func _on_texture_rect_pressed():
 	if !moving:
@@ -421,6 +432,7 @@ func _on_texture_rect_pressed():
 
 func _on_texture_button_pressed():
 	if skillusage:
+		langeliomat.albedo_color.a = 1
 		if skill == false:
 			skill=true
 		elif skill == true:

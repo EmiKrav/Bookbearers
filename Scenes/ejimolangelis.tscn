@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi4ki7d3gvq3o"]
+[gd_scene load_steps=4 format=3 uid="uid://bi4ki7d3gvq3o"]
 
-[sub_resource type="Gradient" id="Gradient_a84c7"]
-offsets = PackedFloat32Array(0, 0.0863787, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.162791, 0.162791, 0.162791, 1, 1, 1, 1, 1)
+[ext_resource type="Material" uid="uid://chwic61na5jjd" path="res://Bookbearers/Materials/ejimolangelis.tres" id="1_n6cgl"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_47nqa"]
-gradient = SubResource("Gradient_a84c7")
+[sub_resource type="Gradient" id="Gradient_ggjdl"]
+offsets = PackedFloat32Array(0, 0.00668896)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hl1cg"]
+gradient = SubResource("Gradient_ggjdl")
 fill_from = Vector2(1, 1)
-fill_to = Vector2(0.987179, 0.982906)
+fill_to = Vector2(0, 0)
 
 [node name="Sprite3D2" type="Sprite3D"]
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
-modulate = Color(0.635294, 0.521569, 0.305882, 1)
-texture = SubResource("GradientTexture2D_47nqa")
+material_override = ExtResource("1_n6cgl")
+texture = SubResource("GradientTexture2D_hl1cg")
