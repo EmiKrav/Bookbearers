@@ -3,4 +3,5 @@
 [resource]
 transparency = 1
 cull_mode = 2
+depth_draw_mode = 1
 albedo_color = Color(0.592157, 0.47451, 0.188235, 1)
