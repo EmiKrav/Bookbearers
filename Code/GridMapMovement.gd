@@ -39,16 +39,16 @@ func _ready():
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
-	enemy.position = Vector3(1,1.5,-15)
+	enemy.position = Vector3(1,2,-15)
 	pos = local_to_map(Vector3(1,1.5,-15))
 	ecurrentpos = pos
-	enemy2.position = Vector3(-1,1.5,-15)
+	enemy2.position = Vector3(-1,2,-15)
 	pos = local_to_map(Vector3(-1,1.5,-15))
 	ecurrentpos2 = pos
-	enemy3.position = Vector3(1,1.5,-12.8)
+	enemy3.position = Vector3(1,2,-12.8)
 	pos = local_to_map(Vector3(1,1.5,-12.8))
 	ecurrentpos3 = pos
-	enemy4.position = Vector3(-1,1.5,-12.8)
+	enemy4.position = Vector3(-1,2,-12.8)
 	pos = local_to_map(Vector3(-1,1.5,-12.8))
 	ecurrentpos4 = pos
 	cells = get_used_cells()
@@ -333,7 +333,7 @@ func enemyMove(ecurrentposi, enemyi):
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
 		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 1.5, locsel.z), 1)
+		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, locsel.z), 1)
 		await tween.finished
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true

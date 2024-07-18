@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=23 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
-[ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/Tiles.tres" id="2_l2eec"]
+[ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_f43eu"]
 [ext_resource type="Script" path="res://Bookbearers/Code/GridMapMovement.gd" id="3_syakv"]
 [ext_resource type="Texture2D" uid="uid://cxudi6jniwn08" path="res://Bookbearers/Textures/knyg.png" id="4_mj18n"]
+[ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_5ofdg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm63p"]
 
@@ -31,25 +32,13 @@ height = 0.1
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85odk"]
 albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32s02"]
-albedo_color = Color(0.0799552, 0.44378, 0.272325, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_ojjs7"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_jftun"]
-material = SubResource("StandardMaterial3D_32s02")
+[sub_resource type="PlaneMesh" id="PlaneMesh_nyhfe"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mclb5"]
-albedo_color = Color(1, 0.952941, 0.0745098, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_me6y2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10wfh"]
-albedo_color = Color(1, 0.0823529, 0.0745098, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_enma1"]
-material = SubResource("StandardMaterial3D_10wfh")
-
-[sub_resource type="BoxMesh" id="BoxMesh_vuloo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0bfc"]
-albedo_color = Color(0.0470588, 0.137255, 1, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_dvftp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
 size = Vector3(4.36224, 1.91614, 1.04297)
@@ -94,7 +83,7 @@ mesh = SubResource("PlaneMesh_eqaxp")
 surface_material_override/0 = SubResource("StandardMaterial3D_cxmbp")
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("2_l2eec")
+mesh_library = ExtResource("2_f43eu")
 data = {
 "cells": PackedInt32Array(0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 65529, 0, 0, 65528, 0, 65535, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 1, 7, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 0, 65534, 0, 0, 65535, 0, 1, 65528, 0, 1, 65529, 0, 1, 65530, 0, 1, 65531, 0, 1, 65532, 0, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 2, 65528, 0, 2, 65529, 0, 2, 65530, 0, 2, 65531, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 3, 65528, 0, 3, 65529, 0, 3, 65530, 0, 3, 65531, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 4, 65528, 0, 4, 65529, 0, 4, 65530, 0, 4, 65531, 0, 4, 65532, 0, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 5, 65528, 0, 5, 65529, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 6, 65528, 0, 6, 65529, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 7, 65528, 0, 7, 65529, 0, 7, 65530, 0, 7, 65531, 0, 7, 65532, 0, 7, 65533, 0, 7, 65534, 0, 7, 65535, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65530, 0, 0, 65531, 0, 0, 65529, 0, 0, 65528, 0, 0, 65528, 1, 0, 65528, 2, 0, 65528, 3, 0, 65528, 4, 0, 65528, 7, 0, 65529, 6, 0, 65529, 7, 0, 65530, 1, 0, 65530, 2, 0, 65530, 3, 0, 65530, 4, 0, 65530, 5, 0, 65530, 6, 0, 65530, 7, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 0, 65531, 5, 0, 65531, 6, 0, 65531, 7, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 0, 65532, 5, 0, 65532, 6, 0, 65532, 7, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65533, 6, 0, 65533, 7, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65534, 6, 0, 65534, 7, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 0, 65535, 5, 0, 65535, 6, 0, 65535, 7, 0, 65528, 65531, 0, 65528, 65532, 0, 65528, 65533, 0, 65528, 65534, 0, 65528, 65535, 0, 65529, 65528, 0, 65529, 65529, 0, 65529, 65530, 0, 65529, 65531, 0, 65529, 65532, 0, 65529, 65533, 0, 65529, 65534, 0, 65529, 65535, 0, 65530, 65528, 0, 65530, 65529, 0, 65530, 65530, 0, 65530, 65531, 0, 65530, 65532, 0, 65530, 65534, 0, 65531, 65528, 0, 65531, 65529, 0, 65531, 65532, 0, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65532, 65528, 0, 65532, 65529, 0, 65532, 65530, 0, 65532, 65531, 0, 65532, 65532, 0, 65532, 65533, 0, 65532, 65534, 0, 65532, 65535, 0, 65533, 65528, 0, 65533, 65529, 0, 65533, 65530, 0, 65533, 65531, 0, 65533, 65532, 0, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65534, 65528, 0, 65534, 65529, 0, 65534, 65530, 0, 65534, 65531, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65535, 65528, 0, 65535, 65529, 0, 65535, 65530, 0, 65535, 65531, 0, 65535, 65532, 0, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65529, 5, 0, 65528, 6, 0, 65528, 5, 0, 65529, 4, 0, 65529, 3, 0, 65529, 2, 0, 65529, 1, 0, 65530, 65535, 0, 65530, 65533, 0, 65531, 65531, 0, 65531, 65530, 0, 65528, 65528, 0, 65528, 65529, 0, 65528, 65530, 0)
 }
@@ -120,35 +109,37 @@ mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="enemy" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -15)
-mesh = SubResource("BoxMesh_jftun")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -15)
+mesh = SubResource("PlaneMesh_ojjs7")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_mclb5")
+surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy"]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
 
 [node name="enemy2" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, -15)
-mesh = SubResource("BoxMesh_jftun")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -15)
+mesh = SubResource("PlaneMesh_nyhfe")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy2"]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
 
 [node name="enemy3" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -12.8)
-mesh = SubResource("BoxMesh_enma1")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -12.8)
+mesh = SubResource("PlaneMesh_me6y2")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy3"]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
 
 [node name="enemy4" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, -12.8)
-mesh = SubResource("BoxMesh_vuloo")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -12.8)
+mesh = SubResource("PlaneMesh_dvftp")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_o0bfc")
+surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy4"]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
