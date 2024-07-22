@@ -295,6 +295,7 @@ func enemyAttack(enemyi):
 	if playerhealth <= 0:
 		if player != null:
 			player.queue_free()
+			
 func showMovement():
 #draw around
 	movemcellls.clear()
