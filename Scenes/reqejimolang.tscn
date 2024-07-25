@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba0l42x12itpn"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/reqejimolang.gd" id="1_37x70"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krxjv"]
+albedo_color = Color(0.725181, 0.541813, 0.207196, 1)
+
+[sub_resource type="Gradient" id="Gradient_5laou"]
+offsets = PackedFloat32Array(0, 0.00334448)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_is2ne"]
+gradient = SubResource("Gradient_5laou")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.0042735, 0.995726)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hglvr"]
+size = Vector3(0.672119, 0.629578, 0.313477)
+
+[node name="Sprite3D" type="Sprite3D"]
+transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 0.5, 0, -3, -2.18557e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_krxjv")
+texture = SubResource("GradientTexture2D_is2ne")
+script = ExtResource("1_37x70")
+
+[node name="Label" type="Label3D" parent="."]
+transform = Transform3D(-0.00143115, 0.999999, 4.37113e-08, -0.999999, -0.00143115, -4.37739e-08, -4.37113e-08, -4.37739e-08, 1, -0.172328, 0.168616, 0.172874)
+visible = false
+
+[node name="Label2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 7.10543e-15, 0, -7.10543e-15, 1, -0.172328, -6.32406e-09, 0.144678)
+visible = false
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 8.88178e-16, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -8.88178e-16, 0, 0, 1, 0, -1.11022e-16, 0.0776367)
+shape = SubResource("BoxShape3D_hglvr")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

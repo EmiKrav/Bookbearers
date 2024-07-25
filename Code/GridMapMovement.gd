@@ -84,8 +84,11 @@ func _process(_delta):
 					redraw = true
 					canmove = false
 					var tween = create_tween()
-					tween.tween_property(player, "position", Vector3(pos.x, 2, pos.z), 1)
+					tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 					await tween.finished
+					var tween2 = create_tween()
+					tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
+					await tween2.finished
 					$player/Camera3D2.current = false
 					$"../StaticBody3D2/Camera3D".current = true
 					pcurrentpos = langelistomove
@@ -333,8 +336,11 @@ func enemyMove(ecurrentposi, enemyi):
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
 		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, locsel.z), 1)
+		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
 		await tween.finished
+		var tween2 = create_tween()
+		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+		await tween2.finished
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
 		

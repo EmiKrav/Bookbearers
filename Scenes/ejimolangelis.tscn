@@ -14,9 +14,3 @@ fill_to = Vector2(0, 0)
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
 material_override = ExtResource("1_n6cgl")
 texture = SubResource("GradientTexture2D_hl1cg")
-
-[node name="Label" type="Label3D" parent="."]
-transform = Transform3D(-0.00143115, 0.999999, 4.37113e-08, -0.999999, -0.00143115, -4.37739e-08, -4.37113e-08, -4.37739e-08, 1, -0.172328, 0.168616, 0.172874)
-
-[node name="Label2" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 7.10543e-15, 0, -7.10543e-15, 1, -0.172328, -6.32406e-09, 0.144678)

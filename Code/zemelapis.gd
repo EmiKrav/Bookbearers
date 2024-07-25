@@ -1,11 +1,11 @@
 extends Node3D
 
-@onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
+@onready var langelis = preload("res://Bookbearers/Scenes/reqejimolang.tscn")
 
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var playermovementPoints = 1
+@export var playermovementPoints = 2
 @export var playerhealth = 10
 
 var V = 22;
@@ -43,6 +43,7 @@ func _ready():
 	pcurrentpos = pos
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
 	mainas()
+	
 func _process(delta):
 	if redraw:
 		if selected:
@@ -56,66 +57,23 @@ func _process(delta):
 					langeliai.get_child(i).queue_free()
 			selected = false
 	
-	
-
-func _input(event):
-	if !click && !moving && selected:
-		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and selected and !moving and !click:
-				atspaust = true
-		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == false and selected and !moving and !click:
-				atspaust = false
-				judeti()
-func judeti():
-	if !click && !moving && selected && !atspaust:	
-		print("jo")
-		var langelistomove = shoot_ray()
-		if langelistomove != null:
-			print("1")
-			print(langelistomove)
-			if movemcellls.has(langelistomove):
-				print("2")
-				$"StaticBody3D2/Camera3D".current = false
-				$player/Camera3D2.current = true
-				if $GridMap.get_used_cells().has(langelistomove):
-					var pos = $GridMap.map_to_local(langelistomove)
-					for i in langeliai.get_child_count():
-						if pos == Vector3(langeliai.get_child(i).position.x,pos.y,langeliai.get_child(i).position.z):
-							movethere(pos,langelistomove)
-							break
-				if $GridMap2.get_used_cells().has(langelistomove):
-					var pos = $GridMap2.map_to_local(langelistomove)
-					for i in langeliai.get_child_count():
-						if pos == Vector3(langeliai.get_child(i).position.x,pos.y,langeliai.get_child(i).position.z):
-							movethere(pos,langelistomove)
-							break
-				if $GridMap3.get_used_cells().has(langelistomove):
-					var pos = $GridMap3.map_to_local(langelistomove)
-					for i in langeliai.get_child_count():
-						if pos == Vector3(langeliai.get_child(i).position.x,pos.y,langeliai.get_child(i).position.z):
-							movethere(pos,langelistomove)
-							break
-func shoot_ray():
-	var camera = get_viewport().get_camera_3d()
-	var mouse_pos = get_viewport().get_mouse_position()
-	var ray_length = 1000
-	var from = camera.project_position(mouse_pos, 0.0)
-	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
-	var ray_query = PhysicsRayQueryParameters3D.create(from,to)
-	var raycast_result = get_world_3d().direct_space_state.intersect_ray(ray_query)
-	var selection = map_selection(raycast_result)
-	return selection
-
-func map_selection(selection: Dictionary):
-	if selection.is_empty():
-		return
-	if selection["collider"] is GridMap:
-		var gridmap: GridMap = selection["collider"]
-		var locsel = to_local(selection.position)
-		var pos = gridmap.local_to_map(locsel)
+				
+func judeti(numeris):
+		$"StaticBody3D2/Camera3D".current = false
+		$player/Camera3D2.current = true
+		var langelistomove = Vector3i(grafas[str_to_var(numeris)][3][0],grafas[str_to_var(numeris)][3][1],grafas[str_to_var(numeris)][3][2])
+		var ind = str_to_var(numeris)
+		var pos
+		if grafas[ind][4] == "G":
+			pos = $GridMap.map_to_local(langelistomove)
+		elif grafas[ind][4] == "G2":
+			pos = $GridMap2.map_to_local(langelistomove)
+		elif grafas[ind][4] == "G3":
+			pos = $GridMap3.map_to_local(langelistomove)
 		
-		return pos
+		movethere(pos,langelistomove,ind)
+		
+					
 
 func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 	if turn && canmove:
@@ -151,16 +109,15 @@ func showMovement():
 	for i in movemcellls.size():
 		if $GridMap.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G":
 			var pos2 = $GridMap.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.605,0)
+			pos2 += Vector3(0,0.5,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
 			lang.get_child(0).text = "G" 
 			lang.get_child(1).text = str(movemnumb[i])
-			print(lang.get_child(1).text)
 		if $GridMap2.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G2":
 			var pos2 = $GridMap2.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.605,0)
+			pos2 += Vector3(0,0.5,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
@@ -168,47 +125,40 @@ func showMovement():
 			lang.get_child(1).text = str(movemnumb[i])
 		if $GridMap3.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G3":
 			var pos2 = $GridMap3.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.605,0)
+			pos2 += Vector3(0,0.5,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
 			lang.get_child(0).text= "G3"
 			lang.get_child(1).text = str(movemnumb[i])
 
-func movethere(pos, langelistomove):
+func movethere(pos, langelistomove,grafnumr):
 	moving = true
 	selected = false
 	redraw = true
 	canmove = false
 	atspaust = false
-	var tween = create_tween()
-	tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
-	await tween.finished
+	var posic 
+	for v in range(1,tra[grafnumr].size()):
+		if grafas[tra[grafnumr][v]][4] == "G":
+			posic = $GridMap.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
+		elif grafas[tra[grafnumr][v]][4] == "G2":
+			posic = $GridMap2.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
+		elif grafas[tra[grafnumr][v]][4] == "G3":
+			posic = $GridMap3.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
+		var tween = create_tween()
+		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
+		await tween.finished
+	#var tween = create_tween()
+	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
+	#await tween.finished
 	$player/Camera3D2.current = false
 	$"StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
-	if pos == $GridMap.map_to_local(langelistomove):
-		for i in grafas:
-			if Vector3i(i[3][0],i[3][1],i[3][2]) == langelistomove and i[4] == "G":
-				playercurrentgraphspot = i[0]
-				print(playercurrentgraphspot)
-				mainas()
-				break
-	if pos == $GridMap2.map_to_local(langelistomove):
-		for i in grafas:
-			if Vector3i(i[3][0],i[3][1],i[3][2]) == langelistomove and i[4] == "G2":
-				playercurrentgraphspot = i[0]
-				print(playercurrentgraphspot)
-				mainas()
-				break
-	if pos == $GridMap3.map_to_local(langelistomove):
-		for i in grafas:
-			if Vector3i(i[3][0],i[3][1],i[3][2]) == langelistomove and i[4] == "G3":
-				playercurrentgraphspot = i[0]
-				print(playercurrentgraphspot)
-				mainas()
-				break
+	playercurrentgraphspot = grafnumr
+	mainas()
+	
 func _on_texture_rect_pressed():
 	if !moving:
 		skillusage = false
@@ -255,6 +205,7 @@ func dijekstra(graph, src):
 	var sptSet= []
 	var near =[]
 	dist.clear()
+	tra.clear()
 	near.resize(V)
 	for i in range(0, V):
 		dist.append(9223372036854775807)
