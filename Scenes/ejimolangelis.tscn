@@ -13,4 +13,6 @@ fill_to = Vector2(0, 0)
 [node name="Sprite3D2" type="Sprite3D"]
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
 material_override = ExtResource("1_n6cgl")
+transparency = 0.6
+cast_shadow = 0
 texture = SubResource("GradientTexture2D_hl1cg")

@@ -31,8 +31,8 @@ func _ready():
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
-	enemy.position = Vector3(1,1.5,-15)
-	pos = local_to_map(Vector3(1,1.5,-15))
+	enemy.position = Vector3(1,2,-15)
+	pos = local_to_map(Vector3(1,2,-15))
 	ecurrentpos = pos
 	cells = get_used_cells()
 	othenemypos.clear()

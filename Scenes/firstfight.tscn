@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
 [ext_resource type="Script" path="res://Bookbearers/Code/GridMapFirstfight.gd" id="3_41r68"]
+[ext_resource type="Texture2D" uid="uid://d2i0igaqs07mq" path="res://Bookbearers/Textures/zanda.png" id="4_ku04p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chial"]
 
@@ -33,14 +34,15 @@ albedo_color = Color(0.133333, 0.447059, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nj7y6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6en0s"]
-albedo_color = Color(0.0799552, 0.44378, 0.272325, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_501qa"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_swcil"]
-material = SubResource("StandardMaterial3D_6en0s")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fq8di"]
-albedo_color = Color(1, 0.952941, 0.0745098, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbf6j"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("4_ku04p")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jo5ol"]
 size = Vector2(32, 32)
@@ -143,13 +145,13 @@ shape = SubResource("BoxShape3D_nj7y6")
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
 
 [node name="enemy" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -15)
-mesh = SubResource("BoxMesh_swcil")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -15)
+mesh = SubResource("PlaneMesh_501qa")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_fq8di")
+surface_material_override/0 = SubResource("StandardMaterial3D_cbf6j")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy"]
-transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
+transform = Transform3D(1, 0, 0, 0, -0.335386, 0.942081, 0, -0.942081, -0.335386, 0, 3.5, -0.828718)
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
