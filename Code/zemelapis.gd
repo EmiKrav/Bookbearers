@@ -38,6 +38,7 @@ var paspaus = false
 var atspaust = false
 
 func _ready():
+	get_tree().paused = false;
 	player.position = Vector3(0,1,4.6)
 	var pos = $GridMap.local_to_map(Vector3(0,1,4.5))
 	pcurrentpos = pos

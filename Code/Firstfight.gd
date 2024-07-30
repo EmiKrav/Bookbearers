@@ -1,6 +1,7 @@
 extends GridMap
 
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
+@onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
 
 @export var playermovementPoints = 4
 @export var playerattackrange = 3
@@ -22,6 +23,7 @@ var canmove = true
 var skill = false
 var skillusage = true
 var skilling = true
+var turnssurvived = 0
 
 @onready var player = $player
 @onready var enemy = $enemy
@@ -37,8 +39,36 @@ func _ready():
 	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)
-	
+
+func playermove(langelistomove):
+	Global.cameramove = false
+	$"../StaticBody3D2/Camera3D".current = false
+	$player/Camera3D2.current = true
+	var pos = map_to_local(langelistomove)
+	moving = true
+	selected = false
+	redraw = true
+	canmove = false
+	var camx = player.position.x - $"../StaticBody3D2".position.x
+	var camz = player.position.z - $"../StaticBody3D2".position.z
+	$"../StaticBody3D2".position.x = pos.x - camx
+	$"../StaticBody3D2".position.z = pos.z - camz
+	var tween = create_tween()
+	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
+	await tween.finished
+	var tween2 = create_tween()
+	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
+	await tween2.finished
+	$player/Camera3D2.current = false
+	$"../StaticBody3D2/Camera3D".current = true
+	pcurrentpos = langelistomove
+	moving = false
+	Global.cameramove = true
 func _process(_delta):
+	if turnssurvived == 6:
+		get_tree().paused = true;
+		await get_tree().create_timer(3).timeout
+		get_tree().change_scene_to_packed(zemelapis)
 	if redraw:
 		if selected:
 			redraw = false
@@ -56,23 +86,8 @@ func _process(_delta):
 			if shoot_ray() != null:
 				var langelistomove = shoot_ray()
 				if movemcellls.has(langelistomove):
-					$"../StaticBody3D2/Camera3D".current = false
-					$player/Camera3D2.current = true
-					var pos = map_to_local(langelistomove)
-					moving = true
-					selected = false
-					redraw = true
-					canmove = false
-					var tween = create_tween()
-					tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
-					await tween.finished
-					var tween2 = create_tween()
-					tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
-					await tween2.finished
-					$player/Camera3D2.current = false
-					$"../StaticBody3D2/Camera3D".current = true
-					pcurrentpos = langelistomove
-					moving = false
+					playermove(langelistomove)
+					
 	
 	if skill == true and skillusage and skilling:
 		var langelistomove = shoot_ray()
@@ -368,6 +383,7 @@ func _on_skill_pressed():
 
 func _on_end_turn_pressed():
 	if !moving:
+		Global.cameramove = false
 		skillusage = false
 		skill = false
 		skilling = false
@@ -384,3 +400,5 @@ func _on_end_turn_pressed():
 		$"../CanvasLayer/Panel/EndTurn"["disabled"]= false
 		$"../CanvasLayer/Panel/EndTurn"["self_modulate"] = "ffffff"
 		$"../CanvasLayer/Panel/Skill"["self_modulate"] = "ffffff"
+		Global.cameramove = true
+		turnssurvived +=1

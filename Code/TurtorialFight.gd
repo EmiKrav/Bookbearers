@@ -3,6 +3,8 @@ extends GridMap
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 @onready var langeliomat = preload("res://Bookbearers/Materials/ejimolangelis.tres")
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
+@onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
+
 
 @export var playermovementPoints = 4
 @export var playerattackrange = 3
@@ -12,6 +14,7 @@ extends GridMap
 @export var skill2coldown = 3
 @export var skill3coldown = 3
 
+var enemieskilled = 0
 var selected = false
 var pcurrentpos : Vector3i
 var ecurrentpos: Vector3i
@@ -68,6 +71,7 @@ func _ready():
 	othenemypos.append(ecurrentpos4)
 	
 func playermove(langelistomove):
+	Global.cameramove = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
 	var pos = map_to_local(langelistomove)
@@ -75,18 +79,26 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	canmove = false
+	var camx = player.position.x - $"../StaticBody3D2".position.x
+	var camz = player.position.z - $"../StaticBody3D2".position.z
+	$"../StaticBody3D2".position.x = pos.x - camx
+	$"../StaticBody3D2".position.z = pos.z - camz
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
 	await tween2.finished
+	
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
-	
+	Global.cameramove = true
 func _process(_delta):
+	if enemieskilled == 4:
+		await get_tree().create_timer(3).timeout
+		get_tree().change_scene_to_packed(namai)
 	if redraw:
 		if selected:
 			redraw = false
@@ -122,6 +134,7 @@ func enemyhurt(langelistomove):
 		$".".add_child(lang)
 		lang.position = pos2
 		lang["material_override"] = langelimiromat
+		enemieskilled +=1
 	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
 		enemy2.queue_free()
 		var pos2 = map_to_local(ecurrentpos2)
@@ -130,6 +143,7 @@ func enemyhurt(langelistomove):
 		$".".add_child(lang)
 		lang.position = pos2
 		lang["material_override"] = langelimiromat
+		enemieskilled +=1
 	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
 		enemy3.queue_free()
 		var pos2 = map_to_local(ecurrentpos3)
@@ -138,6 +152,7 @@ func enemyhurt(langelistomove):
 		$".".add_child(lang)
 		lang.position = pos2
 		lang["material_override"] = langelimiromat
+		enemieskilled +=1
 	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
 		enemy4.queue_free()
 		var pos2 = map_to_local(ecurrentpos4)
@@ -146,6 +161,7 @@ func enemyhurt(langelistomove):
 		$".".add_child(lang)
 		lang.position = pos2
 		lang["material_override"] = langelimiromat
+		enemieskilled +=1
 		
 func animacijalang():
 	var tween = create_tween()
@@ -538,6 +554,7 @@ func showMovement():
 
 func _on_texture_rect_pressed():
 	if !moving:
+		Global.cameramove = false
 		skillusage = false
 		skill = false
 		skillusage2 = false
@@ -580,7 +597,8 @@ func _on_texture_rect_pressed():
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffff"
 		if skill3curcoldown == 0:
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffff"
-
+		Global.cameramove = true
+		
 func _on_texture_button_pressed():
 	if skillusage:
 		langeliomat.albedo_color.a = 1

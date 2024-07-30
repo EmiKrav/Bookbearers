@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
-[ext_resource type="Script" path="res://Bookbearers/Code/GridMapFirstfight.gd" id="3_41r68"]
+[ext_resource type="Script" path="res://Bookbearers/Code/Firstfight.gd" id="3_41r68"]
 [ext_resource type="Texture2D" uid="uid://d2i0igaqs07mq" path="res://Bookbearers/Textures/zanda.png" id="4_ku04p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chial"]
