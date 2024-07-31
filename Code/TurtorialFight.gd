@@ -4,9 +4,12 @@ extends GridMap
 @onready var langeliomat = preload("res://Bookbearers/Materials/ejimolangelis.tres")
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 @onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
+@onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
 
 
-@export var playermovementPoints = 4
+@export var maxplayermovementPoints = 4
+var playermovementPointsx = maxplayermovementPoints
+var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
 @export var playerhealth = 10
 @export var enemymovementPoints = 3
@@ -78,11 +81,11 @@ func playermove(langelistomove):
 	moving = true
 	selected = false
 	redraw = true
-	canmove = false
 	var camx = player.position.x - $"../StaticBody3D2".position.x
 	var camz = player.position.z - $"../StaticBody3D2".position.z
 	$"../StaticBody3D2".position.x = pos.x - camx
 	$"../StaticBody3D2".position.z = pos.z - camz
+	var prad = pcurrentpos
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 	await tween.finished
@@ -95,14 +98,23 @@ func playermove(langelistomove):
 	pcurrentpos = langelistomove
 	moving = false
 	Global.cameramove = true
+	var pab = pcurrentpos
+	playermovementPointsx -=abs(prad.x-pab.x)
+	playermovementPointsz -=abs(prad.z-pab.z)
+	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
+		canmove = false
 func _process(_delta):
+	if playerhealth <= 0:
+		if player != null:
+			player.queue_free()
+		get_tree().change_scene_to_packed(mirtis)
 	if enemieskilled == 4:
 		await get_tree().create_timer(3).timeout
 		get_tree().change_scene_to_packed(namai)
 	if redraw:
 		if selected:
 			redraw = false
-			showMovement()
+			showMovement(playermovementPointsx,playermovementPointsz)
 			selected = true
 		if !selected:
 			redraw = false
@@ -118,11 +130,11 @@ func _process(_delta):
 				if movemcellls.has(langelistomove):
 					playermove(langelistomove)
 	
-	if skill == true and skillusage and skilling:
+	if skill == true and skillusage and skilling and !usingskills:
 		useskill1()
-	if skill2 == true and skillusage2 and skilling and skill2curcoldown == 0:
+	if skill2 == true and skillusage2 and skilling and !usingskills and skill2curcoldown == 0:
 		useskill2()
-	if skill3 == true and skillusage3 and skilling and skill3curcoldown == 0:
+	if skill3 == true and skillusage3 and skilling and !usingskills and skill3curcoldown == 0:
 		useskill3()
 		
 func enemyhurt(langelistomove):
@@ -497,37 +509,36 @@ func enemyAttack(enemyi):
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
 	playerhealth= playerhealth-2
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if player != null:
 		$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
-	if playerhealth <= 0:
-		if player != null:
-			player.queue_free()
 			
-func showMovement():
+func showMovement(playermovementPointsx, playermovementPointsz):
 #draw around
 	movemcellls.clear()
 #apacia desine
-	for y in range(1, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+	for y in range(1, playermovementPointsx+1):
+		for i in range(1, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(y,0,i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus kaire
-	for y in range(0, playermovementPoints+1):
-		for i in range(0, playermovementPoints+1):
+	for y in range(0, playermovementPointsx+1):
+		for i in range(0, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #apacia kaire
-	for y in range(0, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+	for y in range(0, playermovementPointsx+1):
+		for i in range(1, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus desine
-	for y in range(1, playermovementPoints+1):
-		for i in range(0, playermovementPoints+1):
+	for y in range(1, playermovementPointsx+1):
+		for i in range(0, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
@@ -598,7 +609,8 @@ func _on_texture_rect_pressed():
 		if skill3curcoldown == 0:
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffff"
 		Global.cameramove = true
-		
+		playermovementPointsx = maxplayermovementPoints
+		playermovementPointsz = maxplayermovementPoints
 func _on_texture_button_pressed():
 	if skillusage:
 		langeliomat.albedo_color.a = 1
@@ -610,7 +622,7 @@ func _on_texture_button_pressed():
 func _on_texture_button_mouse_entered():
 	skilling = false
 	selected = false
-	if skillusage == true:
+	if skillusage == true and skill:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
@@ -632,7 +644,7 @@ func _on_texture_button_2_pressed():
 func _on_texture_button_2_mouse_entered():
 	skilling = false
 	selected = false
-	if skillusage2 == true:
+	if skillusage2 == true and skill2:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
@@ -654,7 +666,7 @@ func _on_texture_button_3_pressed():
 func _on_texture_button_3_mouse_entered():
 	skilling = false
 	selected = false
-	if skillusage3 == true:
+	if skillusage3 == true and skill3:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()

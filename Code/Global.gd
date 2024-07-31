@@ -1,6 +1,6 @@
 extends Node
 
-var childName
+var childName = "Name"
 
 var cameramove = true
 

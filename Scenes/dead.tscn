@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2di8c8c2krdc"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/dead.gd" id="1_w1xox"]
+
+[sub_resource type="Gradient" id="Gradient_e12dn"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e3x3g"]
+gradient = SubResource("Gradient_e12dn")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_w1xox")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_e3x3g")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.482639
+anchor_top = 0.482253
+anchor_right = 0.517361
+anchor_bottom = 0.517747
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true

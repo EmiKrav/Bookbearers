@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://drr7ucpwcu0lj"]
+[gd_scene load_steps=23 format=3 uid="uid://drr7ucpwcu0lj"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
@@ -23,6 +23,32 @@ width = 100
 height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_6qosa"]
+offsets = PackedFloat32Array(0, 0.00495049)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bjbaq"]
+gradient = SubResource("Gradient_6qosa")
+width = 100
+height = 100
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_7oiif"]
+offsets = PackedFloat32Array(0, 0.00526316)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u4pxp"]
+gradient = SubResource("Gradient_7oiif")
+width = 100
+height = 20
+
+[sub_resource type="Gradient" id="Gradient_yudrr"]
+offsets = PackedFloat32Array(0.994737, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n5hrt"]
+gradient = SubResource("Gradient_yudrr")
+width = 100
+height = 20
+fill_from = Vector2(1, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1yk0b"]
 size = Vector3(4.36224, 1.91614, 1.04297)
@@ -53,7 +79,7 @@ size = Vector2(32, 32)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.31636, 0)
 
 [node name="StaticBody3D2" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 1, 5, 15)
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 1, 5, 17.3138)
 collision_layer = 128
 script = ExtResource("1_33vwa")
 
@@ -101,6 +127,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = SubResource("GradientTexture2D_xpu62")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.808642
+anchor_right = 0.0868056
+anchor_bottom = 1.0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_bjbaq")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_mode = 2
+max_value = 1.0
+texture_under = SubResource("GradientTexture2D_u4pxp")
+texture_progress = SubResource("GradientTexture2D_n5hrt")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
+modulate = Color(0.743908, 0.0168396, 0.018844, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.375
+anchor_top = -0.075
+anchor_right = 0.625
+anchor_bottom = 1.075
+grow_horizontal = 2
+grow_vertical = 2
+text = "1/1"
 metadata/_edit_use_anchors_ = true
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]

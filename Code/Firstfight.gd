@@ -2,10 +2,14 @@ extends GridMap
 
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 @onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
+@onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
+@onready var langeliomat = preload("res://Bookbearers/Materials/ejimolangelis.tres")
 
-@export var playermovementPoints = 4
+@export var maxplayermovementPoints = 4
+var playermovementPointsx = maxplayermovementPoints
+var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
-@export var playerhealth = 10
+@export var playerhealth = 1
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
 
@@ -48,11 +52,11 @@ func playermove(langelistomove):
 	moving = true
 	selected = false
 	redraw = true
-	canmove = false
 	var camx = player.position.x - $"../StaticBody3D2".position.x
 	var camz = player.position.z - $"../StaticBody3D2".position.z
 	$"../StaticBody3D2".position.x = pos.x - camx
 	$"../StaticBody3D2".position.z = pos.z - camz
+	var prad = pcurrentpos
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
@@ -64,7 +68,16 @@ func playermove(langelistomove):
 	pcurrentpos = langelistomove
 	moving = false
 	Global.cameramove = true
+	var pab = pcurrentpos
+	playermovementPointsx -=abs(prad.x-pab.x)
+	playermovementPointsz -=abs(prad.z-pab.z)
+	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
+		canmove = false
 func _process(_delta):
+	if playerhealth <= 0:
+		if player != null:
+			player.queue_free()
+		get_tree().change_scene_to_packed(mirtis)
 	if turnssurvived == 6:
 		get_tree().paused = true;
 		await get_tree().create_timer(3).timeout
@@ -72,7 +85,7 @@ func _process(_delta):
 	if redraw:
 		if selected:
 			redraw = false
-			showMovement()
+			showMovement(playermovementPointsx,playermovementPointsz)
 			selected = true
 		if !selected:
 			redraw = false
@@ -146,6 +159,7 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 	if turn && canmove:
 		if event is InputEventMouseButton:
 			click = true
+			langeliomat.albedo_color.a = 1
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !selected and !moving:
 				selected = true
 				redraw = true
@@ -310,37 +324,36 @@ func enemyAttack(enemyi):
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
 	playerhealth= playerhealth-2
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
 	if player != null:
 		$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
-	if playerhealth <= 0:
-		if player != null:
-			player.queue_free()
-			
-func showMovement():
+	
+func showMovement(playermovementPointsx,playermovementPointsz):
 #draw around
 	movemcellls.clear()
 #apacia desine
-	for y in range(1, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+	for y in range(1, playermovementPointsx+1):
+		for i in range(1, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(y,0,i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus kaire
-	for y in range(0, playermovementPoints+1):
-		for i in range(0, playermovementPoints+1):
+	for y in range(0, playermovementPointsx+1):
+		for i in range(0, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #apacia kaire
-	for y in range(0, playermovementPoints+1):
-		for i in range(1, playermovementPoints+1):
+	for y in range(0, playermovementPointsx+1):
+		for i in range(1, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(-y,0,i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
 #virsus desine
-	for y in range(1, playermovementPoints+1):
-		for i in range(0, playermovementPoints+1):
+	for y in range(1, playermovementPointsx+1):
+		for i in range(0, playermovementPointsz+1):
 			var mappos = pcurrentpos + Vector3i(y,0,-i)
 			if cells.has(mappos):
 				movemcellls.append(mappos)
@@ -357,7 +370,7 @@ func showMovement():
 		var lang = langelis.instantiate()
 		langeliai.add_child(lang)
 		lang.position = pos2
-
+		lang["material_override"]= langeliomat
 
 
 func _on_skill_mouse_entered():
@@ -402,3 +415,5 @@ func _on_end_turn_pressed():
 		$"../CanvasLayer/Panel/Skill"["self_modulate"] = "ffffff"
 		Global.cameramove = true
 		turnssurvived +=1
+		playermovementPointsx = maxplayermovementPoints
+		playermovementPointsz = maxplayermovementPoints
