@@ -26,8 +26,13 @@ var turn = true
 var canmove = true
 var skill = false
 var skillusage = true
+var skill2 = false
+var skillusage2 = true
 var skilling = true
 var turnssurvived = 0
+var dodge = false
+var invisible = false
+var nearobj = false
 
 @onready var player = $player
 @onready var enemy = $enemy
@@ -43,6 +48,7 @@ func _ready():
 	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)
+	$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
 
 func playermove(langelistomove):
 	Global.cameramove = false
@@ -102,37 +108,7 @@ func _process(_delta):
 					playermove(langelistomove)
 					
 	
-	if skill == true and skillusage and skilling:
-		var langelistomove = shoot_ray()
-		var ppos = pcurrentpos
-		if langelistomove != null :
-			var atstumasx = ppos.x -langelistomove.x
-			var atstumasz = ppos.z -langelistomove.z
-			if abs(atstumasx) <= playerattackrange and abs(atstumasz) <= playerattackrange:
-				var pos = map_to_local(langelistomove)
-				pos += Vector3(0,0.01,0)
-				var lang = langelis.instantiate()
-				langeliai.add_child(lang)
-				lang.position = pos
-				for i in range(0, langeliai.get_child_count()-1):
-						if langeliai.get_child(i) != null:
-							langeliai.get_child(i).queue_free()
-		else:
-			for i in range(0, langeliai.get_child_count()):
-					if langeliai.get_child(i) != null:
-						langeliai.get_child(i).queue_free()
-		if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-			skill = false
-			skillusage = false
-			$"../CanvasLayer/Panel/Skill"["self_modulate"] = "ffffff71"
-			if enemy != null && langelistomove == ecurrentpos:
-				enemy.queue_free()
-				var pos2 = map_to_local(ecurrentpos)
-				pos2 += Vector3(0,0.01,0)
-				var lang = langelis.instantiate()
-				$".".add_child(lang)
-				lang.position = pos2
-				lang["modulate"] = "611705"
+		
 		
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
@@ -323,9 +299,12 @@ func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
-	playerhealth= playerhealth-2
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
+	if dodge == true:
+		dodge = false
+	else:
+		playerhealth= playerhealth-2
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
 	if player != null:
 		$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
@@ -373,32 +352,33 @@ func showMovement(playermovementPointsx,playermovementPointsz):
 		lang["material_override"]= langeliomat
 
 
-func _on_skill_mouse_entered():
-	skilling = false
-	selected = false
-	if skillusage == true:
-		for i in range(0, langeliai.get_child_count()):
-			if langeliai.get_child(i) != null:
-				langeliai.get_child(i).queue_free()
-
-func _on_skill_mouse_exited():
-	skilling = true
-
 
 func _on_skill_pressed():
-	if skillusage:
-		if skill == false:
-			skill=true
-		elif skill == true:
-			skill = false
+	if !moving and skillusage:
+		skill = false
+		skillusage = false
+		dodge = true			
+		$"../CanvasLayer/Panel/VBoxContainer/Skill"["self_modulate"] = "ffffff71"
 
+
+func _on_skill_2_pressed():
+	if !moving and skillusage2 and nearobj:
+		skill2 = false
+		skillusage2 = false
+		invisible = true			
+		$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
+		var tween = create_tween()
+		tween.tween_property(player.mesh.material, "albedo_color:a", 0, 1)
+		await tween.finished
 
 
 func _on_end_turn_pressed():
 	if !moving:
 		Global.cameramove = false
 		skillusage = false
+		skillusage2 = false
 		skill = false
+		skill2 = false
 		skilling = false
 		$"../CanvasLayer/Panel/EndTurn"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/EndTurn"["disabled"]= true
@@ -410,10 +390,31 @@ func _on_end_turn_pressed():
 		turn = true
 		canmove = true
 		skillusage = true
+		skillusage2 = true
 		$"../CanvasLayer/Panel/EndTurn"["disabled"]= false
 		$"../CanvasLayer/Panel/EndTurn"["self_modulate"] = "ffffff"
-		$"../CanvasLayer/Panel/Skill"["self_modulate"] = "ffffff"
+		$"../CanvasLayer/Panel/VBoxContainer/Skill"["self_modulate"] = "ffffff"
+		if player.mesh.material.albedo_color.a == 0:
+			var tween = create_tween()
+			tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
+			await tween.finished
+		if nearobj:
+			$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff"
 		Global.cameramove = true
 		turnssurvived +=1
 		playermovementPointsx = maxplayermovementPoints
 		playermovementPointsz = maxplayermovementPoints
+
+
+func _on_area_3d_area_entered(area):
+	nearobj = true
+	if skillusage2:
+		$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff"
+
+func _on_area_3d_area_exited(area):
+	nearobj = false
+	$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
+	var tween = create_tween()
+	tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
+	await tween.finished
+

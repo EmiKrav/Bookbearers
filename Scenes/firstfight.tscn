@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://drr7ucpwcu0lj"]
+[gd_scene load_steps=30 format=3 uid="uid://drr7ucpwcu0lj"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
@@ -14,15 +14,6 @@ gradient = SubResource("Gradient_qipgx")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
-
-[sub_resource type="Gradient" id="Gradient_17ngm"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xpu62"]
-gradient = SubResource("Gradient_17ngm")
-width = 100
-height = 80
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_6qosa"]
 offsets = PackedFloat32Array(0, 0.00495049)
@@ -50,15 +41,44 @@ width = 100
 height = 20
 fill_from = Vector2(1, 0)
 
+[sub_resource type="Gradient" id="Gradient_17ngm"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xpu62"]
+gradient = SubResource("Gradient_17ngm")
+width = 100
+height = 80
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_gtm0e"]
+offsets = PackedFloat32Array(0.990385, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_00jhf"]
+gradient = SubResource("Gradient_gtm0e")
+width = 100
+height = 80
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_1yk0b"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="BoxMesh" id="BoxMesh_hn8my"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sb7lj"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_color = Color(0.141176, 0.266667, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gfrx0"]
-albedo_color = Color(0.133333, 0.447059, 1, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_hn8my"]
+material = SubResource("StandardMaterial3D_sb7lj")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nj7y6"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t6fy8"]
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wtdcy"]
+albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_501qa"]
 
@@ -70,8 +90,16 @@ cull_mode = 2
 depth_draw_mode = 1
 albedo_texture = ExtResource("4_ku04p")
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_pc5vx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_owr12"]
+size = Vector3(5.35461, 1.49707, 5.32764)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_jo5ol"]
 size = Vector2(32, 32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7iv0s"]
+albedo_color = Color(0.0431373, 0.196078, 0.0588235, 1)
 
 [node name="FirstFight" type="Node3D"]
 
@@ -117,18 +145,6 @@ texture_normal = SubResource("GradientTexture2D_gkqt0")
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Skill" type="TextureButton" parent="CanvasLayer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.456597
-anchor_top = 0.876543
-anchor_right = 0.543403
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-texture_normal = SubResource("GradientTexture2D_xpu62")
-metadata/_edit_use_anchors_ = true
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -162,6 +178,28 @@ grow_vertical = 2
 text = "1/1"
 metadata/_edit_use_anchors_ = true
 
+[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -80.0
+offset_right = 52.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Skill" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("GradientTexture2D_xpu62")
+metadata/_edit_use_anchors_ = true
+
+[node name="Skill2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("GradientTexture2D_00jhf")
+
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]
 transform = Transform3D(43.36, 0, 0, 0, 43.36, 0, 0, 0, 43.36, 0, 0, -49.8416)
 collision_mask = 128
@@ -185,15 +223,14 @@ shape = SubResource("BoxShape3D_1yk0b")
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_7nybw")
 data = {
-"cells": PackedInt32Array(0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 65529, 0, 0, 65528, 0, 65535, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 1, 7, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 4, 7, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 0, 65534, 0, 0, 65535, 0, 1, 65528, 0, 1, 65529, 0, 1, 65530, 0, 1, 65531, 0, 1, 65532, 0, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 2, 65528, 0, 2, 65529, 0, 2, 65530, 0, 2, 65531, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 3, 65528, 0, 3, 65529, 0, 3, 65530, 0, 3, 65531, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 4, 65528, 0, 4, 65529, 0, 4, 65530, 0, 4, 65531, 0, 4, 65532, 0, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 5, 65528, 0, 5, 65529, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 6, 65528, 0, 6, 65529, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 7, 65528, 0, 7, 65529, 0, 7, 65530, 0, 7, 65531, 0, 7, 65532, 0, 7, 65533, 0, 7, 65534, 0, 7, 65535, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65530, 0, 0, 65531, 0, 0, 65529, 0, 0, 65528, 0, 0, 65528, 1, 0, 65528, 2, 0, 65528, 3, 0, 65528, 4, 0, 65528, 7, 0, 65529, 6, 0, 65529, 7, 0, 65530, 1, 0, 65530, 2, 0, 65530, 3, 0, 65530, 4, 0, 65530, 5, 0, 65530, 6, 0, 65530, 7, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 0, 65531, 5, 0, 65531, 6, 0, 65531, 7, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 0, 65532, 5, 0, 65532, 6, 0, 65532, 7, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65533, 6, 0, 65533, 7, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65534, 6, 0, 65534, 7, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 0, 65535, 5, 0, 65535, 6, 0, 65535, 7, 0, 65528, 65531, 0, 65528, 65532, 1441792, 65528, 65533, 0, 65528, 65534, 0, 65528, 65535, 0, 65529, 65528, 0, 65529, 65529, 0, 65529, 65530, 0, 65529, 65531, 0, 65529, 65532, 0, 65529, 65533, 0, 65529, 65534, 0, 65529, 65535, 0, 65530, 65528, 0, 65530, 65529, 0, 65530, 65530, 0, 65530, 65531, 0, 65530, 65532, 0, 65530, 65534, 0, 65531, 65528, 0, 65531, 65529, 0, 65531, 65532, 0, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65532, 65528, 0, 65532, 65529, 0, 65532, 65530, 0, 65532, 65531, 0, 65532, 65532, 0, 65532, 65533, 0, 65532, 65534, 0, 65532, 65535, 0, 65533, 65528, 0, 65533, 65529, 0, 65533, 65530, 0, 65533, 65531, 0, 65533, 65532, 0, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65534, 65528, 0, 65534, 65529, 0, 65534, 65530, 0, 65534, 65531, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65535, 65528, 0, 65535, 65529, 0, 65535, 65530, 0, 65535, 65531, 0, 65535, 65532, 0, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65529, 5, 0, 65528, 6, 0, 65528, 5, 0, 65529, 4, 0, 65529, 3, 0, 65529, 2, 0, 65529, 1, 0, 65530, 65535, 0, 65530, 65533, 0, 65531, 65531, 0, 65531, 65530, 1441792, 65528, 65528, 0, 65528, 65529, 0, 65528, 65530, 0)
+"cells": PackedInt32Array(0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 65529, 0, 0, 65528, 0, 65535, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 1, 7, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 7, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 3, 6, 0, 3, 7, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 5, 0, 4, 6, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 0, 5, 6, 0, 5, 7, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 0, 6, 6, 0, 6, 7, 0, 7, 1, 0, 7, 2, 0, 7, 3, 0, 7, 4, 0, 7, 5, 0, 7, 6, 0, 7, 7, 0, 0, 65534, 0, 0, 65535, 0, 1, 65528, 0, 1, 65529, 0, 1, 65530, 0, 1, 65531, 0, 1, 65532, 0, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 2, 65528, 0, 2, 65529, 0, 2, 65530, 0, 2, 65531, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 3, 65528, 0, 3, 65529, 0, 3, 65530, 0, 3, 65531, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 4, 65528, 0, 4, 65529, 0, 4, 65530, 0, 4, 65531, 0, 4, 65532, 0, 4, 65533, 0, 4, 65534, 0, 4, 65535, 0, 5, 65528, 0, 5, 65529, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 6, 65528, 0, 6, 65529, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 7, 65528, 0, 7, 65529, 0, 7, 65530, 0, 7, 65531, 0, 7, 65532, 0, 7, 65533, 0, 7, 65534, 0, 7, 65535, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65530, 0, 0, 65531, 0, 0, 65529, 0, 0, 65528, 0, 0, 65528, 1, 0, 65528, 2, 0, 65528, 3, 0, 65528, 4, 0, 65528, 7, 0, 65529, 6, 0, 65529, 7, 0, 65530, 1, 0, 65530, 2, 0, 65530, 3, 0, 65530, 4, 0, 65530, 5, 0, 65530, 6, 0, 65530, 7, 0, 65531, 1, 0, 65531, 2, 0, 65531, 3, 0, 65531, 4, 0, 65531, 5, 0, 65531, 6, 0, 65531, 7, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 0, 65532, 4, 0, 65532, 5, 0, 65532, 6, 0, 65532, 7, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65533, 6, 0, 65533, 7, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65534, 6, 0, 65534, 7, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 0, 65535, 4, 0, 65535, 5, 0, 65535, 6, 0, 65535, 7, 0, 65528, 65531, 0, 65528, 65532, 1441792, 65528, 65533, 0, 65528, 65534, 0, 65528, 65535, 0, 65529, 65528, 0, 65529, 65529, 0, 65529, 65530, 0, 65529, 65531, 0, 65529, 65532, 0, 65529, 65533, 0, 65529, 65534, 0, 65529, 65535, 0, 65530, 65528, 0, 65530, 65529, 0, 65530, 65530, 0, 65530, 65531, 0, 65530, 65532, 0, 65530, 65534, 0, 65531, 65528, 0, 65531, 65529, 0, 65531, 65532, 0, 65531, 65533, 0, 65531, 65534, 0, 65531, 65535, 0, 65532, 65528, 0, 65532, 65529, 0, 65532, 65530, 0, 65532, 65531, 0, 65532, 65532, 0, 65532, 65533, 0, 65532, 65534, 0, 65532, 65535, 0, 65533, 65528, 0, 65533, 65529, 0, 65533, 65530, 0, 65533, 65531, 0, 65533, 65532, 0, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65534, 65528, 0, 65534, 65529, 0, 65534, 65530, 0, 65534, 65531, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65535, 65528, 0, 65535, 65529, 0, 65535, 65530, 0, 65535, 65531, 0, 65535, 65532, 0, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65529, 5, 0, 65528, 6, 0, 65528, 5, 0, 65529, 4, 0, 65529, 3, 0, 65529, 2, 0, 65529, 1, 0, 65530, 65535, 0, 65530, 65533, 0, 65531, 65531, 0, 65531, 65530, 1441792, 65528, 65528, 0, 65528, 65529, 0, 65528, 65530, 0, 4, 7, 0)
 }
 script = ExtResource("3_41r68")
 
 [node name="player" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.52413, 15)
 mesh = SubResource("BoxMesh_hn8my")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_gfrx0")
 
 [node name="Area3D" type="Area3D" parent="GridMap/player"]
 
@@ -202,6 +239,11 @@ shape = SubResource("BoxShape3D_nj7y6")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/player"]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 3.5, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.528545, -0.00200176)
+mesh = SubResource("CylinderMesh_t6fy8")
+surface_material_override/0 = SubResource("StandardMaterial3D_wtdcy")
 
 [node name="enemy" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -15)
@@ -214,12 +256,29 @@ transform = Transform3D(1, 0, 0, 0, -0.335386, 0.942081, 0, -0.942081, -0.335386
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 3, 0, 0, 0, 1, 4.92744, 3.93146, 12.8024)
+mesh = SubResource("CylinderMesh_pc5vx")
+
+[node name="Area3D" type="Area3D" parent="GridMap/MeshInstance3D"]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/MeshInstance3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.134338, -0.248535, 0.165771)
+shape = SubResource("BoxShape3D_owr12")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.999, 0)
 mesh = SubResource("PlaneMesh_jo5ol")
+surface_material_override/0 = SubResource("StandardMaterial3D_7iv0s")
 
 [connection signal="pressed" from="CanvasLayer/Panel/EndTurn" to="GridMap" method="_on_end_turn_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/Skill" to="GridMap" method="_on_skill_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/Skill" to="GridMap" method="_on_skill_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/Panel/Skill" to="GridMap" method="_on_skill_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/Skill" to="GridMap" method="_on_skill_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/Skill" to="GridMap" method="_on_skill_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/Skill" to="GridMap" method="_on_skill_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_pressed"]
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
+[connection signal="area_entered" from="GridMap/MeshInstance3D/Area3D" to="GridMap" method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="GridMap/MeshInstance3D/Area3D" to="GridMap" method="_on_area_3d_area_exited"]
