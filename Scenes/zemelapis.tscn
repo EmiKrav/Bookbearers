@@ -134,6 +134,8 @@ shape = SubResource("BoxShape3D_dxk3a")
 [node name="lang" type="Node3D" parent="."]
 unique_name_in_owner = true
 
+[node name="Node3D" type="Node3D" parent="."]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]

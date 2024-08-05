@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var langelis = preload("res://Bookbearers/Scenes/reqejimolang.tscn")
-
+@onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
 
 @onready var langeliai = %lang
 @onready var player = %player
@@ -44,6 +44,28 @@ func _ready():
 	pcurrentpos = pos
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
 	mainas()
+	for i in $GridMap.get_used_cells().size():
+		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
+		pos2 += Vector3(0,0.5,0)
+		var lang = fog.instantiate()
+		$Node3D.add_child(lang)
+		lang.position = pos2
+	for i in $GridMap2.get_used_cells().size():
+		var pos2 = $GridMap2.map_to_local($GridMap2.get_used_cells()[i])
+		pos2 += Vector3(0,0.5,0)
+		var lang = fog.instantiate()
+		$Node3D.add_child(lang)
+		lang.position = pos2
+	for i in $GridMap3.get_used_cells().size():
+		var pos2 = $GridMap3.map_to_local($GridMap3.get_used_cells()[i])
+		pos2 += Vector3(0,0.5,0)
+		var lang = fog.instantiate()
+		$Node3D.add_child(lang)
+		lang.position = pos2
+	for i in $Node3D.get_children():
+		#print(i.position - player.position)
+		if snapped(i.position.z - player.position.z,0.1) >= snapped(-4.6,0.1) and i.position.x - player.position.x == 0:
+			i.queue_free()
 	
 func _process(delta):
 	if redraw:
@@ -160,6 +182,29 @@ func movethere(pos, langelistomove,grafnumr):
 	playercurrentgraphspot = grafnumr
 	mainas()
 	
+	var istrynt : Array
+	var istryntg : Array
+	for i in range(0, V):
+		if dist[i] <= playermovementPoints:
+			var mapposx = grafas[i][3][0]
+			var mapposy = grafas[i][3][1]
+			var mapposz = grafas[i][3][2]
+			istrynt.append(Vector3i(mapposx,mapposy,mapposz))
+			istryntg.append(grafas[i][4])
+	for y in $Node3D.get_children():
+		for i in istrynt.size():
+			if $GridMap.get_used_cells().has(istrynt[i]) and istryntg[i] == "G":
+				var pos2 = $GridMap.map_to_local(istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()
+			if $GridMap2.get_used_cells().has(istrynt[i]) and istryntg[i] == "G2":
+				var pos2 = $GridMap2.map_to_local(istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()
+			if $GridMap3.get_used_cells().has(istrynt[i]) and istryntg[i] == "G3":
+				var pos2 = $GridMap3.map_to_local(istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()			
 func _on_texture_rect_pressed():
 	if !moving:
 		skillusage = false
