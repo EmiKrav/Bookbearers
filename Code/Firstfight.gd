@@ -39,7 +39,7 @@ var nearobj = false
 @onready var langeliai = $Node3D
 
 func _ready():
-	player.position = Vector3(1,1.5,15)
+	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
 	enemy.position = Vector3(1,2,-15)
@@ -64,10 +64,10 @@ func playermove(langelistomove):
 	$"../StaticBody3D2".position.z = pos.z - camz
 	var prad = pcurrentpos
 	var tween = create_tween()
-	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
+	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
-	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
+	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
 	await tween2.finished
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true

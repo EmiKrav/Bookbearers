@@ -1,33 +1,29 @@
-[gd_scene load_steps=7 format=3 uid="uid://djlnaa1om74it"]
+[gd_scene load_steps=8 format=3 uid="uid://djlnaa1om74it"]
 
 [ext_resource type="ArrayMesh" uid="uid://dine63270onhm" path="res://Bookbearers/Blender/untitled.obj" id="1_qqwqk"]
+[ext_resource type="Texture2D" uid="uid://bsyqakp3p4ohs" path="res://Bookbearers/Textures/zole.png" id="2_4s4jw"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_klkoj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3lnx"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("2_4s4jw")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tmi7m"]
+points = PackedVector3Array(-1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuj2r"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mt4gi"]
 data = PackedVector3Array(0, -0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 0, -0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, -0.6007, -0.6007, -1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 0, -0.6007, 1.5017, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, 0.6007, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, 0.6007, 0.6007, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, -1.5017, 0, -0.6007, -1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, -0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 0, 0.6007, -1.5017, 0, 0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, -0.6007, 0.6007, 0, -0.6007, 1.5017, 0, 0.6007, -1.5017, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 1.3081, 0.6007, -0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, 0.6007)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_klkoj"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3lnx"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tmi7m"]
-points = PackedVector3Array(-1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, 1)
-
 [node name="Tiles" type="Node3D"]
 
 [node name="Node3D" type="Node3D" parent="."]
-
-[node name="Cube2" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 0, 0, 0)
-mesh = ExtResource("1_qqwqk")
-skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_yuj2r")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Cube2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Cube2/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_mt4gi")
 
 [node name="kubas" type="MeshInstance3D" parent="Node3D"]
 mesh = SubResource("PlaneMesh_klkoj")
@@ -40,3 +36,14 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/kubas/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000724435, -0.00241852, 0.00773311)
 shape = SubResource("ConvexPolygonShape3D_tmi7m")
+
+[node name="Cube2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 0, 0, 0)
+mesh = ExtResource("1_qqwqk")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yuj2r")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Cube2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Cube2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mt4gi")
