@@ -2,11 +2,14 @@ extends Node3D
 
 @onready var langelis = preload("res://Bookbearers/Scenes/reqejimolang.tscn")
 @onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
+@onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
 
 @onready var langeliai = %lang
 @onready var player = %player
 @export var playermovementPoints = 2
 @export var playerhealth = 10
+
+var changetofight = false
 
 var V = 22;
 var par =[]
@@ -79,7 +82,8 @@ func _process(delta):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 			selected = false
-	
+	if changetofight:
+		get_tree().change_scene_to_packed(kova)
 				
 func judeti(numeris):
 		$"StaticBody3D2/Camera3D".current = false
@@ -285,3 +289,7 @@ func mainas():
 			else:
 				number[b].append(0)
 	dijekstra(number, playercurrentgraphspot);
+
+
+func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	changetofight = true

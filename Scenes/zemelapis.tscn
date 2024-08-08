@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://brvo832id34ap"]
+[gd_scene load_steps=18 format=3 uid="uid://brvo832id34ap"]
 
 [ext_resource type="MeshLibrary" uid="uid://bnn22ovaht85a" path="res://Bookbearers/Tiles/Tileszemelap.tres" id="1_fck5j"]
 [ext_resource type="Script" path="res://Bookbearers/Code/zemelapis.gd" id="1_oowoj"]
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="2_4yjty"]
 [ext_resource type="Texture2D" uid="uid://cxudi6jniwn08" path="res://Bookbearers/Textures/knyg.png" id="3_u1lcu"]
+[ext_resource type="Texture2D" uid="uid://d2i0igaqs07mq" path="res://Bookbearers/Textures/zanda.png" id="5_33513"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vna6o"]
 
@@ -27,6 +28,19 @@ albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dxk3a"]
 size = Vector3(4.36224, 1.91614, 1.04297)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_x03e1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djpv5"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("5_33513")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ytvpx"]
+data = PackedVector3Array(0, -0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 0, -0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, -0.6007, -0.6007, -1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 0, -0.6007, 1.5017, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, 0.6007, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, 0.6007, 0.6007, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, -1.5017, 0, -0.6007, -1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, -0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 0, 0.6007, -1.5017, 0, 0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, -0.6007, 0.6007, 0, -0.6007, 1.5017, 0, 0.6007, -1.5017, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 1.3081, 0.6007, -0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, 0.6007)
 
 [sub_resource type="Gradient" id="Gradient_wau2e"]
 
@@ -99,6 +113,8 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_oi2sv")
 
 [node name="Area3D" type="Area3D" parent="player"]
+collision_layer = 4
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="player/Area3D"]
 shape = SubResource("BoxShape3D_7my7i")
@@ -130,6 +146,21 @@ shape = SubResource("BoxShape3D_dxk3a")
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.779, 0.458, 1.045)
 shape = SubResource("BoxShape3D_dxk3a")
+
+[node name="enemy" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, -0.0645376, 0.950891, -2.24148)
+mesh = SubResource("PlaneMesh_x03e1")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_djpv5")
+
+[node name="Area3D" type="Area3D" parent="enemy"]
+collision_layer = 2
+collision_mask = 4
+input_ray_pickable = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemy/Area3D"]
+transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.124708, -0.0912004, -4.76837e-07)
+shape = SubResource("ConcavePolygonShape3D_ytvpx")
 
 [node name="lang" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -163,10 +194,23 @@ texture_normal = SubResource("GradientTexture2D_ll6vl")
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.27
+anchor_right = 0.85
+anchor_bottom = 0.73
+grow_horizontal = 2
+grow_vertical = 2
+text = "End Turn"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="input_event" from="player/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap2" method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap3" method="_on_area_3d_input_event"]
+[connection signal="area_shape_entered" from="enemy/Area3D" to="." method="_on_area_3d_area_shape_entered"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="." method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap2" method="_on_texture_rect_pressed"]

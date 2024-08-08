@@ -3,7 +3,7 @@ extends GridMap
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 @onready var langeliomat = preload("res://Bookbearers/Materials/langelis.tres")
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
-@onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
+@onready var namai = preload("res://Bookbearers/Scenes/zemelapis.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
 
 

@@ -1,13 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://canti7bp6iw32"]
+[gd_scene load_steps=7 format=3 uid="uid://canti7bp6iw32"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/CharacterBody2D.gd" id="1_elx3n"]
+[ext_resource type="Texture2D" uid="uid://iswcky2fhl2r" path="res://Bookbearers/Textures/child.png" id="2_7rpds"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsyko"]
-
-[sub_resource type="Gradient" id="Gradient_fixde"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_aqsya"]
-gradient = SubResource("Gradient_fixde")
+radius = 35.865
+height = 190.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o7pvn"]
 size = Vector2(282, 31)
@@ -29,13 +27,15 @@ position = Vector2(100, 100)
 script = ExtResource("1_elx3n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(10, 4)
 shape = SubResource("CapsuleShape2D_hsyko")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-texture = SubResource("GradientTexture2D_aqsya")
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_7rpds")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(300, 200)
+position = Vector2(428, -183)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_o7pvn")

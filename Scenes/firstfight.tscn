@@ -64,15 +64,16 @@ fill_to = Vector2(1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_1yk0b"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_lot75"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p20i6"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ya44"]
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
 depth_draw_mode = 1
 albedo_texture = ExtResource("4_tf2p4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lot75"]
+material = SubResource("StandardMaterial3D_4ya44")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nj7y6"]
 size = Vector3(1, 1, 1.87903)
@@ -148,6 +149,18 @@ texture_normal = SubResource("GradientTexture2D_gkqt0")
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/EndTurn"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.27
+anchor_right = 0.85
+anchor_bottom = 0.73
+grow_horizontal = 2
+grow_vertical = 2
+text = "End Turn"
+metadata/_edit_use_anchors_ = true
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -199,9 +212,27 @@ layout_mode = 2
 texture_normal = SubResource("GradientTexture2D_xpu62")
 metadata/_edit_use_anchors_ = true
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.2875
+grow_horizontal = 0
+text = "⌛0/1"
+
 [node name="Skill2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
 texture_normal = SubResource("GradientTexture2D_00jhf")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.2875
+grow_horizontal = 0
+text = "⌛0/1"
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]
 transform = Transform3D(43.36, 0, 0, 0, 43.36, 0, 0, 0, 43.36, 0, 0, -49.8416)
@@ -232,10 +263,9 @@ script = ExtResource("3_41r68")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="player" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2.08636, 14.9268)
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 1, 1.548, 14.9268)
 mesh = SubResource("PlaneMesh_lot75")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_p20i6")
 
 [node name="Area3D" type="Area3D" parent="GridMap/player"]
 

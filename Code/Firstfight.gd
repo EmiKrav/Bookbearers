@@ -3,7 +3,7 @@ extends GridMap
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 @onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
-@onready var langeliomat = preload("res://Bookbearers/Materials/ejimolangelis.tres")
+@onready var langeliomat = preload("res://Bookbearers/Materials/langelis.tres")
 
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
@@ -39,8 +39,8 @@ var nearobj = false
 @onready var langeliai = $Node3D
 
 func _ready():
-	player.position = Vector3(1,2,15)
-	var pos = local_to_map(Vector3(1,1.5,15))
+	player.position = Vector3(1,1.5,15)
+	var pos = local_to_map(Vector3(1,0,15))
 	pcurrentpos = pos
 	enemy.position = Vector3(1,2,-15)
 	pos = local_to_map(Vector3(1,2,-15))
@@ -64,10 +64,10 @@ func playermove(langelistomove):
 	$"../StaticBody3D2".position.z = pos.z - camz
 	var prad = pcurrentpos
 	var tween = create_tween()
-	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
+	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
-	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
+	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
@@ -359,6 +359,7 @@ func _on_skill_pressed():
 		skillusage = false
 		dodge = true			
 		$"../CanvasLayer/Panel/VBoxContainer/Skill"["self_modulate"] = "ffffff71"
+		$"../CanvasLayer/Panel/VBoxContainer/Skill/Label".text = "⌛1/1"
 
 
 func _on_skill_2_pressed():
@@ -367,6 +368,7 @@ func _on_skill_2_pressed():
 		skillusage2 = false
 		invisible = true			
 		$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
+		$"../CanvasLayer/Panel/VBoxContainer/Skill2/Label".text = "⌛1/1"
 		var tween = create_tween()
 		tween.tween_property(player.mesh.material, "albedo_color:a", 0, 1)
 		await tween.finished
@@ -393,6 +395,8 @@ func _on_end_turn_pressed():
 		skillusage2 = true
 		$"../CanvasLayer/Panel/EndTurn"["disabled"]= false
 		$"../CanvasLayer/Panel/EndTurn"["self_modulate"] = "ffffff"
+		$"../CanvasLayer/Panel/VBoxContainer/Skill/Label".text = "⌛0/1"
+		$"../CanvasLayer/Panel/VBoxContainer/Skill2/Label".text = "⌛0/1"
 		$"../CanvasLayer/Panel/VBoxContainer/Skill"["self_modulate"] = "ffffff"
 		if player.mesh.material.albedo_color.a == 0:
 			var tween = create_tween()

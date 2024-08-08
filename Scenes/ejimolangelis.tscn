@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bi4ki7d3gvq3o"]
 
-[ext_resource type="Material" uid="uid://chwic61na5jjd" path="res://Bookbearers/Materials/ejimolangelis.tres" id="1_n6cgl"]
+[ext_resource type="Material" uid="uid://chwic61na5jjd" path="res://Bookbearers/Materials/langelis.tres" id="1_n6cgl"]
 
 [sub_resource type="Gradient" id="Gradient_ggjdl"]
 offsets = PackedFloat32Array(0, 0.00668896)
