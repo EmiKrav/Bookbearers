@@ -16,6 +16,9 @@ var playermovementPointsz = maxplayermovementPoints
 @export var enemyattackrange = 2
 @export var skill2coldown = 3
 @export var skill3coldown = 3
+@export var skilldmg = 2
+@export var skill2dmg = 1
+@export var skill3dmg = 1
 
 var enemieskilled = 0
 var selected = false
@@ -139,43 +142,55 @@ func _process(_delta):
 	if skill3 == true and skillusage3 and skilling and !usingskills and skill3curcoldown == 0:
 		useskill3()
 		
-func enemyhurt(langelistomove):
+func enemyhurt(langelistomove, dmg):
 	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
-		enemy.queue_free()
-		var pos2 = map_to_local(ecurrentpos)
-		pos2 += Vector3(0,0.1,0)
-		var lang = langelis.instantiate()
-		$".".add_child(lang)
-		lang.position = pos2
-		lang["material_override"] = langelimiromat
-		enemieskilled +=1
+		var gyv = enemy.get_child(1).text
+		enemy.get_child(1).text = str(str_to_var(gyv) - dmg) 
+		if str_to_var(enemy.get_child(1).text) <= 0:
+			enemy.queue_free()
+			var pos2 = map_to_local(ecurrentpos)
+			pos2 += Vector3(0,0.1,0)
+			var lang = langelis.instantiate()
+			$".".add_child(lang)
+			lang.position = pos2
+			lang["material_override"] = langelimiromat
+			enemieskilled +=1
 	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
-		enemy2.queue_free()
-		var pos2 = map_to_local(ecurrentpos2)
-		pos2 += Vector3(0,0.1,0)
-		var lang = langelis.instantiate()
-		$".".add_child(lang)
-		lang.position = pos2
-		lang["material_override"] = langelimiromat
-		enemieskilled +=1
+		var gyv = enemy2.get_child(1).text
+		enemy2.get_child(1).text = str(str_to_var(gyv) - dmg) 
+		if str_to_var(enemy2.get_child(1).text) <= 0:
+			enemy2.queue_free()
+			var pos2 = map_to_local(ecurrentpos2)
+			pos2 += Vector3(0,0.1,0)
+			var lang = langelis.instantiate()
+			$".".add_child(lang)
+			lang.position = pos2
+			lang["material_override"] = langelimiromat
+			enemieskilled +=1
 	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
-		enemy3.queue_free()
-		var pos2 = map_to_local(ecurrentpos3)
-		pos2 += Vector3(0,0.1,0)
-		var lang = langelis.instantiate()
-		$".".add_child(lang)
-		lang.position = pos2
-		lang["material_override"] = langelimiromat
-		enemieskilled +=1
+		var gyv = enemy3.get_child(1).text
+		enemy3.get_child(1).text = str(str_to_var(gyv) - dmg) 
+		if str_to_var(enemy3.get_child(1).text) <= 0:
+			enemy3.queue_free()
+			var pos2 = map_to_local(ecurrentpos3)
+			pos2 += Vector3(0,0.1,0)
+			var lang = langelis.instantiate()
+			$".".add_child(lang)
+			lang.position = pos2
+			lang["material_override"] = langelimiromat
+			enemieskilled +=1
 	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
-		enemy4.queue_free()
-		var pos2 = map_to_local(ecurrentpos4)
-		pos2 += Vector3(0,0.1,0)
-		var lang = langelis.instantiate()
-		$".".add_child(lang)
-		lang.position = pos2
-		lang["material_override"] = langelimiromat
-		enemieskilled +=1
+		var gyv = enemy4.get_child(1).text
+		enemy4.get_child(1).text = str(str_to_var(gyv) - dmg) 
+		if str_to_var(enemy4.get_child(1).text) <= 0:
+			enemy4.queue_free()
+			var pos2 = map_to_local(ecurrentpos4)
+			pos2 += Vector3(0,0.1,0)
+			var lang = langelis.instantiate()
+			$".".add_child(lang)
+			lang.position = pos2
+			lang["material_override"] = langelimiromat
+			enemieskilled +=1
 		
 func animacijalang():
 	var tween = create_tween()
@@ -236,7 +251,7 @@ func useskill2():
 				at1.append(local_to_map(langeliai.get_child(i).position))
 				langeliai.get_child(i).queue_free()
 		for i in range(0,at1.size()):
-			enemyhurt(at1[i])
+			enemyhurt(at1[i], skill2dmg)
 	usingskills = false
 	
 func useskill3():
@@ -285,7 +300,7 @@ func useskill3():
 				at1.append(local_to_map(langeliai.get_child(i).position))
 				langeliai.get_child(i).queue_free()
 		for i in range(0,at1.size()):
-			enemyhurt(at1[i])
+			enemyhurt(at1[i], skill3dmg)
 	usingskills = false
 	
 func useskill1():
@@ -321,7 +336,7 @@ func useskill1():
 				at1.append(local_to_map(langeliai.get_child(i).position))
 				langeliai.get_child(i).queue_free()
 		for i in range(0,at1.size()):
-			enemyhurt(at1[i])
+			enemyhurt(at1[i], skilldmg)
 	usingskills = false
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()

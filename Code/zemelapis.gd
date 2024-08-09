@@ -16,7 +16,7 @@ var par =[]
 var dist = []
 var grafas
 var tra = []
-var playercurrentgraphspot = 0
+var playercurrentgraphspot = Global.grafspot
 
 var selected = false
 var pcurrentpos : Vector3i
@@ -42,11 +42,22 @@ var atspaust = false
 
 func _ready():
 	get_tree().paused = false;
-	player.position = Vector3(0,1,4.6)
-	var pos = $GridMap.local_to_map(Vector3(0,1,4.5))
+	mainas()
+	
+	if Global.grafspot == 5:
+		$enemy.queue_free()
+	if grafas[playercurrentgraphspot][4] == "G":
+		player.position =  $GridMap.map_to_local(Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2]))
+		player.position += Vector3(0,1,0)
+	elif grafas[playercurrentgraphspot][4] == "G2":
+		player.position =  $GridMap2.map_to_local(Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2]))
+		player.position += Vector3(0,1,0)
+	elif grafas[playercurrentgraphspot][4] == "G3":
+		player.position =  $GridMap3.map_to_local(Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2]))
+		player.position += Vector3(0,1,0)
+	var pos = Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2])
 	pcurrentpos = pos
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
-	mainas()
 	for i in $GridMap.get_used_cells().size():
 		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
 		pos2 += Vector3(0,0.5,0)
@@ -65,10 +76,39 @@ func _ready():
 		var lang = fog.instantiate()
 		$Node3D.add_child(lang)
 		lang.position = pos2
-	for i in $Node3D.get_children():
-		#print(i.position - player.position)
-		if snapped(i.position.z - player.position.z,0.1) >= snapped(-4.6,0.1) and i.position.x - player.position.x == 0:
-			i.queue_free()
+		
+	
+	
+	for i in range(0, V):
+		if dist[i] <= playermovementPoints:
+			var mapposx = grafas[i][3][0]
+			var mapposy = grafas[i][3][1]
+			var mapposz = grafas[i][3][2]
+			if !Global.istrynt.has(Vector3i(mapposx,mapposy,mapposz)):
+				Global.istrynt.append(Vector3i(mapposx,mapposy,mapposz))
+				Global.istryntg.append(grafas[i][4])
+			elif Global.istryntg[Global.istrynt.find(Vector3i(mapposx,mapposy,mapposz))] != grafas[i][4]:
+				if findfrom(Global.istrynt.find(Vector3i(mapposx,mapposy,mapposz)),grafas[i][4],Vector3i(mapposx,mapposy,mapposz)) == -1:
+					Global.istrynt.append(Vector3i(mapposx,mapposy,mapposz))
+					Global.istryntg.append(grafas[i][4])
+	for y in $Node3D.get_children():
+		for i in Global.istrynt.size():
+			if $GridMap.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G":
+				var pos2 = $GridMap.map_to_local(Global.istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()
+			if $GridMap2.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G2":
+				var pos2 = $GridMap2.map_to_local(Global.istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()
+			if $GridMap3.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G3":
+				var pos2 = $GridMap3.map_to_local(Global.istrynt[i])
+				if pos2.x == y.position.x and pos2.z == y.position.z:
+					y.queue_free()		
+	#for i in $Node3D.get_children():
+		##print(i.position - player.position)
+		#if snapped(i.position.z - player.position.z,0.1) >= snapped(-4.6,0.1) and i.position.x - player.position.x == 0:
+			#i.queue_free()
 	
 func _process(delta):
 	if redraw:
@@ -83,6 +123,7 @@ func _process(delta):
 					langeliai.get_child(i).queue_free()
 			selected = false
 	if changetofight:
+		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
 				
 func judeti(numeris):
@@ -158,7 +199,14 @@ func showMovement():
 			lang.position = pos2
 			lang.get_child(0).text= "G3"
 			lang.get_child(1).text = str(movemnumb[i])
-
+func findfrom(ind, com, what):
+	if Global.istrynt.find(what,ind+1) != -1:
+		if Global.istryntg[Global.istrynt.find(what,ind+1)] != com:
+			findfrom(ind,com, what)
+		else:
+			return 0
+	else:
+		return -1
 func movethere(pos, langelistomove,grafnumr):
 	moving = true
 	selected = false
@@ -173,9 +221,16 @@ func movethere(pos, langelistomove,grafnumr):
 			posic = $GridMap2.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
 		elif grafas[tra[grafnumr][v]][4] == "G3":
 			posic = $GridMap3.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
+		var camx = player.position.x - $StaticBody3D2.position.x
+		var camz = player.position.z - $StaticBody3D2.position.z
+		$StaticBody3D2.position.x = posic.x - camx
+		$StaticBody3D2.position.z = posic.z - camz
+		playercurrentgraphspot = tra[grafnumr][v]
+		Global.grafspot = playercurrentgraphspot
 		var tween = create_tween()
 		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
 		await tween.finished
+	
 	#var tween = create_tween()
 	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
 	#await tween.finished
@@ -184,29 +239,32 @@ func movethere(pos, langelistomove,grafnumr):
 	pcurrentpos = langelistomove
 	moving = false
 	playercurrentgraphspot = grafnumr
+	Global.grafspot = playercurrentgraphspot
 	mainas()
-	
-	var istrynt : Array
-	var istryntg : Array
 	for i in range(0, V):
 		if dist[i] <= playermovementPoints:
 			var mapposx = grafas[i][3][0]
 			var mapposy = grafas[i][3][1]
 			var mapposz = grafas[i][3][2]
-			istrynt.append(Vector3i(mapposx,mapposy,mapposz))
-			istryntg.append(grafas[i][4])
+			if !Global.istrynt.has(Vector3i(mapposx,mapposy,mapposz)):
+				Global.istrynt.append(Vector3i(mapposx,mapposy,mapposz))
+				Global.istryntg.append(grafas[i][4])
+			elif Global.istryntg[Global.istrynt.find(Vector3i(mapposx,mapposy,mapposz))] != grafas[i][4]:
+				if findfrom(Global.istrynt.find(Vector3i(mapposx,mapposy,mapposz)),grafas[i][4],Vector3i(mapposx,mapposy,mapposz)) == -1:
+					Global.istrynt.append(Vector3i(mapposx,mapposy,mapposz))
+					Global.istryntg.append(grafas[i][4])
 	for y in $Node3D.get_children():
-		for i in istrynt.size():
-			if $GridMap.get_used_cells().has(istrynt[i]) and istryntg[i] == "G":
-				var pos2 = $GridMap.map_to_local(istrynt[i])
+		for i in Global.istrynt.size():
+			if $GridMap.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G":
+				var pos2 = $GridMap.map_to_local(Global.istrynt[i])
 				if pos2.x == y.position.x and pos2.z == y.position.z:
 					y.queue_free()
-			if $GridMap2.get_used_cells().has(istrynt[i]) and istryntg[i] == "G2":
-				var pos2 = $GridMap2.map_to_local(istrynt[i])
+			if $GridMap2.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G2":
+				var pos2 = $GridMap2.map_to_local(Global.istrynt[i])
 				if pos2.x == y.position.x and pos2.z == y.position.z:
 					y.queue_free()
-			if $GridMap3.get_used_cells().has(istrynt[i]) and istryntg[i] == "G3":
-				var pos2 = $GridMap3.map_to_local(istrynt[i])
+			if $GridMap3.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G3":
+				var pos2 = $GridMap3.map_to_local(Global.istrynt[i])
 				if pos2.x == y.position.x and pos2.z == y.position.z:
 					y.queue_free()			
 func _on_texture_rect_pressed():
@@ -293,3 +351,4 @@ func mainas():
 
 func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	changetofight = true
+	

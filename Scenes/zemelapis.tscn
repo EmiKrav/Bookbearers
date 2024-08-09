@@ -107,7 +107,7 @@ shape = SubResource("BoxShape3D_vna6o")
 
 [node name="player" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0.2, 1, 5)
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 1, 4.6)
 mesh = SubResource("PlaneMesh_ctong")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_oi2sv")
@@ -161,6 +161,9 @@ input_ray_pickable = false
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemy/Area3D"]
 transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.124708, -0.0912004, -4.76837e-07)
 shape = SubResource("ConcavePolygonShape3D_ytvpx")
+
+[node name="Label3D" type="Label3D" parent="enemy"]
+text = "5"
 
 [node name="lang" type="Node3D" parent="."]
 unique_name_in_owner = true
