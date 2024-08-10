@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://drr7ucpwcu0lj"]
+[gd_scene load_steps=32 format=3 uid="uid://drr7ucpwcu0lj"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
 [ext_resource type="Script" path="res://Bookbearers/Code/Firstfight.gd" id="3_41r68"]
-[ext_resource type="Texture2D" uid="uid://d2i0igaqs07mq" path="res://Bookbearers/Textures/zanda.png" id="4_ku04p"]
+[ext_resource type="Texture2D" uid="uid://b1llos4qtnt0o" path="res://Bookbearers/Textures/zanda.png" id="4_ku04p"]
 [ext_resource type="Texture2D" uid="uid://iswcky2fhl2r" path="res://Bookbearers/Textures/child.png" id="4_tf2p4"]
+[ext_resource type="ArrayMesh" uid="uid://ciyl1ntyvruj5" path="res://Bookbearers/Blender/girl.obj" id="6_eqt2o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chial"]
 
@@ -307,6 +308,11 @@ shape = SubResource("BoxShape3D_owr12")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.999, 0)
 mesh = SubResource("PlaneMesh_jo5ol")
 surface_material_override/0 = SubResource("StandardMaterial3D_7iv0s")
+
+[node name="Girl" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0109048, 0, 0.249762, 0, 0.25, 0, -0.249762, 0, 0.0109048, 2.01312, 1.61084, 14.9299)
+cast_shadow = 0
+mesh = ExtResource("6_eqt2o")
 
 [connection signal="pressed" from="CanvasLayer/Panel/EndTurn" to="GridMap" method="_on_end_turn_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/Skill" to="GridMap" method="_on_skill_mouse_entered"]
