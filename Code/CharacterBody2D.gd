@@ -27,7 +27,7 @@ func _physics_process(delta):
 
 
 func _on_area_2d_body_entered(body):
-	call_deferred("change_level")
+	call_deferred("changelevel")
 
-func change_level():
+func changelevel():
 	get_tree().change_scene_to_packed(firstfight)

@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=3 uid="uid://canti7bp6iw32"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/VilkolakioNamai.gd" id="1_thrr5"]
+[ext_resource type="Texture2D" uid="uid://iswcky2fhl2r" path="res://Bookbearers/Textures/child.png" id="2_x2xkk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsyko"]
+radius = 35.865
+height = 190.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7pvn"]
+size = Vector2(282, 31)
+
+[sub_resource type="Gradient" id="Gradient_e280g"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hfd2f"]
+gradient = SubResource("Gradient_e280g")
+width = 284
+height = 32
+
+[node name="Namai" type="Node2D"]
+position = Vector2(480, 230)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+self_modulate = Color(0.0784314, 0.0784314, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.893519
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Space"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+fit_content = true
+metadata/_edit_use_anchors_ = true
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_thrr5")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(10, 4)
+shape = SubResource("CapsuleShape2D_hsyko")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_x2xkk")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(428, -183)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_o7pvn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = SubResource("GradientTexture2D_hfd2f")
+
+[connection signal="body_entered" from="Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
