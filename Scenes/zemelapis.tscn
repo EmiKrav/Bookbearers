@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://brvo832id34ap"]
+[gd_scene load_steps=21 format=3 uid="uid://brvo832id34ap"]
 
 [ext_resource type="MeshLibrary" uid="uid://bnn22ovaht85a" path="res://Bookbearers/Tiles/Tileszemelap.tres" id="1_fck5j"]
 [ext_resource type="Script" path="res://Bookbearers/Code/zemelapis.gd" id="1_oowoj"]
@@ -51,6 +51,17 @@ gradient = SubResource("Gradient_wau2e")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_05kbu"]
+offsets = PackedFloat32Array(0.994845, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s6b4g"]
+gradient = SubResource("Gradient_05kbu")
+width = 150
+height = 50
+fill_from = Vector2(1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ypvfa"]
 
 [node name="Zemelapis" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.745014, 0, 0)
@@ -201,15 +212,63 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.15
-anchor_top = 0.27
-anchor_right = 0.85
-anchor_bottom = 0.73
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -11.5
+offset_right = 35.0
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "End Turn"
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.869792
+anchor_right = 1.0
+anchor_bottom = 0.0771605
+offset_left = 50.0
+grow_horizontal = 0
+texture = SubResource("GradientTexture2D_s6b4g")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Quests:"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+scroll_following = true
+metadata/_edit_use_anchors_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 5.51536, 0.851351, -1.59206)
+mesh = SubResource("BoxMesh_ypvfa")
+
+[node name="WereHouse" type="Area3D" parent="MeshInstance3D"]
+collision_layer = 2
+collision_mask = 4
+input_ray_pickable = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/WereHouse"]
+transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.125815, 0.975832, -4.76837e-07)
+shape = SubResource("ConcavePolygonShape3D_ytvpx")
 
 [connection signal="input_event" from="player/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
@@ -220,3 +279,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap2" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap3" method="_on_texture_rect_pressed"]
+[connection signal="area_shape_entered" from="MeshInstance3D/WereHouse" to="." method="_on_were_house_area_shape_entered"]

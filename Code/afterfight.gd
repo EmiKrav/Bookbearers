@@ -5,9 +5,9 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 var kalbeti = false
 var dialogas
-var eilute = 0
+var eilute = -1
 
-var goback = false
+var hideintrolley = false
 @onready var firstfight = preload("res://Bookbearers/Scenes/firstfight.tscn")
 @onready var childhead = preload("res://Bookbearers/Textures/childhead.png")
 @onready var head = preload("res://Bookbearers/Textures/zandahead.png")
@@ -28,16 +28,24 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		
+	if Input.is_action_just_pressed("ui_accept") and $"../Area2D2/Label".visible:
+		hideintrolley = true
+	if Input.is_action_just_pressed("ui_accept") and $"../Area2D/Label".visible:
+		mainas()
+		kalbeti = true
+		
 	if kalbeti:
 		$"../CanvasLayer".visible = true
-		if dialogas[eilute][1] == 0:
-			$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = childhead
-		else:
-			$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = head
-				
-		$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
+		#if dialogas[eilute][1] == 0:
+			#$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = childhead
+		#else:
+			#$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = head
+				#
+		#$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
+				#
 		$"../CanvasLayer/Panel/TextureRect".size = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".size
 		$"../CanvasLayer/Panel/TextureRect".global_position = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".global_position
+				
 		if Input.is_action_just_pressed("ui_accept"):
 			eilute +=1
 			if eilute< dialogas.size():
@@ -49,36 +57,39 @@ func _physics_process(delta):
 				$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
 				$"../CanvasLayer/Panel/TextureRect".size = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".size
 				$"../CanvasLayer/Panel/TextureRect".global_position = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".global_position
-		
+				
 			else:
 				kalbeti = false
 				$"../CanvasLayer".visible = false
-				eilute = 0
-				if Global.quests != null:
-					if Global.posiblequests[0][2] == false:
-						Global.quests += Global.posiblequests[0][1]
-				else:
-					Global.quests = Global.posiblequests[0][1]
-					Global.posiblequests[0][2] = true
+				eilute = -1
+				
 				
 	else:
 		get_input()
 		move_and_slide()
-	if goback:
+	if hideintrolley:
 		get_tree().change_scene_to_packed(zemelapis)
 
 
 func _on_area_2d_body_entered(body):
-	mainas()
-	kalbeti = true
+	$"../Area2D/Label".visible = true
+	
 	
 func mainas():    
 	var number = []
-	var file = FileAccess.open("res://Bookbearers/Code/dialogassuvilku.txt", FileAccess.READ)
+	var file = FileAccess.open("res://Bookbearers/Code/dialogassutevais.txt", FileAccess.READ)
 	var content = file.get_as_text()
 	dialogas = str_to_var(content)
 
 
 
 func _on_area_2d_2_body_entered(body):
-	goback = true
+	$"../Area2D2/Label".visible = true
+	
+
+func _on_area_2d_2_body_exited(body):
+	$"../Area2D2/Label".visible = false
+
+
+func _on_area_2d_body_exited(body):
+	$"../Area2D/Label".visible = false

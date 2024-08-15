@@ -3,6 +3,7 @@ extends Node3D
 @onready var langelis = preload("res://Bookbearers/Scenes/reqejimolang.tscn")
 @onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
+@onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 
 @onready var langeliai = %lang
 @onready var player = %player
@@ -10,6 +11,7 @@ extends Node3D
 @export var playerhealth = 10
 
 var changetofight = false
+var changetowerehouse = false
 
 var V = 22;
 var par =[]
@@ -43,9 +45,12 @@ var atspaust = false
 func _ready():
 	get_tree().paused = false;
 	mainas()
+	updatequests()
 	
 	if Global.grafspot == 5:
 		$enemy.queue_free()
+	#if Global.grafspot == 8:
+		#changetowerehouse =
 	if grafas[playercurrentgraphspot][4] == "G":
 		player.position =  $GridMap.map_to_local(Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2]))
 		player.position += Vector3(0,1,0)
@@ -125,6 +130,9 @@ func _process(delta):
 	if changetofight:
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
+	if changetowerehouse:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(werehouse)
 				
 func judeti(numeris):
 		$"StaticBody3D2/Camera3D".current = false
@@ -214,7 +222,9 @@ func movethere(pos, langelistomove,grafnumr):
 	canmove = false
 	atspaust = false
 	var posic 
+	var movpoint = 0
 	for v in range(1,tra[grafnumr].size()):
+		movpoint += 1
 		if grafas[tra[grafnumr][v]][4] == "G":
 			posic = $GridMap.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
 		elif grafas[tra[grafnumr][v]][4] == "G2":
@@ -230,6 +240,9 @@ func movethere(pos, langelistomove,grafnumr):
 		var tween = create_tween()
 		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
 		await tween.finished
+	if movpoint == 0:
+		if playercurrentgraphspot == 8:
+			changetowerehouse = true
 	
 	#var tween = create_tween()
 	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
@@ -351,4 +364,13 @@ func mainas():
 
 func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	changetofight = true
+func updatequests():
+	if Global.quests != null:
+		$CanvasLayer/Panel/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.quests)
+		$CanvasLayer/Panel/TextureRect2.texture.height += 10
 	
+
+
+func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot == 8:
+		changetowerehouse = true 
