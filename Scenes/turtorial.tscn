@@ -56,8 +56,8 @@ offsets = PackedFloat32Array(0, 0.00495049)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kk52g"]
 gradient = SubResource("Gradient_vjirl")
-width = 100
-height = 100
+width = 150
+height = 150
 fill_from = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_med0a"]
@@ -65,8 +65,9 @@ offsets = PackedFloat32Array(0, 0.00526316)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3ofys"]
 gradient = SubResource("Gradient_med0a")
-width = 100
+width = 150
 height = 20
+fill_to = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_7hghq"]
 offsets = PackedFloat32Array(0.994737, 1)
@@ -262,43 +263,51 @@ anchor_bottom = 0.73
 grow_horizontal = 2
 grow_vertical = 2
 text = "End Turn"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.808642
-anchor_right = 0.0868056
+anchor_top = 0.731481
+anchor_right = 0.130208
 anchor_bottom = 1.0
-grow_vertical = 0
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_kk52g")
 
 [node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_direction = 2
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 max_value = 10.0
+nine_patch_stretch = true
+stretch_margin_left = 150
+stretch_margin_top = 10
+stretch_margin_bottom = 10
 texture_under = SubResource("GradientTexture2D_3ofys")
 texture_progress = SubResource("GradientTexture2D_0hirv")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
-modulate = Color(0.743908, 0.0168396, 0.018844, 1)
+modulate = Color(1, 0.0196078, 0, 1)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -21.5
-offset_top = -11.5
-offset_right = 21.5
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
@@ -308,13 +317,14 @@ anchor_top = 0.876543
 anchor_right = 0.633681
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 3
 texture_normal = SubResource("GradientTexture2D_x1h1v")
+stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
@@ -334,7 +344,9 @@ text = "⚔️2"
 
 [node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 texture_normal = SubResource("GradientTexture2D_x1h1v")
+stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
@@ -355,7 +367,9 @@ text = "⚔️1"
 
 [node name="TextureButton3" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 texture_normal = SubResource("GradientTexture2D_bosuy")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
 layout_mode = 1
