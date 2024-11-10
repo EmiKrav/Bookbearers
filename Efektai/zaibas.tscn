@@ -1,0 +1,114 @@
+[gd_scene load_steps=21 format=3 uid="uid://cglmtuf64euh0"]
+
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/raides.gdshader" id="1_v6pi1"]
+[ext_resource type="Texture2D" uid="uid://b5h8x6ukeypwa" path="res://Bookbearers/Textures/alphabet.png" id="2_1beky"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/debeselis.gdshader" id="3_ckd7w"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/zaibas.gdshader" id="4_gvrtw"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cog3k"]
+direction = Vector3(0, 10, 0)
+spread = 23.824
+initial_velocity_min = 1.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhsib"]
+render_priority = 0
+shader = ExtResource("1_v6pi1")
+shader_parameter/color = null
+shader_parameter/hframe = 5
+shader_parameter/vframe = 5
+shader_parameter/albedo_texture = ExtResource("2_1beky")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xwvsn"]
+material = SubResource("ShaderMaterial_rhsib")
+orientation = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k7sb0"]
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_j8q52"]
+noise = SubResource("FastNoiseLite_k7sb0")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_icusp"]
+frequency = 0.0094
+offset = Vector3(0, -54.05, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vgr4u"]
+seamless = true
+bump_strength = 32.0
+noise = SubResource("FastNoiseLite_icusp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tof2v"]
+shader = ExtResource("3_ckd7w")
+shader_parameter/density = 1.0
+shader_parameter/albedo = Color(0.274142, 0.624189, 1, 1)
+shader_parameter/emission = Color(0.219501, 0.219501, 0.219501, 1)
+shader_parameter/height_falloff = 0.0
+shader_parameter/edge_fade = 5.585
+shader_parameter/flatn = 5.0
+shader_parameter/dens = 5.0
+shader_parameter/rad = 20.06
+shader_parameter/density_texture = SubResource("NoiseTexture3D_j8q52")
+shader_parameter/noisetex = SubResource("NoiseTexture2D_vgr4u")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cd2l7"]
+
+[sub_resource type="Sky" id="Sky_3m61y"]
+sky_material = SubResource("ProceduralSkyMaterial_cd2l7")
+
+[sub_resource type="Environment" id="Environment_us4ij"]
+background_mode = 2
+sky = SubResource("Sky_3m61y")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+
+[sub_resource type="Curve" id="Curve_2cvrw"]
+min_value = -0.5
+_data = [Vector2(0, -0.087912), 0.0, -83.0769, 0, 0, Vector2(0.804762, -0.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_5y068"]
+curve_y = SubResource("Curve_2cvrw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrk42"]
+directional_velocity_min = 1.0
+directional_velocity_max = 243.02
+directional_velocity_curve = SubResource("CurveXYZTexture_5y068")
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8sm0n"]
+render_priority = 0
+shader = ExtResource("4_gvrtw")
+shader_parameter/color = Color(0.854902, 0.909804, 0.180392, 1)
+shader_parameter/colore = Color(1, 0.847059, 0.301961, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4tbyf"]
+material = SubResource("ShaderMaterial_8sm0n")
+height = 38.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Letters" type="GPUParticles3D" parent="."]
+amount = 12
+lifetime = 2.0
+visibility_aabb = AABB(-6.25663, -7.52547, -4, 12.5133, 15.0509, 8)
+process_material = SubResource("ParticleProcessMaterial_cog3k")
+draw_pass_1 = SubResource("PlaneMesh_xwvsn")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(0.999933, -0.011676, 0, 0.011676, 0.999933, 0, 0, 0, 1, -0.250099, 17.0785, 0.00208139)
+size = Vector3(70.3314, 2.49872, 43.8089)
+shape = 0
+material = SubResource("ShaderMaterial_tof2v")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_us4ij")
+
+[node name="Ligthning" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64969, 28.3916, -36.1699)
+amount = 3
+speed_scale = 0.8
+explosiveness = 0.31
+visibility_aabb = AABB(-4, -7.22733, -4, 8, 14.4547, 8)
+process_material = SubResource("ParticleProcessMaterial_mrk42")
+draw_pass_1 = SubResource("CapsuleMesh_4tbyf")
