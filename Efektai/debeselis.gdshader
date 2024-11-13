@@ -23,7 +23,7 @@ void fog() {
 	float noise = texture(noisetex,WORLD_POSITION.xz*0.02 +ran).r;
 
 	DENSITY = mix(1.0,noise,UVW.y * flatn);
-	DENSITY *= 1.0 - step(rad * sin(TIME / 5.0),l);
+	DENSITY *= 1.0 - step(rad * abs(sin(TIME / 5.0))+10.0,l);
 	DENSITY *= step(0.5,-SDF)*dens;
 	
 	DENSITY *= smoothstep(0.0,0,-SDF);
