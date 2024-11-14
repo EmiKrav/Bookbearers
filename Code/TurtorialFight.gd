@@ -5,6 +5,7 @@ extends GridMap
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 @onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
+@onready var playermat = preload("res://Bookbearers/Materials/turtorial.tres")
 
 
 @export var maxplayermovementPoints = 4
@@ -52,8 +53,11 @@ var skill3curcoldown = 0
 @onready var enemy3 = $enemy3
 @onready var enemy4 = $enemy4
 @onready var langeliai = $Node3D
+@onready var noise = playermat.get_shader_parameter("bleeding");
 
 func _ready():
+	noise.noise.seed = randi()%1000;
+	
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
@@ -538,6 +542,9 @@ func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = true
 			
 func showMovement(playermovementPointsx, playermovementPointsz):
+
+	playermat.set_shader_parameter("bleeding", noise);
+	playermat.set_shader_parameter("bleedamount",randf_range(0.0,1.0));
 #draw around
 	movemcellls.clear()
 #apacia desine
@@ -586,6 +593,7 @@ func showMovement(playermovementPointsx, playermovementPointsz):
 		lang["material_override"]= langeliomat
 
 func _on_texture_rect_pressed():
+	
 	if !moving:
 		Global.cameramove = false
 		skillusage = false
