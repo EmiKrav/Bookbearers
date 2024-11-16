@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://cl5u106d3qbvn"]
+[gd_scene load_steps=18 format=3 uid="uid://cl5u106d3qbvn"]
 
+[ext_resource type="Script" path="res://Bookbearers/Efektai/ugnis.gd" id="1_jhpaa"]
 [ext_resource type="Texture2D" uid="uid://kbxgx1fq051u" path="res://Bookbearers/Textures/pngtree-d-flame-motion-on-transparent-background-red-fire-texture-burn-light-png-image_13271569.png" id="1_urvbc"]
 
 [sub_resource type="Gradient" id="Gradient_1l872"]
@@ -93,11 +94,11 @@ sub_emitter_frequency = 20.0
 material = SubResource("StandardMaterial3D_7isdb")
 
 [node name="Ugnies takas" type="Node3D"]
+transform = Transform3D(-6.77527e-09, 0, 0.155, 0, 0.155, 0, -0.155, 0, -6.77527e-09, 0, 0, 0)
+script = ExtResource("1_jhpaa")
 
 [node name="Takas" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.81149, 8.57053, -0.0394544)
-emitting = false
-amount = 20000
+amount = 2000
 lifetime = 0.3
 speed_scale = 0.5
 randomness = 1.0
@@ -108,7 +109,7 @@ draw_pass_1 = SubResource("QuadMesh_w4dy2")
 draw_skin = SubResource("Skin_pf6eg")
 
 [node name="Saltinis" type="GPUParticles3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.12281, 8.56216, -0.0538929)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.777144, 0, 0)
 amount = 200
 lifetime = 0.3
 speed_scale = 0.3
@@ -119,7 +120,7 @@ process_material = SubResource("ParticleProcessMaterial_uxhac")
 draw_pass_1 = SubResource("QuadMesh_v8sb5")
 
 [node name="Saltinis2" type="GPUParticles3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.12281, 8.56216, -0.934454)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.777144, 0, -0.93852)
 amount = 200
 lifetime = 0.3
 speed_scale = 0.3
@@ -130,7 +131,7 @@ process_material = SubResource("ParticleProcessMaterial_uxhac")
 draw_pass_1 = SubResource("QuadMesh_v8sb5")
 
 [node name="Saltinis3" type="GPUParticles3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.12281, 8.56216, 0.720118)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.777144, 0, 0.964125)
 amount = 200
 lifetime = 0.3
 speed_scale = 0.3
@@ -141,7 +142,7 @@ process_material = SubResource("ParticleProcessMaterial_uxhac")
 draw_pass_1 = SubResource("QuadMesh_v8sb5")
 
 [node name="Saltinis4" type="GPUParticles3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.12281, 8.56216, 0.348806)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.777144, 0, -0.497482)
 amount = 200
 lifetime = 0.3
 speed_scale = 0.3
@@ -152,7 +153,7 @@ process_material = SubResource("ParticleProcessMaterial_uxhac")
 draw_pass_1 = SubResource("QuadMesh_v8sb5")
 
 [node name="Saltinis5" type="GPUParticles3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.12281, 8.56216, -0.478183)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.777144, 0, 0.499449)
 amount = 200
 lifetime = 0.3
 speed_scale = 0.3

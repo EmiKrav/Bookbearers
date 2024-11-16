@@ -1,5 +1,6 @@
 extends Node3D
 
+var number = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,5 +22,8 @@ func _on_ligthning_finished():
 	zaib()
 	
 func zaib():
+	number+=1;
 	await get_tree().create_timer(0.5).timeout
 	$Ligthning.emitting = true;
+	if number > 5:
+		$".".queue_free()

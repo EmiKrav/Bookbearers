@@ -6,6 +6,8 @@ extends GridMap
 @onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
 @onready var playermat = preload("res://Bookbearers/Materials/turtorial.tres")
+@onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
+@onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
 
 
 @export var maxplayermovementPoints = 4
@@ -197,6 +199,7 @@ func enemyhurt(langelistomove, dmg):
 			enemieskilled +=1
 		
 func animacijalang():
+	await get_tree().create_timer(20).timeout
 	var tween = create_tween()
 	tween.tween_property(langeliai.get_child(0), "material_override:albedo_color:a", 0, 1)
 	if langeliai.get_child_count() > 1:
@@ -247,7 +250,6 @@ func useskill2():
 		skillusage2 = false
 		skill2curcoldown = skill2coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffff71"
-		
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
 		await animacijalang()
 		for i in range(0, langeliai.get_child_count()):
@@ -298,6 +300,12 @@ func useskill3():
 		skill3curcoldown = skill3coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
+		var ugnis = ugnis.instantiate()
+		$'.'.add_child(ugnis)
+		var pos = map_to_local(langelistomove)
+		var plpos = map_to_local(pcurrentpos)
+		var dis = Vector3(pos.x, pos.y + 1.3, plpos.z); 
+		ugnis.position = dis + Vector3(0,1.3,0)#map_to_local(pcurrentpos) + Vector3(0,1.3,-1.0)
 		await animacijalang()
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -330,6 +338,11 @@ func useskill1():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
+		var zaibas = zaibas.instantiate()
+		$'.'.add_child(zaibas)
+		var pos = map_to_local(langelistomove)
+		zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
+		zaibas.get_child(1).position = pos
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"
@@ -533,6 +546,8 @@ func enemyMove(ecurrentposi, enemyi):
 func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
+	playermat.set_shader_parameter("bleeding", noise);
+	playermat.set_shader_parameter("bleedamount", playerhealth/10-0.2);
 	await get_tree().create_timer(1).timeout
 	playerhealth= playerhealth-2
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
@@ -542,9 +557,6 @@ func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = true
 			
 func showMovement(playermovementPointsx, playermovementPointsz):
-
-	playermat.set_shader_parameter("bleeding", noise);
-	playermat.set_shader_parameter("bleedamount",randf_range(0.0,1.0));
 #draw around
 	movemcellls.clear()
 #apacia desine

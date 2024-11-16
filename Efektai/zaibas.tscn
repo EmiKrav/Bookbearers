@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cglmtuf64euh0"]
+[gd_scene load_steps=26 format=3 uid="uid://cglmtuf64euh0"]
 
 [ext_resource type="Script" path="res://Bookbearers/Efektai/zaibas.gd" id="1_nn3d7"]
 [ext_resource type="Shader" path="res://Bookbearers/Efektai/raides.gdshader" id="1_v6pi1"]
@@ -16,14 +16,6 @@ point_count = 3
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_4fhqp"]
 curve_x = SubResource("Curve_7tf0v")
 
-[sub_resource type="Curve" id="Curve_cxsre"]
-max_value = 2.0
-_data = [Vector2(0, 0.659341), 0.0, 0.0, 0, 0, Vector2(0.504762, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_5j06r"]
-curve = SubResource("Curve_cxsre")
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cog3k"]
 direction = Vector3(0, 1, 0)
 spread = 0.0
@@ -34,7 +26,6 @@ directional_velocity_max = 5.0
 directional_velocity_curve = SubResource("CurveXYZTexture_4fhqp")
 orbit_velocity_max = 0.168
 gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_5j06r")
 turbulence_noise_scale = 3.96
 turbulence_initial_displacement_min = -24.1
 turbulence_initial_displacement_max = 28.0
@@ -52,7 +43,7 @@ shader_parameter/vframe = 5
 shader_parameter/rand1 = 2
 shader_parameter/rand2 = 2
 shader_parameter/specular = 0.615
-shader_parameter/scale = Vector3(1, 1, 1)
+shader_parameter/scale = Vector3(0.5, 0.5, 0.5)
 shader_parameter/albedo_texture = ExtResource("2_1beky")
 shader_parameter/texture_albedo = ExtResource("4_1aphj")
 
@@ -60,6 +51,32 @@ shader_parameter/texture_albedo = ExtResource("4_1aphj")
 material = SubResource("ShaderMaterial_2pg64")
 size = Vector2(1, 1)
 orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrk42"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0frgp"]
+frequency = 0.0082
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uubni"]
+seamless = true
+noise = SubResource("FastNoiseLite_0frgp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vusm"]
+render_priority = 0
+shader = ExtResource("4_gvrtw")
+shader_parameter/color = Color(0.768627, 0.74902, 0.113725, 1)
+shader_parameter/colore = Color(0.803922, 0.886275, 0, 1)
+shader_parameter/kampas = 4.735
+shader_parameter/albedo_texture = ExtResource("5_hiynp")
+shader_parameter/noise = SubResource("NoiseTexture2D_uubni")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0wefx"]
+material = SubResource("ShaderMaterial_0vusm")
+size = Vector2(50, 50)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_k7sb0"]
 
@@ -100,32 +117,6 @@ glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrk42"]
-emission_shape = 3
-emission_box_extents = Vector3(15, 15, 15)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0frgp"]
-frequency = 0.0082
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uubni"]
-seamless = true
-noise = SubResource("FastNoiseLite_0frgp")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vusm"]
-render_priority = 0
-shader = ExtResource("4_gvrtw")
-shader_parameter/color = Color(0.768627, 0.74902, 0.113725, 1)
-shader_parameter/colore = Color(0.803922, 0.886275, 0, 1)
-shader_parameter/kampas = 4.735
-shader_parameter/albedo_texture = ExtResource("5_hiynp")
-shader_parameter/noise = SubResource("NoiseTexture2D_uubni")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_0wefx"]
-material = SubResource("ShaderMaterial_0vusm")
-size = Vector2(50, 50)
-
 [node name="Zaibas" type="Node3D"]
 script = ExtResource("1_nn3d7")
 
@@ -137,18 +128,6 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_cog3k")
 draw_pass_1 = SubResource("PlaneMesh_sy6ni")
 
-[node name="FogVolume" type="FogVolume" parent="."]
-transform = Transform3D(0.999933, -0.011676, 0, 0.011676, 0.999933, 0, 0, 0, 1, -0.250099, 17.0785, 0.00208139)
-size = Vector3(70.3314, 2.49872, 43.8089)
-shape = 0
-material = SubResource("ShaderMaterial_tof2v")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.999196, -0.0400672, -0.00164312, -0.00150621, -0.0784446, 0.996917, -0.0400726, -0.996113, -0.0784419, 0, 7.13993, -21.8523)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_us4ij")
-
 [node name="Ligthning" type="GPUParticles3D" parent="."]
 transform = Transform3D(-0.995396, 0, 0.0958458, 0, 1, 0, -0.0958458, 0, -0.995396, 0, 7.13993, 0)
 top_level = true
@@ -158,9 +137,20 @@ lifetime = 0.02
 one_shot = true
 speed_scale = 0.8
 explosiveness = 0.31
-visibility_aabb = AABB(-1, -10.0222, -1, 2, 20.0445, 2)
 process_material = SubResource("ParticleProcessMaterial_mrk42")
 draw_pass_1 = SubResource("PlaneMesh_0wefx")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(0.999933, -0.011676, 0, 0.011676, 0.999933, 0, 0, 0, 1, 0, 15, 0)
+size = Vector3(70.3314, 2.49872, 43.8089)
+shape = 0
+material = SubResource("ShaderMaterial_tof2v")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.999196, -0.0400672, -0.00164312, -0.00150621, -0.0784446, 0.996917, -0.0400726, -0.996113, -0.0784419, 0, 7.13993, -21.8523)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_us4ij")
 
 [connection signal="finished" from="Letters" to="." method="_on_letters_finished"]
 [connection signal="finished" from="Ligthning" to="." method="_on_ligthning_finished"]

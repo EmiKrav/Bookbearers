@@ -26,6 +26,7 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/randomizer = null
 shader_parameter/first_color = Color(1, 0, 0, 1)
 shader_parameter/second_color = Color(1, 1, 1, 1)
 shader_parameter/bleedamount = 1.0

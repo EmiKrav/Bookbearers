@@ -24,9 +24,14 @@ void vertex() {
 	NORMAL = vec3(0.0, 1.0, 0.0);
 	VERTEX.x += sin(NODE_POSITION_WORLD.x + TIME * 0.3 + UV.y) * ( 1.0 - UV.y) * 0.2;
 	VERTEX.z += cos(NODE_POSITION_WORLD.z + TIME * 0.3 + UV.y) * ( 1.0 - UV.y) * 0.2;
-	VERTEX = VERTEX * vec3(scale.x, scale.y, scale.z);
+	vec3 sc = scale;
+	
+	//sc.x *= abs(sin(TIME / 5.0))+0.5;
+	//sc.y *= abs(sin(TIME / 1.0));
+	//sc.z *= abs(sin(TIME / 1.0));
+	VERTEX = VERTEX * vec3(sc.x, scale.y, scale.z);
 	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(vec4(normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz)), 0.0), vec4(0.0, 1.0, 0.0, 0.0), vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0))), 0.0), MODEL_MATRIX[3]);
-
+	
 }
 float random (vec2 st) {
 	return float(index) * fract(sin(dot(st.xy, vec2(12.9898,78.233))) 
@@ -35,8 +40,6 @@ float random (vec2 st) {
 
 
 void fragment() {
-	int ad = int(float(index));
-	
 	int rnd =rand1;
 	int rnd2 = rand2;
 	rnd = int(random(vec2(float(rnd),float(rnd2))));
