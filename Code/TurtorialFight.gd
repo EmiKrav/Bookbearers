@@ -8,6 +8,7 @@ extends GridMap
 @onready var playermat = preload("res://Bookbearers/Materials/turtorial.tres")
 @onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
 @onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
+@onready var duobe = preload("res://Bookbearers/Efektai/map.material")
 
 
 @export var maxplayermovementPoints = 4
@@ -197,7 +198,25 @@ func enemyhurt(langelistomove, dmg):
 			lang.position = pos2
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
-		
+func enemytrapped(langelistomove):
+	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
+		enemy.position -= Vector3(0,0.5,0);
+	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
+		enemy2.position -= Vector3(0,0.5,0);
+	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
+		enemy3.position -= Vector3(0,0.5,0);
+	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
+		enemy4.position -= Vector3(0,0.5,0);
+func enemyuntrapped(langelistomove):
+	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
+		enemy.position += Vector3(0,0.5,0);
+	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
+		enemy2.position += Vector3(0,0.5,0);
+	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
+		enemy3.position += Vector3(0,0.5,0);
+	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
+		enemy4.position += Vector3(0,0.5,0);
+
 func animacijalang():
 	await get_tree().create_timer(20).timeout
 	var tween = create_tween()
@@ -217,6 +236,7 @@ func useskill2():
 	var ppos = pcurrentpos
 	var at1 : Array
 	if langelistomove != null :
+		var posd = map_to_local(langelistomove)
 		var atstumasx = ppos.x -langelistomove.x
 		var atstumasz = ppos.z -langelistomove.z
 		if abs(atstumasx) <= playerattackrange and abs(atstumasz) <= playerattackrange:
@@ -251,7 +271,22 @@ func useskill2():
 		skill2curcoldown = skill2coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
+		duobe.set_shader_parameter("duobe", true)
+		
+		var array: Array[Vector3] = []
+		for i in range(0, langeliai.get_child_count()):
+			if langeliai.get_child(i) != null:
+				array.append(langeliai.get_child(i).position)
+				var tween = create_tween()
+				tween.tween_property(langeliai.get_child(i), "material_override:albedo_color:a", 0, 0)
+	
+		duobe.set_shader_parameter("duobkord", array)
+		for i in range(0,array.size()):
+			enemytrapped(local_to_map(array[i]))
 		await animacijalang()
+		duobe.set_shader_parameter("duobe", false)
+		for i in range(0,array.size()):
+			enemyuntrapped(local_to_map(array[i]))
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				at1.append(local_to_map(langeliai.get_child(i).position))
