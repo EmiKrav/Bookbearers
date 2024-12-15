@@ -44,7 +44,7 @@ void fragment() {
 	vec2 base_uvduob = vec2(base_uv.x * 16.0, base_uv.y * 16.0);
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	vec4 duobetex = texture(hole, base_uvduob);
-	duobetex = mix(duobetex, holecolor, duobetex.a);
+	//duobetex = mix(duobetex, holecolor, duobetex.a);
 	vec4 bled = mix(albedo_tex, duobetex, duobetex.a * 0.0);
 	ALBEDO *= albedo_tex.rgb * bled.rgb;;
 	ALPHA *= albedo_tex.a * bled.a;

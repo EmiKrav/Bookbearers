@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://drr7ucpwcu0lj"]
+[gd_scene load_steps=32 format=3 uid="uid://drr7ucpwcu0lj"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
@@ -104,6 +104,10 @@ size = Vector2(32, 32)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7iv0s"]
 albedo_color = Color(0.0431373, 0.196078, 0.0588235, 1)
+
+[sub_resource type="Environment" id="Environment_qgtp5"]
+background_energy_multiplier = 10.0
+glow_enabled = true
 
 [node name="FirstFight" type="Node3D"]
 
@@ -307,6 +311,9 @@ shape = SubResource("BoxShape3D_owr12")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.999, 0)
 mesh = SubResource("PlaneMesh_jo5ol")
 surface_material_override/0 = SubResource("StandardMaterial3D_7iv0s")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qgtp5")
 
 [connection signal="pressed" from="CanvasLayer/Panel/EndTurn" to="GridMap" method="_on_end_turn_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/Skill" to="GridMap" method="_on_skill_mouse_entered"]

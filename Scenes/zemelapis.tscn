@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://brvo832id34ap"]
+[gd_scene load_steps=22 format=3 uid="uid://brvo832id34ap"]
 
 [ext_resource type="MeshLibrary" uid="uid://bnn22ovaht85a" path="res://Bookbearers/Tiles/Tileszemelap.tres" id="1_fck5j"]
 [ext_resource type="Script" path="res://Bookbearers/Code/zemelapis.gd" id="1_oowoj"]
@@ -62,6 +62,10 @@ height = 50
 fill_from = Vector2(1, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ypvfa"]
+
+[sub_resource type="Environment" id="Environment_r5o18"]
+background_energy_multiplier = 5.0
+glow_enabled = true
 
 [node name="Zemelapis" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.745014, 0, 0)
@@ -269,6 +273,9 @@ input_ray_pickable = false
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/WereHouse"]
 transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.125815, 0.975832, -4.76837e-07)
 shape = SubResource("ConcavePolygonShape3D_ytvpx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r5o18")
 
 [connection signal="input_event" from="player/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap" method="_on_area_3d_input_event"]

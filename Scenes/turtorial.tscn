@@ -91,7 +91,7 @@ fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
 [sub_resource type="Environment" id="Environment_cp4k0"]
-ambient_light_color = Color(1, 1, 1, 1)
+background_energy_multiplier = 10.0
 glow_enabled = true
 
 [node name="Turtorial" type="Node3D"]

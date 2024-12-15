@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://djt15d47f28yq"]
+
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/plane.gdshader" id="1_apvp5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjm8g"]
+render_priority = 0
+shader = ExtResource("1_apvp5")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ieh8y"]
+material = SubResource("ShaderMaterial_sjm8g")
+size = Vector3(2, 0.001, 2)
+subdivide_width = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_ieh8y")
