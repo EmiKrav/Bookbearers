@@ -9,6 +9,7 @@ extends GridMap
 @onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
 @onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
 @onready var duobe = preload("res://Bookbearers/Efektai/map.material")
+@onready var lektuvai = preload("res://Bookbearers/Efektai/lektuvas.tscn")
 
 
 @export var maxplayermovementPoints = 4
@@ -49,6 +50,8 @@ var skilling = true
 var usingskills = false
 var skill2curcoldown = 0
 var skill3curcoldown = 0
+
+var skillset = 1;
 
 @onready var player = $player
 @onready var enemy = $enemy
@@ -351,7 +354,6 @@ func useskill3():
 	usingskills = false
 	
 func useskill1():
-	
 	usingskills = true
 	var langelistomove = shoot_ray()
 	var ppos = pcurrentpos
@@ -373,11 +375,19 @@ func useskill1():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-		var zaibas = zaibas.instantiate()
-		$'.'.add_child(zaibas)
-		var pos = map_to_local(langelistomove)
-		zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
-		zaibas.get_child(1).position = pos
+		if skillset == 1:
+			var zaibas = zaibas.instantiate()
+			$'.'.add_child(zaibas)
+			var pos = map_to_local(langelistomove)
+			zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
+			zaibas.get_child(1).position = pos
+		if skillset == 2:
+			var lektuvas = lektuvai.instantiate()
+			$'.'.add_child(lektuvas)
+			var pos = map_to_local(langelistomove)
+			lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
+			
+			
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"
@@ -756,3 +766,12 @@ func _on_texture_button_3_mouse_entered():
 
 func _on_texture_button_3_mouse_exited():
 	skilling = true
+
+
+func _on_texture_button_4_pressed():
+	if skillset == 1:
+		skillset = 2;
+		return
+	if skillset == 2:
+		skillset = 1;
+		return
