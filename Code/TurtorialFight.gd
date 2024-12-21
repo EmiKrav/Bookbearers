@@ -9,6 +9,7 @@ extends GridMap
 @onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
 @onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
 @onready var duobe = preload("res://Bookbearers/Efektai/map.material")
+@onready var lektuvomat = preload("res://Bookbearers/Efektai/lektuvas.material")
 @onready var lektuvai = preload("res://Bookbearers/Efektai/lektuvas.tscn")
 
 
@@ -221,7 +222,9 @@ func enemyuntrapped(langelistomove):
 		enemy4.position += Vector3(0,0.5,0);
 
 func animacijalang():
-	await get_tree().create_timer(20).timeout
+	moving = true;
+	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
+	$"../CanvasLayer/Panel/TextureRect"["disabled"]= true
 	var tween = create_tween()
 	tween.tween_property(langeliai.get_child(0), "material_override:albedo_color:a", 0, 1)
 	if langeliai.get_child_count() > 1:
@@ -232,6 +235,9 @@ func animacijalang():
 		tween.tween_property(langeliai.get_child(3), "material_override:albedo_color:a", 0, 1)
 			#tween.tween_property(langeliomat, "albedo_color:a", 0, 3)
 	await tween.finished
+	moving = false;
+	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffffff"
+	$"../CanvasLayer/Panel/TextureRect"["disabled"]= false
 		
 func useskill2():
 	usingskills = true
@@ -381,13 +387,35 @@ func useskill1():
 			var pos = map_to_local(langelistomove)
 			zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
 			zaibas.get_child(1).position = pos
+			await get_tree().create_timer(20).timeout
 		if skillset == 2:
 			var lektuvas = lektuvai.instantiate()
 			$'.'.add_child(lektuvas)
 			var pos = map_to_local(langelistomove)
 			lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
 			
+			lektuvomat.set_shader_parameter("sk", Time.get_ticks_msec()/360.0/3.0);
+			#print(lektuvomat.get_shader_parameter("sk"));
+			await get_tree().create_timer(5).timeout
+			var angle = Vector2(lektuvas.position.x, lektuvas.position.z).angle_to(Vector2(pos.x,pos.z));
+			#dv
+			if (lektuvas.position.x < pos.x && lektuvas.position.z > pos.z):
+				lektuvas.rotation.y += angle; 
+			#kv
+			if (lektuvas.position.x > pos.x && lektuvas.position.z > pos.z):
+				lektuvas.rotation.y += angle;
+			#da
+			if (lektuvas.position.z < pos.z && lektuvas.position.x < pos.x):
+				lektuvas.rotation.y -= angle + PI;
+			# ka
+			if (lektuvas.position.z < pos.z && lektuvas.position.x > pos.x):
+				lektuvas.rotation.y -= angle - PI;
+				
 			
+			#print(rad_to_deg(angle));
+			var tweenlek = create_tween()
+			tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 10)
+			await tweenlek.finished
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"

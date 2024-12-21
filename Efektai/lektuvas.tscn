@@ -1,16 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://djt15d47f28yq"]
 
-[ext_resource type="Shader" path="res://Bookbearers/Efektai/plane.gdshader" id="1_apvp5"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjm8g"]
-render_priority = 0
-shader = ExtResource("1_apvp5")
+[ext_resource type="Material" uid="uid://c04ke7ix7icfg" path="res://Bookbearers/Efektai/lektuvas.material" id="1_u6vdk"]
+[ext_resource type="Script" path="res://Bookbearers/Efektai/lektuvas.gd" id="2_y5ncu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ieh8y"]
-material = SubResource("ShaderMaterial_sjm8g")
-size = Vector3(2, 0.001, 2)
+material = ExtResource("1_u6vdk")
+size = Vector3(2, 0.01, 2)
 subdivide_width = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D"]
 transform = Transform3D(-0.5, 0, 4.37114e-08, 0, 0.5, 0, -4.37114e-08, 0, -0.5, 0, 0, 0)
 mesh = SubResource("BoxMesh_ieh8y")
+script = ExtResource("2_y5ncu")
