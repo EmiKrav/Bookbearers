@@ -9,9 +9,8 @@ extends GridMap
 @onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
 @onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
 @onready var duobe = preload("res://Bookbearers/Efektai/map.material")
-@onready var lektuvomat = preload("res://Bookbearers/Efektai/lektuvas.material")
 @onready var lektuvai = preload("res://Bookbearers/Efektai/lektuvas.tscn")
-
+@onready var grandine = preload("res://Bookbearers/Efektai/grandine.tscn")
 
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
@@ -225,6 +224,7 @@ func animacijalang():
 	moving = true;
 	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
 	$"../CanvasLayer/Panel/TextureRect"["disabled"]= true
+	await get_tree().create_timer(10).timeout
 	var tween = create_tween()
 	tween.tween_property(langeliai.get_child(0), "material_override:albedo_color:a", 0, 1)
 	if langeliai.get_child_count() > 1:
@@ -388,34 +388,43 @@ func useskill1():
 			zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
 			zaibas.get_child(1).position = pos
 			await get_tree().create_timer(20).timeout
+		if skillset == 3:
+			var grandine = grandine.instantiate()
+			$'.'.add_child(grandine)
+			var pos = map_to_local(langelistomove)
+			grandine.position = map_to_local(pcurrentpos + Vector3i(0,1.0,0))
+			await get_tree().create_timer(10).timeout
+			var tweengrand = create_tween()
+			tweengrand.tween_property(grandine, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
+			tweengrand.finished
+			await get_tree().create_timer(5).timeout
 		if skillset == 2:
 			var lektuvas = lektuvai.instantiate()
 			$'.'.add_child(lektuvas)
 			var pos = map_to_local(langelistomove)
 			lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
-			
-			lektuvomat.set_shader_parameter("sk", Time.get_ticks_msec()/360.0/3.0);
 			#print(lektuvomat.get_shader_parameter("sk"));
 			await get_tree().create_timer(5).timeout
 			var angle = Vector2(lektuvas.position.x, lektuvas.position.z).angle_to(Vector2(pos.x,pos.z));
+			var rotationlek = 0;
 			#dv
 			if (lektuvas.position.x < pos.x && lektuvas.position.z > pos.z):
-				lektuvas.rotation.y += angle; 
+				rotationlek += angle; 
 			#kv
 			if (lektuvas.position.x > pos.x && lektuvas.position.z > pos.z):
-				lektuvas.rotation.y += angle;
+				rotationlek += angle;
 			#da
 			if (lektuvas.position.z < pos.z && lektuvas.position.x < pos.x):
-				lektuvas.rotation.y -= angle + PI;
+				rotationlek = -angle - PI;
 			# ka
 			if (lektuvas.position.z < pos.z && lektuvas.position.x > pos.x):
-				lektuvas.rotation.y -= angle - PI;
-				
-			
-			#print(rad_to_deg(angle));
+				rotationlek += -angle + PI;
+			var tweenlekr = create_tween()
+			tweenlekr.tween_property(lektuvas, "rotation", Vector3(lektuvas.rotation.x, lektuvas.rotation.y + rotationlek, lektuvas.rotation.z), 3)
+			await tweenlekr.finished
 			var tweenlek = create_tween()
-			tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 10)
-			await tweenlek.finished
+			tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
+			tweenlek.finished
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"
@@ -801,5 +810,8 @@ func _on_texture_button_4_pressed():
 		skillset = 2;
 		return
 	if skillset == 2:
+		skillset = 3;
+		return
+	if skillset == 3:
 		skillset = 1;
 		return
