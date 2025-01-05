@@ -1,10 +1,14 @@
-[gd_scene load_steps=33 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=42 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
 [ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_f43eu"]
 [ext_resource type="Script" path="res://Bookbearers/Code/TurtorialFight.gd" id="3_h0tnh"]
 [ext_resource type="Material" uid="uid://biuu56xp86tq1" path="res://Bookbearers/Materials/turtorial.tres" id="4_ifdn2"]
 [ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_5ofdg"]
+[ext_resource type="Script" path="res://Bookbearers/Code/Camera3D2.gd" id="5_6w5mo"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/posp1l.gdshader" id="6_5kata"]
+[ext_resource type="Texture2D" uid="uid://831wp8b36yyb" path="res://Bookbearers/Textures/clouds-7613361_1920.png" id="6_bqxqb"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/pos1sonas.gdshader" id="8_b5jmd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm63p"]
 
@@ -98,9 +102,38 @@ height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6rb4b"]
+panorama = ExtResource("6_bqxqb")
+
+[sub_resource type="Sky" id="Sky_38als"]
+sky_material = SubResource("PanoramaSkyMaterial_6rb4b")
+radiance_size = 0
+
 [sub_resource type="Environment" id="Environment_cp4k0"]
-background_energy_multiplier = 10.0
+background_mode = 2
+sky = SubResource("Sky_38als")
+ambient_light_source = 1
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+reflected_light_source = 1
 glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ckb2w"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d54ud"]
+render_priority = 0
+shader = ExtResource("6_5kata")
+shader_parameter/blur_strength = 6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6g6e"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_d54ud")
+shader = ExtResource("8_b5jmd")
+shader_parameter/blur_strength = 6
+shader_parameter/radius = 0.3
+shader_parameter/feather = 0.05
 
 [node name="Turtorial" type="Node3D"]
 
@@ -116,7 +149,7 @@ script = ExtResource("1_ypa8j")
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -0.130666, -0.00419044, -0.00366402)
 shape = SubResource("BoxShape3D_qm63p")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -144,7 +177,8 @@ surface_material_override/0 = ExtResource("4_ifdn2")
 shape = SubResource("BoxShape3D_3tbtm")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/player"]
-transform = Transform3D(1, 0, 0, 0, -0.264108, 0.964493, 0, -0.964493, -0.264108, 0, 3.5, -1.38958)
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 1.94, -0.83)
+script = ExtResource("5_6w5mo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/player"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.97907)
@@ -158,12 +192,18 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy"]
-transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
+transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.13, -0.595)
+script = ExtResource("5_6w5mo")
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
 text = "2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.0904779, -0.0494976, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="enemy2" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -15)
@@ -172,12 +212,18 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy2"]
-transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
+transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.06, -0.455)
+script = ExtResource("5_6w5mo")
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy2"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
 text = "2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.143822, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="enemy3" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -12.8)
@@ -186,12 +232,18 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy3"]
-transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
+transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.06, -0.455)
+script = ExtResource("5_6w5mo")
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
 text = "2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.113292, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="enemy4" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -12.8)
@@ -200,12 +252,18 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy4"]
-transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
+transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.235, -0.555)
+script = ExtResource("5_6w5mo")
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy4"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
 text = "2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.130984, -0.0415163, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
@@ -405,6 +463,13 @@ environment = SubResource("Environment_cp4k0")
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.737266, 0.675603, 0, -0.675603, 0.737266, 0, 14.8139, 0)
+
+[node name="postprocessing2" type="MeshInstance3D" parent="."]
+visible = false
+layers = 16384
+gi_mode = 0
+mesh = SubResource("QuadMesh_ckb2w")
+surface_material_override/0 = SubResource("ShaderMaterial_c6g6e")
 
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]

@@ -8,7 +8,7 @@ extends CharacterBody3D
 
 @export var rdriba = 0.5
 @export var ruriba = -1.5
-
+@onready var mat = preload("res://Bookbearers/Efektai/post1.material")
 
 func _process(delta):
 	if Global.cameramove:	
@@ -52,9 +52,6 @@ func _process(delta):
 			
 		if Input.is_action_pressed("rotate_right"):
 			rotation.y -= rotationspeed * delta
-			
-			
-		
 		move_and_slide()
 
 

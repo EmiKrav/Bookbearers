@@ -14,7 +14,6 @@ size = Vector3(2, 0.1, 2)
 subdivide_width = 32
 
 [node name="Node3D" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_oqmw7")
 
 [node name="DviGRandines" type="Node3D" parent="."]

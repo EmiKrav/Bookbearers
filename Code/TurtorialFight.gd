@@ -92,6 +92,7 @@ func playermove(langelistomove):
 	Global.cameramove = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
+	
 	var pos = map_to_local(langelistomove)
 	moving = true
 	selected = false
