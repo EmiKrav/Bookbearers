@@ -14,8 +14,11 @@ func _process(delta):
 		#$"../../../postprocessing".global_position =$".".global_position;
 		#$"../../../postprocessing".visible=true;
 		$"../../../postprocessing2".global_position =$".".global_position;
+		$"../../../postprocessing3".visible=false;
 		$"../../../postprocessing2".visible=true;
+		
 	if (using==true and $"../../../StaticBody3D2/Camera3D".current==true):
 		#$"../../../postprocessing".visible=false;
 		$"../../../postprocessing2".visible=false;
+		$"../../../postprocessing3".visible=true;
 		using=false;

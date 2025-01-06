@@ -52,6 +52,8 @@ func _process(delta):
 			
 		if Input.is_action_pressed("rotate_right"):
 			rotation.y -= rotationspeed * delta
+		$"../postprocessing3".global_position =$".".global_position;
+		
 		move_and_slide()
 
 

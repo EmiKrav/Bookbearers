@@ -276,6 +276,8 @@ func useskill2():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
+		$"../postprocessing3".visible = false;
+		langeliomat["render_priority"]=0;
 		skill2 = false
 		skillusage2 = false
 		skill2curcoldown = skill2coldown
@@ -304,9 +306,11 @@ func useskill2():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill2dmg)
 	usingskills = false
-	
+	langeliomat["render_priority"]=1;
+	$"../postprocessing3".visible=true;
 func useskill3():
 	usingskills = true
+	$"../postprocessing3".visible=false;
 	var langelistomove = shoot_ray()
 	var ppos = pcurrentpos
 	var at1 : Array
@@ -359,7 +363,8 @@ func useskill3():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill3dmg)
 	usingskills = false
-	
+	langeliomat["render_priority"]=1;
+	$"../postprocessing3".visible=true;
 func useskill1():
 	usingskills = true
 	var langelistomove = shoot_ray()
@@ -382,6 +387,8 @@ func useskill1():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
+		$"../postprocessing3".visible=false;
+		langeliomat["render_priority"]=0;
 		if skillset == 1:
 			var zaibas = zaibas.instantiate()
 			$'.'.add_child(zaibas)
@@ -438,6 +445,8 @@ func useskill1():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skilldmg)
 	usingskills = false
+	langeliomat["render_priority"]=1;
+	$"../postprocessing3".visible=true;
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
 	var mouse_pos = get_viewport().get_mouse_position()

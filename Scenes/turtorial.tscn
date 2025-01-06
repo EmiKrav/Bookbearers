@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=45 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
 [ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_f43eu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Shader" path="res://Bookbearers/Efektai/posp1l.gdshader" id="6_5kata"]
 [ext_resource type="Texture2D" uid="uid://831wp8b36yyb" path="res://Bookbearers/Textures/clouds-7613361_1920.png" id="6_bqxqb"]
 [ext_resource type="Shader" path="res://Bookbearers/Efektai/pos1sonas.gdshader" id="8_b5jmd"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/outlinepostproc.gdshader" id="10_l3bvm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm63p"]
 
@@ -134,6 +135,18 @@ shader = ExtResource("8_b5jmd")
 shader_parameter/blur_strength = 6
 shader_parameter/radius = 0.3
 shader_parameter/feather = 0.05
+
+[sub_resource type="QuadMesh" id="QuadMesh_xijy5"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0l05m"]
+render_priority = 0
+shader = ExtResource("10_l3bvm")
+shader_parameter/zNear = 0.05
+shader_parameter/zFar = 100.0
+shader_parameter/outlineThickness = 1.5
+shader_parameter/outlineColor = Color(1, 1, 1, 1)
 
 [node name="Turtorial" type="Node3D"]
 
@@ -470,6 +483,15 @@ layers = 16384
 gi_mode = 0
 mesh = SubResource("QuadMesh_ckb2w")
 surface_material_override/0 = SubResource("ShaderMaterial_c6g6e")
+
+[node name="postprocessing3" type="MeshInstance3D" parent="."]
+layers = 16384
+cast_shadow = 0
+extra_cull_margin = 1195.91
+ignore_occlusion_culling = true
+gi_mode = 0
+mesh = SubResource("QuadMesh_xijy5")
+surface_material_override/0 = SubResource("ShaderMaterial_0l05m")
 
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]

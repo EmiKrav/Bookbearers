@@ -1,0 +1,88 @@
+shader_type spatial;
+render_mode unshaded, depth_draw_opaque, cull_disabled;
+
+
+// Parameters
+uniform float zNear = 0.05; 
+uniform float zFar = 100;  
+uniform float outlineThickness = 1.5; 
+uniform vec3 outlineColor : source_color = vec3(0.0);
+
+uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_nearest;
+
+// Sobel Filter x
+const mat3 Sy = mat3(
+	vec3(1.0, 0.0, -1.0),
+	vec3(2.0, 0.0, -2.0),
+	vec3(1.0, 0.0, -1.0)
+);
+
+// Sobel Filter y
+const mat3 Sx = mat3(
+	vec3(1.0, 2.0, 1.0),
+	vec3(0.0, 0.0, 0.0),
+	vec3(-1.0, -2.0, -1.0)
+);
+
+void vertex() {
+	POSITION = vec4(VERTEX, 1.0);
+}
+
+// Retrieve and scale depth from the depth buffer
+float depth(sampler2D depth_texture, vec2 screen_uv,  mat4 inv_projection_matrix){
+	float raw_depth = texture(depth_texture, screen_uv)[0];
+	vec3 ndc = vec3(screen_uv, raw_depth);
+    vec4 view_space = inv_projection_matrix * vec4(ndc, 1.0);	
+	view_space.xyz /= view_space.w;
+	float linear_depth = view_space.z ; 
+	float scaled_depth = (zFar-zNear)/(zNear  + linear_depth*(zFar -zNear));
+	return scaled_depth;
+}
+
+// Compute edges detection from depth using x,y sobel filters
+float sobel_depth(in vec2 uv,  in vec2 offset,  mat4 inv_projection_matrix) {
+	float d00 = depth(DEPTH_TEXTURE, uv + offset * vec2(-1,-1),inv_projection_matrix);
+	float d01 = depth(DEPTH_TEXTURE, uv + offset * vec2(-1, 0),inv_projection_matrix);
+	float d02 = depth(DEPTH_TEXTURE, uv + offset * vec2(-1, 1),inv_projection_matrix);
+	
+	float d10 = depth(DEPTH_TEXTURE, uv + offset * vec2( 0,-1),inv_projection_matrix);
+	float d11 = depth(DEPTH_TEXTURE, uv + offset * vec2( 0, 0),inv_projection_matrix);
+	float d12 = depth(DEPTH_TEXTURE, uv + offset * vec2( 0, 1),inv_projection_matrix);
+	
+	float d20 = depth(DEPTH_TEXTURE, uv + offset * vec2( 1,-1),inv_projection_matrix);
+	float d21 = depth(DEPTH_TEXTURE, uv + offset * vec2( 1, 0),inv_projection_matrix);
+	float d22 = depth(DEPTH_TEXTURE, uv + offset * vec2( 1, 1),inv_projection_matrix);
+	
+	float xSobelDepth =
+	Sx[0][0] * d00 + Sx[1][0] * d10 + Sx[2][0] * d20 +
+	Sx[0][1] * d01 + Sx[1][1] * d11 + Sx[2][1] * d21 +
+	Sx[0][2] * d02 + Sx[1][2] * d12 + Sx[2][2] * d22;
+	
+	float ySobelDepth =
+	Sy[0][0] * d00 + Sy[1][0] * d10 + Sy[2][0] * d20 +
+	Sy[0][1] * d01 + Sy[1][1] * d11 + Sy[2][1] * d21 +
+	Sy[0][2] * d02 + Sy[1][2] * d12 + Sy[2][2] * d22;
+	return  sqrt(pow(xSobelDepth, 2.0) + pow(ySobelDepth, 2.0));
+}
+
+
+void fragment() {  
+	vec2 offset = outlineThickness/ VIEWPORT_SIZE;
+	vec2 uv = SCREEN_UV;
+	// Access the depth buffer
+	float depth = depth(DEPTH_TEXTURE, uv, INV_PROJECTION_MATRIX);
+
+	
+	vec3 pixelColor = texture(SCREEN_TEXTURE, uv).rgb; 
+	
+
+	// Edge detection using depth buffer
+	float edgeDepth = sobel_depth(uv, offset, INV_PROJECTION_MATRIX);
+	// Mix both edge detection
+	float outline = clamp(0.0,1.0,distance(depth,edgeDepth)*edgeDepth*25.0);
+	// Mix color and edges
+	ALBEDO = mix(pixelColor, outlineColor,  outline);
+}
+
