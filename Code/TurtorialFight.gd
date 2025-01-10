@@ -11,7 +11,9 @@ extends GridMap
 @onready var duobe = preload("res://Bookbearers/Efektai/map.material")
 @onready var lektuvai = preload("res://Bookbearers/Efektai/lektuvas.tscn")
 @onready var grandine = preload("res://Bookbearers/Efektai/grandine.tscn")
+@onready var meninis = preload("res://Bookbearers/Efektai/meninis.tscn")
 
+var turnnumber=2;
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
@@ -699,6 +701,16 @@ func showMovement(playermovementPointsx, playermovementPointsz):
 func _on_texture_rect_pressed():
 	
 	if !moving:
+		$"../CanvasLayer".visible=false;
+		var meninis = meninis.instantiate()
+		$"..".add_child(meninis)
+		await get_tree().create_timer(4).timeout
+		meninis.get_child(0).get_child(1).visible=true
+		meninis.get_child(0).get_child(1).text="TURN: "+str(turnnumber);
+		await get_tree().create_timer(2).timeout
+		meninis.queue_free()
+		turnnumber+=1;
+		$"../CanvasLayer".visible=true;
 		Global.cameramove = false
 		skillusage = false
 		skill = false

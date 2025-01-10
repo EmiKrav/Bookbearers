@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cglmtuf64euh0"]
+[gd_scene load_steps=27 format=3 uid="uid://cglmtuf64euh0"]
 
 [ext_resource type="Script" path="res://Bookbearers/Efektai/zaibas.gd" id="1_nn3d7"]
 [ext_resource type="Shader" path="res://Bookbearers/Efektai/raides.gdshader" id="1_v6pi1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bvw6k86v033pc" path="res://Bookbearers/Textures/particle512x512.png" id="4_1aphj"]
 [ext_resource type="Shader" path="res://Bookbearers/Efektai/zaibas.gdshader" id="4_gvrtw"]
 [ext_resource type="Texture2D" uid="uid://bpcvwlyebb7sf" path="res://Bookbearers/Textures/lighning -stright.png" id="5_hiynp"]
+[ext_resource type="Shader" path="res://Bookbearers/Efektai/skydarker.gdshader" id="8_cw8dg"]
 
 [sub_resource type="Curve" id="Curve_7tf0v"]
 min_value = -1.0
@@ -95,8 +96,8 @@ noise = SubResource("FastNoiseLite_icusp")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tof2v"]
 shader = ExtResource("3_ckd7w")
 shader_parameter/density = 1.0
-shader_parameter/albedo = Color(0.274142, 0.624189, 1, 1)
-shader_parameter/emission = Color(0.219501, 0.219501, 0.219501, 1)
+shader_parameter/albedo = Color(0, 0.439582, 0.803591, 1)
+shader_parameter/emission = Color(0.513233, 0.513233, 0.513233, 1)
 shader_parameter/height_falloff = 0.0
 shader_parameter/edge_fade = 5.585
 shader_parameter/flatn = 3.215
@@ -105,14 +106,43 @@ shader_parameter/rad = 20.06
 shader_parameter/density_texture = SubResource("NoiseTexture3D_j8q52")
 shader_parameter/noisetex = SubResource("NoiseTexture2D_vgr4u")
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cd2l7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4c88"]
+shader = ExtResource("8_cw8dg")
+shader_parameter/day_top_color = Color(0, 0.103118, 0.204353, 1)
+shader_parameter/day_bottom_color = Color(1.56425e-07, 0.0830734, 0.127904, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(8.42288e-08, 0.178476, 0.2094, 1)
+shader_parameter/horizon_blur = 1.0
+shader_parameter/sun_color = Color(0, 0, 0, 1)
+shader_parameter/sun_sunset_color = Color(0, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
 
-[sub_resource type="Sky" id="Sky_3m61y"]
-sky_material = SubResource("ProceduralSkyMaterial_cd2l7")
+[sub_resource type="Sky" id="Sky_e73pk"]
+sky_material = SubResource("ShaderMaterial_h4c88")
 
 [sub_resource type="Environment" id="Environment_us4ij"]
 background_mode = 2
-sky = SubResource("Sky_3m61y")
+sky = SubResource("Sky_e73pk")
 glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
