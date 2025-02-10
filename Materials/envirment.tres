@@ -1,0 +1,14 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://dl2acpk2i6h63"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8jiu5"]
+
+[sub_resource type="Sky" id="Sky_38als"]
+sky_material = SubResource("PanoramaSkyMaterial_8jiu5")
+
+[resource]
+sky = SubResource("Sky_38als")
+ambient_light_source = 1
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+reflected_light_source = 1
+glow_enabled = true

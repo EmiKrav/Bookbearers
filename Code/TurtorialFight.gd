@@ -5,13 +5,8 @@ extends GridMap
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 @onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
-@onready var playermat = preload("res://Bookbearers/Materials/turtorial.tres")
-@onready var zaibas = preload("res://Bookbearers/Efektai/zaibas.tscn")
-@onready var ugnis = preload("res://Bookbearers/Efektai/ugnis.tscn")
-@onready var duobe = preload("res://Bookbearers/Efektai/map.material")
-@onready var lektuvai = preload("res://Bookbearers/Efektai/lektuvas.tscn")
-@onready var grandine = preload("res://Bookbearers/Efektai/grandine.tscn")
-@onready var meninis = preload("res://Bookbearers/Efektai/meninis.tscn")
+
+#@onready var duobe = preload("res://Bookbearers/Efektai/map.material")
 
 var turnnumber=2;
 @export var maxplayermovementPoints = 4
@@ -61,10 +56,9 @@ var skillset = 1;
 @onready var enemy3 = $enemy3
 @onready var enemy4 = $enemy4
 @onready var langeliai = $Node3D
-@onready var noise = playermat.get_shader_parameter("bleeding");
 
 func _ready():
-	noise.noise.seed = randi()%1000;
+	#noise.noise.seed = randi()%1000;
 	
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
@@ -227,7 +221,7 @@ func animacijalang():
 	moving = true;
 	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
 	$"../CanvasLayer/Panel/TextureRect"["disabled"]= true
-	await get_tree().create_timer(10).timeout
+	await get_tree().create_timer(1).timeout
 	var tween = create_tween()
 	tween.tween_property(langeliai.get_child(0), "material_override:albedo_color:a", 0, 1)
 	if langeliai.get_child_count() > 1:
@@ -278,14 +272,13 @@ func useskill2():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-		$"../postprocessing3".visible = false;
-		langeliomat["render_priority"]=0;
+		
 		skill2 = false
 		skillusage2 = false
 		skill2curcoldown = skill2coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
-		duobe.set_shader_parameter("duobe", true)
+		#duobe.set_shader_parameter("duobe", true)
 		
 		var array: Array[Vector3] = []
 		for i in range(0, langeliai.get_child_count()):
@@ -294,11 +287,11 @@ func useskill2():
 				var tween = create_tween()
 				tween.tween_property(langeliai.get_child(i), "material_override:albedo_color:a", 0, 0)
 	
-		duobe.set_shader_parameter("duobkord", array)
+		#duobe.set_shader_parameter("duobkord", array)
 		for i in range(0,array.size()):
 			enemytrapped(local_to_map(array[i]))
 		await animacijalang()
-		duobe.set_shader_parameter("duobe", false)
+		#duobe.set_shader_parameter("duobe", false)
 		for i in range(0,array.size()):
 			enemyuntrapped(local_to_map(array[i]))
 		for i in range(0, langeliai.get_child_count()):
@@ -308,11 +301,8 @@ func useskill2():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill2dmg)
 	usingskills = false
-	langeliomat["render_priority"]=1;
-	$"../postprocessing3".visible=true;
 func useskill3():
 	usingskills = true
-	$"../postprocessing3".visible=false;
 	var langelistomove = shoot_ray()
 	var ppos = pcurrentpos
 	var at1 : Array
@@ -351,12 +341,12 @@ func useskill3():
 		skill3curcoldown = skill3coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
-		var ugnis = ugnis.instantiate()
-		$'.'.add_child(ugnis)
-		var pos = map_to_local(langelistomove)
-		var plpos = map_to_local(pcurrentpos)
-		var dis = Vector3(pos.x, pos.y + 1.3, plpos.z); 
-		ugnis.position = dis + Vector3(0,1.3,0)#map_to_local(pcurrentpos) + Vector3(0,1.3,-1.0)
+		#var ugnis = ugnis.instantiate()
+		#$'.'.add_child(ugnis)
+		#var pos = map_to_local(langelistomove)
+		#var plpos = map_to_local(pcurrentpos)
+		#var dis = Vector3(pos.x, pos.y + 1.3, plpos.z); 
+		#ugnis.position = dis + Vector3(0,1.3,0)#map_to_local(pcurrentpos) + Vector3(0,1.3,-1.0)
 		await animacijalang()
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -365,8 +355,6 @@ func useskill3():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill3dmg)
 	usingskills = false
-	langeliomat["render_priority"]=1;
-	$"../postprocessing3".visible=true;
 func useskill1():
 	usingskills = true
 	var langelistomove = shoot_ray()
@@ -389,52 +377,51 @@ func useskill1():
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-		$"../postprocessing3".visible=false;
-		langeliomat["render_priority"]=0;
-		if skillset == 1:
-			var zaibas = zaibas.instantiate()
-			$'.'.add_child(zaibas)
-			var pos = map_to_local(langelistomove)
-			zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
-			zaibas.get_child(1).position = pos
-			await get_tree().create_timer(20).timeout
-		if skillset == 3:
-			var grandine = grandine.instantiate()
-			$'.'.add_child(grandine)
-			var pos = map_to_local(langelistomove)
-			grandine.position = map_to_local(pcurrentpos + Vector3i(0,1.0,0))
-			await get_tree().create_timer(10).timeout
-			var tweengrand = create_tween()
-			tweengrand.tween_property(grandine, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
-			tweengrand.finished
-			await get_tree().create_timer(5).timeout
-		if skillset == 2:
-			var lektuvas = lektuvai.instantiate()
-			$'.'.add_child(lektuvas)
-			var pos = map_to_local(langelistomove)
-			lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
-			#print(lektuvomat.get_shader_parameter("sk"));
-			await get_tree().create_timer(5).timeout
-			var angle = Vector2(lektuvas.position.x, lektuvas.position.z).angle_to(Vector2(pos.x,pos.z));
-			var rotationlek = 0;
-			#dv
-			if (lektuvas.position.x < pos.x && lektuvas.position.z > pos.z):
-				rotationlek += angle; 
-			#kv
-			if (lektuvas.position.x > pos.x && lektuvas.position.z > pos.z):
-				rotationlek += angle;
-			#da
-			if (lektuvas.position.z < pos.z && lektuvas.position.x < pos.x):
-				rotationlek = -angle - PI;
-			# ka
-			if (lektuvas.position.z < pos.z && lektuvas.position.x > pos.x):
-				rotationlek += -angle + PI;
-			var tweenlekr = create_tween()
-			tweenlekr.tween_property(lektuvas, "rotation", Vector3(lektuvas.rotation.x, lektuvas.rotation.y + rotationlek, lektuvas.rotation.z), 3)
-			await tweenlekr.finished
-			var tweenlek = create_tween()
-			tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
-			tweenlek.finished
+		
+		#if skillset == 1:
+			#var zaibas = zaibas.instantiate()
+			#$'.'.add_child(zaibas)
+			#var pos = map_to_local(langelistomove)
+			#zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
+			#zaibas.get_child(1).position = pos
+			#await get_tree().create_timer(20).timeout
+		#if skillset == 3:
+			#var grandine = grandine.instantiate()
+			#$'.'.add_child(grandine)
+			#var pos = map_to_local(langelistomove)
+			#grandine.position = map_to_local(pcurrentpos + Vector3i(0,1.0,0))
+			#await get_tree().create_timer(10).timeout
+			#var tweengrand = create_tween()
+			#tweengrand.tween_property(grandine, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
+			#tweengrand.finished
+			#await get_tree().create_timer(5).timeout
+		#if skillset == 2:
+			#var lektuvas = lektuvai.instantiate()
+			#$'.'.add_child(lektuvas)
+			#var pos = map_to_local(langelistomove)
+			#lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
+			##print(lektuvomat.get_shader_parameter("sk"));
+			#await get_tree().create_timer(5).timeout
+			#var angle = Vector2(lektuvas.position.x, lektuvas.position.z).angle_to(Vector2(pos.x,pos.z));
+			#var rotationlek = 0;
+			##dv
+			#if (lektuvas.position.x < pos.x && lektuvas.position.z > pos.z):
+				#rotationlek += angle; 
+			##kv
+			#if (lektuvas.position.x > pos.x && lektuvas.position.z > pos.z):
+				#rotationlek += angle;
+			##da
+			#if (lektuvas.position.z < pos.z && lektuvas.position.x < pos.x):
+				#rotationlek = -angle - PI;
+			## ka
+			#if (lektuvas.position.z < pos.z && lektuvas.position.x > pos.x):
+				#rotationlek += -angle + PI;
+			#var tweenlekr = create_tween()
+			#tweenlekr.tween_property(lektuvas, "rotation", Vector3(lektuvas.rotation.x, lektuvas.rotation.y + rotationlek, lektuvas.rotation.z), 3)
+			#await tweenlekr.finished
+			#var tweenlek = create_tween()
+			#tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
+			#tweenlek.finished
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"
@@ -447,8 +434,7 @@ func useskill1():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skilldmg)
 	usingskills = false
-	langeliomat["render_priority"]=1;
-	$"../postprocessing3".visible=true;
+	
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -640,8 +626,6 @@ func enemyMove(ecurrentposi, enemyi):
 func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
-	playermat.set_shader_parameter("bleeding", noise);
-	playermat.set_shader_parameter("bleedamount", playerhealth/10-0.2);
 	await get_tree().create_timer(1).timeout
 	playerhealth= playerhealth-2
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
@@ -702,13 +686,13 @@ func _on_texture_rect_pressed():
 	
 	if !moving:
 		$"../CanvasLayer".visible=false;
-		var meninis = meninis.instantiate()
-		$"..".add_child(meninis)
-		await get_tree().create_timer(4).timeout
-		meninis.get_child(0).get_child(1).visible=true
-		meninis.get_child(0).get_child(1).text="TURN: "+str(turnnumber);
-		await get_tree().create_timer(2).timeout
-		meninis.queue_free()
+		#var meninis = meninis.instantiate()
+		#$"..".add_child(meninis)
+		#await get_tree().create_timer(4).timeout
+		#meninis.get_child(0).get_child(1).visible=true
+		#meninis.get_child(0).get_child(1).text="TURN: "+str(turnnumber);
+		#await get_tree().create_timer(2).timeout
+		#meninis.queue_free()
 		turnnumber+=1;
 		$"../CanvasLayer".visible=true;
 		Global.cameramove = false

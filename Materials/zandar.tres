@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://waivying8h2e"]
 
-[ext_resource type="Texture2D" uid="uid://b1llos4qtnt0o" path="res://Bookbearers/Textures/zanda.png" id="1_hmdop"]
+[ext_resource type="Texture2D" uid="uid://bpcvc23bfquud" path="res://Bookbearers/Textures/enemy.png" id="1_t2ap8"]
 
 [resource]
 transparency = 2
@@ -8,4 +8,5 @@ alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
 depth_draw_mode = 1
-albedo_texture = ExtResource("1_hmdop")
+shading_mode = 0
+albedo_texture = ExtResource("1_t2ap8")

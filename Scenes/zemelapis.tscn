@@ -1,20 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://brvo832id34ap"]
+[gd_scene load_steps=23 format=3 uid="uid://brvo832id34ap"]
 
 [ext_resource type="MeshLibrary" uid="uid://bnn22ovaht85a" path="res://Bookbearers/Tiles/Tileszemelap.tres" id="1_fck5j"]
 [ext_resource type="Script" path="res://Bookbearers/Code/zemelapis.gd" id="1_oowoj"]
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3DMap.gd" id="3_f5m4d"]
-[ext_resource type="Texture2D" uid="uid://cxudi6jniwn08" path="res://Bookbearers/Textures/knyg.png" id="3_u1lcu"]
+[ext_resource type="Material" uid="uid://3s2t06rekbws" path="res://Bookbearers/Materials/player.tres" id="4_1tcu3"]
+[ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_gburw"]
+[ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="6_u8oho"]
+[ext_resource type="Texture2D" uid="uid://ctv2ny2uy6may" path="res://Bookbearers/Textures/cloudkrita.png" id="7_ah4j4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vna6o"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ctong"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oi2sv"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-cull_mode = 2
-albedo_texture = ExtResource("3_u1lcu")
+material = ExtResource("4_1tcu3")
+size = Vector2(1.25, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7my7i"]
 size = Vector3(1.22839, 0.363525, 1.77177)
@@ -29,17 +27,8 @@ albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 size = Vector3(4.36224, 1.91614, 1.04297)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_x03e1"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w8jlt"]
-load_path = "res://.godot/imported/zanda.png-5627caf159fe740993f29d1f73674caf.s3tc.ctex"
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djpv5"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-cull_mode = 2
-depth_draw_mode = 1
-albedo_texture = SubResource("CompressedTexture2D_w8jlt")
+material = ExtResource("5_gburw")
+size = Vector2(1.25, 2)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ytvpx"]
 data = PackedVector3Array(0, -0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 0, -0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, -0.6007, -0.6007, -1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, -0.6007, 1.5017, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 0, -0.6007, 1.5017, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, 0.6007, -1.3081, -0.6007, 0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, 0.6007, -1.3081, -0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 1.3081, -0.6007, -0.6007, 1.3081, 0.6007, 0.6007, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, -0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, -1.5017, 0, -0.6007, -1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, -0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, -0.6007, -0.6007, 0, 0.6007, -1.5017, 0, 0.6007, -1.5017, -1.3081, -0.6007, -0.6007, 0, -0.6007, -1.5017, 1.3081, 0.6007, 0.6007, 1.3081, -0.6007, 0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, -0.6007, 0.6007, 0, -0.6007, 1.5017, 0, 0.6007, -1.5017, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, -1.3081, 0.6007, -0.6007, 1.3081, 0.6007, -0.6007, -1.3081, 0.6007, 0.6007, -1.3081, 0.6007, 0.6007, 1.3081, 0.6007, -0.6007, 0, 0.6007, 1.5017, 0, 0.6007, 1.5017, 1.3081, 0.6007, -0.6007, 1.3081, 0.6007, 0.6007)
@@ -63,9 +52,14 @@ fill_from = Vector2(1, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ypvfa"]
 
-[sub_resource type="Environment" id="Environment_r5o18"]
-background_energy_multiplier = 5.0
-glow_enabled = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56dvv"]
+shading_mode = 0
+albedo_texture = ExtResource("7_ah4j4")
+heightmap_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_4ibw6"]
+material = SubResource("StandardMaterial3D_56dvv")
+flip_faces = true
 
 [node name="Zemelapis" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.745014, 0, 0)
@@ -127,7 +121,6 @@ unique_name_in_owner = true
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 1, 4.6)
 mesh = SubResource("PlaneMesh_ctong")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_oi2sv")
 
 [node name="Area3D" type="Area3D" parent="player"]
 collision_layer = 4
@@ -168,7 +161,6 @@ shape = SubResource("BoxShape3D_dxk3a")
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, -0.0645376, 0.950891, -2.24148)
 mesh = SubResource("PlaneMesh_x03e1")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_djpv5")
 
 [node name="Area3D" type="Area3D" parent="enemy"]
 collision_layer = 2
@@ -276,7 +268,11 @@ transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 
 shape = SubResource("ConcavePolygonShape3D_ytvpx")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_r5o18")
+environment = ExtResource("6_u8oho")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment"]
+transform = Transform3D(500, 0, 0, 0, 500, 0, 0, 0, 500, -11.3278, 87.8008, -5.20008)
+mesh = SubResource("SphereMesh_4ibw6")
 
 [connection signal="input_event" from="player/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap" method="_on_area_3d_input_event"]

@@ -1,10 +1,12 @@
-[gd_scene load_steps=31 format=3 uid="uid://c7rauur2rx5ic"]
+[gd_scene load_steps=36 format=3 uid="uid://c7rauur2rx5ic"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_81alu"]
 [ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_3wemk"]
 [ext_resource type="Script" path="res://Bookbearers/Code/MapFight.gd" id="3_uu2b1"]
-[ext_resource type="Texture2D" uid="uid://cxudi6jniwn08" path="res://Bookbearers/Textures/knyg.png" id="4_b1xkw"]
+[ext_resource type="Material" uid="uid://3s2t06rekbws" path="res://Bookbearers/Materials/player.tres" id="4_4itab"]
 [ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_dqayo"]
+[ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="6_lxcrk"]
+[ext_resource type="Texture2D" uid="uid://ctv2ny2uy6may" path="res://Bookbearers/Textures/cloudkrita.png" id="7_y6gxx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm63p"]
 
@@ -15,13 +17,7 @@ size = Vector2(32, 32)
 albedo_color = Color(0.0431373, 0.196078, 0.0588235, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_p0mc2"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xh1c7"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-cull_mode = 2
-albedo_texture = ExtResource("4_b1xkw")
+size = Vector2(1.25, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3tbtm"]
 size = Vector3(1.22839, 0.363525, 1.77177)
@@ -33,68 +29,90 @@ height = 0.1
 albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ojjs7"]
+size = Vector2(1.25, 2)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_nyhfe"]
+size = Vector2(1.25, 2)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_me6y2"]
+size = Vector2(1.25, 2)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dvftp"]
+size = Vector2(1.25, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="Gradient" id="Gradient_popui"]
+[sub_resource type="Gradient" id="Gradient_wh1ay"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_l7xdt"]
-gradient = SubResource("Gradient_popui")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xvd74"]
+gradient = SubResource("Gradient_wh1ay")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Gradient" id="Gradient_itks2"]
+[sub_resource type="Gradient" id="Gradient_0vweo"]
 offsets = PackedFloat32Array(0, 0.00495049)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kc60w"]
-gradient = SubResource("Gradient_itks2")
-width = 100
-height = 100
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_33hqx"]
+gradient = SubResource("Gradient_0vweo")
+width = 150
+height = 150
 fill_from = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_gs37r"]
+[sub_resource type="Gradient" id="Gradient_2otp0"]
 offsets = PackedFloat32Array(0, 0.00526316)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hbu6s"]
-gradient = SubResource("Gradient_gs37r")
-width = 100
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g8b3q"]
+gradient = SubResource("Gradient_2otp0")
+width = 150
 height = 20
+fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_m50kh"]
+[sub_resource type="Gradient" id="Gradient_q53am"]
 offsets = PackedFloat32Array(0.994737, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rh2yr"]
-gradient = SubResource("Gradient_m50kh")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dta8k"]
+gradient = SubResource("Gradient_q53am")
 width = 100
 height = 20
 fill_from = Vector2(1, 0)
 
-[sub_resource type="Gradient" id="Gradient_kgb5x"]
+[sub_resource type="Gradient" id="Gradient_13swi"]
+offsets = PackedFloat32Array(0.995215, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_y101o"]
-gradient = SubResource("Gradient_kgb5x")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sy6e1"]
+gradient = SubResource("Gradient_13swi")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_p1kn7"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jwreb"]
+gradient = SubResource("Gradient_p1kn7")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_rm0od"]
+[sub_resource type="Gradient" id="Gradient_765lj"]
 offsets = PackedFloat32Array(0.983108, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_55w0d"]
-gradient = SubResource("Gradient_rm0od")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l6k37"]
+gradient = SubResource("Gradient_765lj")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocnck"]
+shading_mode = 0
+albedo_texture = ExtResource("7_y6gxx")
+heightmap_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_njxkv"]
+material = SubResource("StandardMaterial3D_ocnck")
+flip_faces = true
 
 [node name="MapFight" type="Node3D"]
 
@@ -127,10 +145,10 @@ script = ExtResource("3_uu2b1")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="player" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, 15)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 1.93, 15)
 mesh = SubResource("PlaneMesh_p0mc2")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_xh1c7")
+surface_material_override/0 = ExtResource("4_4itab")
 
 [node name="Area3D" type="Area3D" parent="GridMap/player"]
 
@@ -141,12 +159,12 @@ shape = SubResource("BoxShape3D_3tbtm")
 transform = Transform3D(1, 0, 0, 0, -0.264108, 0.964493, 0, -0.964493, -0.264108, 0, 3.5, -1.38958)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/player"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.97907)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.90907)
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="enemy" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -15)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.885, 2, -15)
 mesh = SubResource("PlaneMesh_ojjs7")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_dqayo")
@@ -159,8 +177,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117
 visible = false
 text = "1"
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+
 [node name="enemy2" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -15)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.12, 2, -15)
 mesh = SubResource("PlaneMesh_nyhfe")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_dqayo")
@@ -173,8 +196,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117
 visible = false
 text = "1"
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+
 [node name="enemy3" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 2, -12.8)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.88, 2, -12.8)
 mesh = SubResource("PlaneMesh_me6y2")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_dqayo")
@@ -188,8 +216,13 @@ visible = false
 text = "1
 "
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+
 [node name="enemy4" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2, -12.8)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.115, 2, -12.8)
 mesh = SubResource("PlaneMesh_dvftp")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_dqayo")
@@ -201,6 +234,11 @@ transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
 text = "1"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115, 0, 0.97907)
+mesh = SubResource("CylinderMesh_fdhe6")
+surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
@@ -227,7 +265,8 @@ shape = SubResource("BoxShape3D_ueenk")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]
-self_modulate = Color(0, 0, 0, 0)
+self_modulate = Color(1, 1, 1, 0)
+clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -249,7 +288,7 @@ offset_top = -0.000366211
 offset_right = -0.000610352
 grow_horizontal = 0
 grow_vertical = 0
-texture_normal = SubResource("GradientTexture2D_l7xdt")
+texture_normal = SubResource("GradientTexture2D_xvd74")
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -263,59 +302,76 @@ anchor_bottom = 0.73
 grow_horizontal = 2
 grow_vertical = 2
 text = "End Turn"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.808642
-anchor_right = 0.0868056
+anchor_top = 0.731481
+anchor_right = 0.130208
 anchor_bottom = 1.0
-grow_vertical = 0
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
 layout_mode = 2
-texture = SubResource("GradientTexture2D_kc60w")
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_33hqx")
 
 [node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_direction = 2
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 max_value = 10.0
-texture_under = SubResource("GradientTexture2D_hbu6s")
-texture_progress = SubResource("GradientTexture2D_rh2yr")
+nine_patch_stretch = true
+stretch_margin_left = 150
+stretch_margin_top = 10
+stretch_margin_bottom = 10
+texture_under = SubResource("GradientTexture2D_g8b3q")
+texture_progress = SubResource("GradientTexture2D_dta8k")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
-modulate = Color(0.743908, 0.0168396, 0.018844, 1)
+modulate = Color(1, 0.0196078, 0, 1)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -21.5
-offset_top = -11.5
-offset_right = 21.5
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.366319
-anchor_top = 0.876543
-anchor_right = 0.633681
+anchor_left = 0.337
+anchor_top = 0.877
+anchor_right = 0.663
 anchor_bottom = 1.0
+offset_top = -0.296143
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureButton4" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+texture_normal = SubResource("GradientTexture2D_sy6e1")
+stretch_mode = 0
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-texture_normal = SubResource("GradientTexture2D_y101o")
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_jwreb")
+stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
@@ -331,11 +387,13 @@ text = "⌛0/1"
 layout_mode = 1
 offset_right = 38.0
 offset_bottom = 23.0
-text = "⚔️1"
+text = "⚔️2"
 
 [node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
-texture_normal = SubResource("GradientTexture2D_y101o")
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_jwreb")
+stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
@@ -356,7 +414,9 @@ text = "⚔️1"
 
 [node name="TextureButton3" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
-texture_normal = SubResource("GradientTexture2D_55w0d")
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_l6k37")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
 layout_mode = 1
@@ -376,14 +436,15 @@ offset_right = 38.0005
 offset_bottom = 22.0001
 text = "⚔️1"
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("6_lxcrk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment"]
+transform = Transform3D(500, 0, 0, 0, 500, 0, 0, 0, 500, -11.3278, 87.8008, -5.20008)
+mesh = SubResource("SphereMesh_njxkv")
+
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_pressed"]

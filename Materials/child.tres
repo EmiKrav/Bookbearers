@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bs3r8ldvhlw1r"]
+
+[ext_resource type="Texture2D" uid="uid://cdtwm7cs7to6h" path="res://Bookbearers/Textures/mousechild.png" id="1_fwwaw"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("1_fwwaw")
+uv1_offset = Vector3(-0.105, 0, 0)
