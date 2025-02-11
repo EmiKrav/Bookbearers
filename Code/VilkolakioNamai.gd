@@ -9,8 +9,8 @@ var eilute = 0
 
 var goback = false
 @onready var firstfight = preload("res://Bookbearers/Scenes/firstfight.tscn")
-@onready var childhead = preload("res://Bookbearers/Textures/childhead.png")
-@onready var head = preload("res://Bookbearers/Textures/zandahead.png")
+@onready var childhead = preload("res://Bookbearers/Textures/mousechildhead.png")
+@onready var head = preload("res://Bookbearers/Textures/enemyhead.png")
 
 @onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -74,7 +74,7 @@ func _on_area_2d_body_entered(body):
 	
 func mainas():    
 	var number = []
-	var file = FileAccess.open("res://Bookbearers/Code/dialogassuvilku.txt", FileAccess.READ)
+	var file = FileAccess.open("res://Bookbearers/Dialogai/dialogassuvilku.txt", FileAccess.READ)
 	var content = file.get_as_text()
 	dialogas = str_to_var(content)
 
