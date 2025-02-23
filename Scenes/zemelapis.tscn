@@ -3,7 +3,7 @@
 [ext_resource type="MeshLibrary" uid="uid://bnn22ovaht85a" path="res://Bookbearers/Tiles/Tileszemelap.tres" id="1_fck5j"]
 [ext_resource type="Script" path="res://Bookbearers/Code/zemelapis.gd" id="1_oowoj"]
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3DMap.gd" id="3_f5m4d"]
-[ext_resource type="Material" uid="uid://3s2t06rekbws" path="res://Bookbearers/Materials/player.tres" id="4_1tcu3"]
+[ext_resource type="Material" uid="uid://dk1faek2xgva7" path="res://Bookbearers/Materials/playerexplore.tres" id="4_x45uc"]
 [ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_gburw"]
 [ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="6_u8oho"]
 [ext_resource type="Texture2D" uid="uid://ctv2ny2uy6may" path="res://Bookbearers/Textures/cloudkrita.png" id="7_ah4j4"]
@@ -11,7 +11,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_vna6o"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ctong"]
-material = ExtResource("4_1tcu3")
+material = ExtResource("4_x45uc")
 size = Vector2(1.25, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7my7i"]
@@ -77,7 +77,7 @@ cell_center_y = false
 cell_center_z = false
 cell_scale = 0.8
 data = {
-"cells": PackedInt32Array(0, 65528, 1441793, 0, 65529, 1441793, 0, 65533, 1048577, 0, 65534, 1441793, 0, 65535, 1441793, 0, 0, 1441793, 0, 1, 1441793, 0, 2, 1441793, 0, 65530, 1441793, 0, 65531, 1441793, 0, 65532, 1441793)
+"cells": PackedInt32Array(0, 65528, 1441793, 0, 65529, 1441793, 0, 65533, 1048577, 0, 65534, 1441793, 0, 65535, 1441793, 0, 0, 1441793, 0, 1, 1441793, 0, 2, 1441793, 0, 65530, 1441793, 0, 65531, 1441793, 0, 65532, 1441793, 0, 65527, 1441793, 0, 65526, 1441793, 0, 65525, 1441793, 0, 65524, 1441793, 0, 65523, 1441793, 0, 65522, 1441793, 0, 65521, 1441793, 0, 65520, 1441793, 0, 65519, 1441793, 0, 65518, 1441793, 0, 65517, 1441793, 0, 65516, 1441793, 0, 65515, 1441793, 0, 65514, 1441793, 0, 65513, 1441793, 0, 65512, 1441793, 0, 65511, 1441793, 0, 65510, 1441793, 0, 65509, 1441793, 0, 65508, 1441793)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -88,7 +88,7 @@ cell_size = Vector3(3.7, 2, 2.3)
 cell_center_y = false
 cell_scale = 0.8
 data = {
-"cells": PackedInt32Array(0, 65535, 1441793, 65535, 65535, 1441793, 65535, 65533, 1048577, 65535, 65532, 1048577, 65535, 65529, 1441793, 0, 65529, 1441793, 65535, 65528, 1441793, 0, 65528, 1441793, 1, 65535, 1441793)
+"cells": PackedInt32Array(0, 65535, 1441793, 65535, 65535, 1441793, 65535, 65533, 1048577, 65535, 65532, 1048577, 65535, 65529, 1441793, 0, 65529, 1441793, 65535, 65528, 1441793, 0, 65528, 1441793, 1, 65535, 1441793, 0, 65525, 1441793, 65535, 65525, 1441793, 65533, 65525, 1441793, 0, 65519, 1441793, 65535, 65519, 1441793, 65535, 65518, 1441793, 0, 65518, 1441793, 0, 65513, 1441793, 1, 65512, 1441793, 65535, 65513, 1441793, 65534, 65513, 1441793, 0, 65508, 1441793, 65535, 65508, 1441793, 65535, 65507, 1441793, 0, 65507, 1441793, 65534, 65525, 1441793)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -101,16 +101,17 @@ cell_center_y = false
 cell_center_z = false
 cell_scale = 0.8
 data = {
-"cells": PackedInt32Array(65534, 0, 1048577, 2, 65535, 1441793)
+"cells": PackedInt32Array(65534, 0, 1048577, 2, 65535, 1441793, 65534, 65525, 1441793, 65532, 65526, 1441793, 2, 65525, 1441793, 2, 65513, 1441793, 4, 65513, 1441793, 65534, 65513, 1441793, 65532, 65513, 1441793)
 }
 
 [node name="StaticBody3D2" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 1, 5, 17.0479)
+transform = Transform3D(1, 0, 0, 0, 0.967396, 0.253268, 0, -0.253268, 0.967396, -0.288049, 2.53292, 6.87173)
 collision_layer = 128
+input_ray_pickable = false
 script = ExtResource("3_f5m4d")
 
 [node name="Camera3D" type="Camera3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0.514875, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
@@ -142,19 +143,19 @@ transform = Transform3D(33.615, 0, 0, 0, 33.615, 0, 0, 0, 33.615, 0, 0, -49.8416
 collision_mask = 128
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215488, 0.458069, 2.23641)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215488, 0.458069, 2.34213)
 shape = SubResource("BoxShape3D_dxk3a")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215, 0.458, 0.412)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215, 0.458, -1.52735)
 shape = SubResource("BoxShape3D_dxk3a")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.664394, 0.458, 1.045)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.906205, 0.458, 1.045)
 shape = SubResource("BoxShape3D_dxk3a")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.779, 0.458, 1.045)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.855699, 0.458, 1.045)
 shape = SubResource("BoxShape3D_dxk3a")
 
 [node name="enemy" type="MeshInstance3D" parent="."]
@@ -166,14 +167,12 @@ skeleton = NodePath("")
 collision_layer = 2
 collision_mask = 4
 input_ray_pickable = false
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemy/Area3D"]
 transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.124708, -0.0912004, -4.76837e-07)
 shape = SubResource("ConcavePolygonShape3D_ytvpx")
-
-[node name="Label3D" type="Label3D" parent="enemy"]
-visible = false
-text = "5"
 
 [node name="lang" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -254,18 +253,23 @@ size_flags_vertical = 3
 scroll_following = true
 metadata/_edit_use_anchors_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="VilkoNamai" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 5.51536, 0.851351, -1.59206)
 mesh = SubResource("BoxMesh_ypvfa")
 
-[node name="WereHouse" type="Area3D" parent="MeshInstance3D"]
+[node name="WereHouse" type="Area3D" parent="VilkoNamai"]
 collision_layer = 2
 collision_mask = 4
 input_ray_pickable = false
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/WereHouse"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="VilkoNamai/WereHouse"]
 transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.125815, 0.975832, -4.76837e-07)
 shape = SubResource("ConcavePolygonShape3D_ytvpx")
+
+[node name="Label3D" type="Label3D" parent="VilkoNamai"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.828259)
+visible = false
+text = "Space"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_u8oho")
@@ -273,6 +277,42 @@ environment = ExtResource("6_u8oho")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment"]
 transform = Transform3D(500, 0, 0, 0, 500, 0, 0, 0, 500, -11.3278, 87.8008, -5.20008)
 mesh = SubResource("SphereMesh_4ibw6")
+
+[node name="EglesNamai" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, -7.37154, 0.851351, -23.3044)
+mesh = SubResource("BoxMesh_ypvfa")
+
+[node name="TreeHouse" type="Area3D" parent="EglesNamai"]
+collision_layer = 2
+collision_mask = 4
+input_ray_pickable = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="EglesNamai/TreeHouse"]
+transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.125815, 0.975832, -4.76837e-07)
+shape = SubResource("ConcavePolygonShape3D_ytvpx")
+
+[node name="Label3D" type="Label3D" parent="EglesNamai"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.828259)
+visible = false
+text = "Space"
+
+[node name="RobotoNamai" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 7.32197, 0.851351, -53.3448)
+mesh = SubResource("BoxMesh_ypvfa")
+
+[node name="MetalHouse" type="Area3D" parent="RobotoNamai"]
+collision_layer = 2
+collision_mask = 4
+input_ray_pickable = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RobotoNamai/MetalHouse"]
+transform = Transform3D(-0.0243463, -6.3729e-08, -1.4998, -1.4998, 1.13232e-07, 0.0243463, 1.12183e-07, 1.5, -6.55584e-08, 0.125815, 0.975832, -4.76837e-07)
+shape = SubResource("ConcavePolygonShape3D_ytvpx")
+
+[node name="Label3D" type="Label3D" parent="RobotoNamai"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.828259)
+visible = false
+text = "Space"
 
 [connection signal="input_event" from="player/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
@@ -283,4 +323,9 @@ mesh = SubResource("SphereMesh_4ibw6")
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap2" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap3" method="_on_texture_rect_pressed"]
-[connection signal="area_shape_entered" from="MeshInstance3D/WereHouse" to="." method="_on_were_house_area_shape_entered"]
+[connection signal="area_shape_entered" from="VilkoNamai/WereHouse" to="." method="_on_were_house_area_shape_entered"]
+[connection signal="area_shape_exited" from="VilkoNamai/WereHouse" to="." method="_on_were_house_area_shape_exited"]
+[connection signal="area_shape_entered" from="EglesNamai/TreeHouse" to="." method="_on_tree_house_area_shape_entered"]
+[connection signal="area_shape_exited" from="EglesNamai/TreeHouse" to="." method="_on_tree_house_area_shape_exited"]
+[connection signal="area_shape_entered" from="RobotoNamai/MetalHouse" to="." method="_on_metal_house_area_shape_entered"]
+[connection signal="area_shape_exited" from="RobotoNamai/MetalHouse" to="." method="_on_metal_house_area_shape_exited"]

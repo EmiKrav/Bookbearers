@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var upriba = 25
 @export var dpriba = 0
 
-@export var rdriba = -0.5
+@export var rdriba = 1.0
 @export var ruriba = -1.5
 
 

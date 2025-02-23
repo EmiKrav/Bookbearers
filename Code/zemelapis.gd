@@ -4,16 +4,19 @@ extends Node3D
 @onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
 @onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
+@onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var playermovementPoints = 2
+@export var playermovementPoints = 50
 @export var playerhealth = 10
 
 var changetofight = false
 var changetowerehouse = false
+var changetotreehouse = false
+var changetometalhouse = false
 
-var V = 22;
+var V = 65;
 var par =[]
 var dist = []
 var grafas
@@ -66,18 +69,36 @@ func _ready():
 	for i in $GridMap.get_used_cells().size():
 		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
 		pos2 += Vector3(0,0.5,0)
+		#var lang = langelis.instantiate()
+		#langeliai.add_child(lang)
+		#lang.position = pos2
+		#lang.get_child(0).text = "G" 
+		#lang.get_child(1).text = str(i)
+		#lang.get_child(2).text = str($GridMap.get_used_cells()[i])
 		var lang = fog.instantiate()
 		$Node3D.add_child(lang)
 		lang.position = pos2
 	for i in $GridMap2.get_used_cells().size():
 		var pos2 = $GridMap2.map_to_local($GridMap2.get_used_cells()[i])
 		pos2 += Vector3(0,0.5,0)
+		#var lang = langelis.instantiate()
+		#langeliai.add_child(lang)
+		#lang.position = pos2
+		#lang.get_child(0).text = "G2" 
+		#lang.get_child(1).text = str(i)
+		#lang.get_child(2).text = str($GridMap2.get_used_cells()[i])
 		var lang = fog.instantiate()
 		$Node3D.add_child(lang)
 		lang.position = pos2
 	for i in $GridMap3.get_used_cells().size():
 		var pos2 = $GridMap3.map_to_local($GridMap3.get_used_cells()[i])
 		pos2 += Vector3(0,0.5,0)
+		#var lang = langelis.instantiate()
+		#langeliai.add_child(lang)
+		#lang.position = pos2
+		#lang.get_child(0).text = "G3" 
+		#lang.get_child(1).text = str(i)
+		#lang.get_child(2).text = str($GridMap3.get_used_cells()[i])
 		var lang = fog.instantiate()
 		$Node3D.add_child(lang)
 		lang.position = pos2
@@ -131,8 +152,17 @@ func _process(delta):
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
 	if changetowerehouse:
-		Global.grafspot = playercurrentgraphspot
-		get_tree().change_scene_to_packed(werehouse)
+		if Input.is_action_just_pressed("ui_accept"):
+			Global.grafspot = playercurrentgraphspot
+			get_tree().change_scene_to_packed(werehouse)
+	if changetotreehouse:
+		if Input.is_action_just_pressed("ui_accept"):
+			Global.grafspot = playercurrentgraphspot
+			get_tree().change_scene_to_packed(werehouse)
+	if changetometalhouse:
+		if Input.is_action_just_pressed("ui_accept"):
+			Global.grafspot = playercurrentgraphspot
+			get_tree().change_scene_to_packed(werehouse)
 				
 func judeti(numeris):
 		$"StaticBody3D2/Camera3D".current = false
@@ -191,6 +221,7 @@ func showMovement():
 			lang.position = pos2
 			lang.get_child(0).text = "G" 
 			lang.get_child(1).text = str(movemnumb[i])
+			lang.get_child(2).text = str(movemcellls[i])
 		if $GridMap2.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G2":
 			var pos2 = $GridMap2.map_to_local(movemcellls[i])
 			pos2 += Vector3(0,0.5,0)
@@ -199,6 +230,7 @@ func showMovement():
 			lang.position = pos2
 			lang.get_child(0).text= "G2"
 			lang.get_child(1).text = str(movemnumb[i])
+			lang.get_child(2).text = str(movemcellls[i])
 		if $GridMap3.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G3":
 			var pos2 = $GridMap3.map_to_local(movemcellls[i])
 			pos2 += Vector3(0,0.5,0)
@@ -207,6 +239,7 @@ func showMovement():
 			lang.position = pos2
 			lang.get_child(0).text= "G3"
 			lang.get_child(1).text = str(movemnumb[i])
+			lang.get_child(2).text = str(movemcellls[i])
 func findfrom(ind, com, what):
 	if Global.istrynt.find(what,ind+1) != -1:
 		if Global.istryntg[Global.istrynt.find(what,ind+1)] != com:
@@ -242,8 +275,14 @@ func movethere(pos, langelistomove,grafnumr):
 		await tween.finished
 	if movpoint == 0:
 		if playercurrentgraphspot == 8:
+			$VilkoNamai/Label3D.visible = true;
 			changetowerehouse = true
-	
+		if playercurrentgraphspot == 30:
+			$EglesNamai/Label3D.visible = true;
+			changetotreehouse = true
+		if playercurrentgraphspot == 51:
+			$RobotoNamai/Label3D.visible = true;
+			changetometalhouse = true
 	#var tween = create_tween()
 	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
 	#await tween.finished
@@ -373,4 +412,25 @@ func updatequests():
 
 func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	if playercurrentgraphspot == 8:
-		changetowerehouse = true 
+		$VilkoNamai/Label3D.visible = true;
+		changetowerehouse = true;
+func _on_were_house_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot != 8:
+		$VilkoNamai/Label3D.visible = false;
+		changetowerehouse = false;
+func _on_tree_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot == 30:
+		$EglesNamai/Label3D.visible = true;
+		changetotreehouse = true
+func _on_tree_house_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot != 30:
+		$EglesNamai/Label3D.visible = false;
+		changetotreehouse = false
+func _on_metal_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot == 51:
+		$RobotoNamai/Label3D.visible = true;
+		changetometalhouse = true
+func _on_metal_house_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	if playercurrentgraphspot != 51:
+		$RobotoNamai/Label3D.visible = false;
+		changetometalhouse = false
