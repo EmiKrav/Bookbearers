@@ -3,7 +3,7 @@ extends CharacterBody3D
 @export var speed = 10
 @export var rotationspeed = 0.5
 
-@export var upriba = 25
+@export var upriba = 10
 @export var dpriba = 2
 
 @export var rdriba = 0.5

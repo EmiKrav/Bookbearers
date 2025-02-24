@@ -106,13 +106,13 @@ height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocnck"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jr1mb"]
 shading_mode = 0
 albedo_texture = ExtResource("7_y6gxx")
 heightmap_enabled = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_njxkv"]
-material = SubResource("StandardMaterial3D_ocnck")
+material = SubResource("StandardMaterial3D_jr1mb")
 flip_faces = true
 
 [node name="MapFight" type="Node3D"]
