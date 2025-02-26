@@ -6,6 +6,6 @@
 albedo_color = Color(0.0177324, 0.0177324, 0.0177324, 1)
 
 [node name="Untitled" type="MeshInstance3D"]
-transform = Transform3D(-5.50763e-08, 0, 1.26, 0, 3, 0, -1.26, 0, -5.50763e-08, 0, 0, 0)
+transform = Transform3D(-5.50763e-08, 0, 1.26, 0, 3, 0, -1.26, 0, -5.50763e-08, 0, 1.12149, 0)
 mesh = ExtResource("1_4yovi")
 surface_material_override/0 = SubResource("StandardMaterial3D_mcsk7")

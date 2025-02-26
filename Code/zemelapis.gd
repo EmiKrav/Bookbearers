@@ -2,13 +2,14 @@ extends Node3D
 
 @onready var langelis = preload("res://Bookbearers/Scenes/reqejimolang.tscn")
 @onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
+@onready var trees = preload("res://Bookbearers/Scenes/trees.tscn")
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
 @onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 @onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var playermovementPoints = 50
+@export var playermovementPoints = 2
 @export var playerhealth = 10
 
 var changetofight = false
@@ -68,7 +69,7 @@ func _ready():
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
 	for i in $GridMap.get_used_cells().size():
 		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
-		pos2 += Vector3(0,0.5,0)
+		pos2 += Vector3(0,1.5,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2
@@ -80,7 +81,7 @@ func _ready():
 		lang.position = pos2
 	for i in $GridMap2.get_used_cells().size():
 		var pos2 = $GridMap2.map_to_local($GridMap2.get_used_cells()[i])
-		pos2 += Vector3(0,0.5,0)
+		pos2 += Vector3(0,1.5,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2
@@ -92,7 +93,7 @@ func _ready():
 		lang.position = pos2
 	for i in $GridMap3.get_used_cells().size():
 		var pos2 = $GridMap3.map_to_local($GridMap3.get_used_cells()[i])
-		pos2 += Vector3(0,0.5,0)
+		pos2 += Vector3(0,1.5,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2
@@ -102,7 +103,23 @@ func _ready():
 		var lang = fog.instantiate()
 		$Node3D.add_child(lang)
 		lang.position = pos2
+	for i in $GridMap4.get_used_cells().size():
+		var pos2 = $GridMap4.map_to_local($GridMap4.get_used_cells()[i])
+		pos2 += Vector3(0,0.5,0)
 		
+		#if pos2.x < 8 && pos2.x > -8:
+		var lang = trees.instantiate()
+		$Node3D2.add_child(lang)
+		lang.position = pos2
+	for i in $GridMap5.get_used_cells().size():
+		var pos2 = $GridMap5.map_to_local($GridMap5.get_used_cells()[i])
+		pos2 += Vector3(0,0.5,0)
+		
+		#if pos2.x < 8 && pos2.x > -8:
+		var lang = trees.instantiate()
+		$Node3D2.add_child(lang)
+		lang.position = pos2
+			
 	
 	
 	for i in range(0, V):
@@ -131,6 +148,16 @@ func _ready():
 				var pos2 = $GridMap3.map_to_local(Global.istrynt[i])
 				if pos2.x == y.position.x and pos2.z == y.position.z:
 					y.queue_free()		
+		#for i in $GridMap4.get_used_cells().size():
+			#var pos2 = $GridMap4.map_to_local($GridMap4.get_used_cells()[i])
+			#var ppos = %player.position
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -6.0 && ppos.x <= pos2.x +6.0&& ppos.z >= pos2.z -6.0 && ppos.z <= pos2.z +6.0:
+				#y.queue_free()
+		#for i in $GridMap5.get_used_cells().size():
+			#var pos2 = $GridMap5.map_to_local($GridMap5.get_used_cells()[i])
+			#var ppos = %player.position
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x +4.0 && ppos.z >= pos2.z -6.0 && ppos.z <= pos2.z +6.0:
+				#y.queue_free()
 	#for i in $Node3D.get_children():
 		##print(i.position - player.position)
 		#if snapped(i.position.z - player.position.z,0.1) >= snapped(-4.6,0.1) and i.position.x - player.position.x == 0:
@@ -215,7 +242,7 @@ func showMovement():
 	for i in movemcellls.size():
 		if $GridMap.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G":
 			var pos2 = $GridMap.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.5,0)
+			pos2 += Vector3(0,0.525,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
@@ -224,7 +251,7 @@ func showMovement():
 			lang.get_child(2).text = str(movemcellls[i])
 		if $GridMap2.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G2":
 			var pos2 = $GridMap2.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.5,0)
+			pos2 += Vector3(0,0.525,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
@@ -233,7 +260,7 @@ func showMovement():
 			lang.get_child(2).text = str(movemcellls[i])
 		if $GridMap3.get_used_cells().has(movemcellls[i]) and movemGrids[i] == "G3":
 			var pos2 = $GridMap3.map_to_local(movemcellls[i])
-			pos2 += Vector3(0,0.5,0)
+			pos2 += Vector3(0,0.525,0)
 			var lang = langelis.instantiate()
 			langeliai.add_child(lang)
 			lang.position = pos2
@@ -293,6 +320,7 @@ func movethere(pos, langelistomove,grafnumr):
 	playercurrentgraphspot = grafnumr
 	Global.grafspot = playercurrentgraphspot
 	mainas()
+	
 	for i in range(0, V):
 		if dist[i] <= playermovementPoints:
 			var mapposx = grafas[i][3][0]
@@ -305,6 +333,7 @@ func movethere(pos, langelistomove,grafnumr):
 				if findfrom(Global.istrynt.find(Vector3i(mapposx,mapposy,mapposz)),grafas[i][4],Vector3i(mapposx,mapposy,mapposz)) == -1:
 					Global.istrynt.append(Vector3i(mapposx,mapposy,mapposz))
 					Global.istryntg.append(grafas[i][4])
+	var ppos = %player.position
 	for y in $Node3D.get_children():
 		for i in Global.istrynt.size():
 			if $GridMap.get_used_cells().has(Global.istrynt[i]) and Global.istryntg[i] == "G":
@@ -319,6 +348,29 @@ func movethere(pos, langelistomove,grafnumr):
 				var pos2 = $GridMap3.map_to_local(Global.istrynt[i])
 				if pos2.x == y.position.x and pos2.z == y.position.z:
 					y.queue_free()			
+		#for i in $GridMap.get_used_cells().size():
+			#var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
+			#var ppos = %player.position
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -6.0 && ppos.z <= pos2.z + 6.0:
+				#y.queue_free()
+		#for i in $GridMap2.get_used_cells().size():
+			#var pos2 = $GridMap2.map_to_local($GridMap2.get_used_cells()[i])
+			#var ppos = %player.position
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				#y.queue_free()
+		#for i in $GridMap3.get_used_cells().size():
+			#var pos2 = $GridMap3.map_to_local($GridMap3.get_used_cells()[i])
+			#var ppos = %player.position
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				#y.queue_free()
+		for i in $GridMap4.get_used_cells().size():
+			var pos2 = $GridMap4.map_to_local($GridMap4.get_used_cells()[i])
+			if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				y.queue_free()
+		for i in $GridMap5.get_used_cells().size():
+			var pos2 = $GridMap5.map_to_local($GridMap5.get_used_cells()[i])
+			if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				y.queue_free()
 func _on_texture_rect_pressed():
 	if !moving:
 		skillusage = false
