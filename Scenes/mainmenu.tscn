@@ -12,6 +12,7 @@ gradient = SubResource("Gradient_g27yw")
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3h8nu"]
 gradient = SubResource("Gradient_vci3g")
 width = 284
+fill_from = Vector2(0.978903, 1)
 
 [sub_resource type="Gradient" id="Gradient_n1n8o"]
 
