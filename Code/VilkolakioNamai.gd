@@ -9,8 +9,8 @@ var eilute = 0
 
 var goback = false
 @onready var firstfight = preload("res://Bookbearers/Scenes/firstfight.tscn")
-@onready var childhead = preload("res://Bookbearers/Textures/mousechildhead.png")
-@onready var head = preload("res://Bookbearers/Textures/enemyhead.png")
+@onready var childhead = preload("res://Bookbearers/Textures/mousechild.png")
+@onready var head = preload("res://Bookbearers/Textures/robotas.png")
 
 @onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -31,9 +31,9 @@ func _physics_process(delta):
 	if kalbeti:
 		$"../CanvasLayer".visible = true
 		if dialogas[eilute][1] == 0:
-			$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = childhead
+			$"../CanvasLayer/Panel/TextureRect2".texture = childhead
 		else:
-			$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = head
+			$"../CanvasLayer/Panel/TextureRect2".texture = head
 				
 		$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
 		$"../CanvasLayer/Panel/TextureRect".size = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".size
@@ -42,9 +42,9 @@ func _physics_process(delta):
 			eilute +=1
 			if eilute< dialogas.size():
 				if dialogas[eilute][1] == 0:
-					$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = childhead
+					$"../CanvasLayer/Panel/TextureRect2".texture = childhead
 				else:
-					$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/TextureRect".texture = head
+					$"../CanvasLayer/Panel/TextureRect2".texture = head
 				
 				$"../CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
 				$"../CanvasLayer/Panel/TextureRect".size = $"../CanvasLayer/Panel/VBoxContainer/HBoxContainer".size
@@ -65,6 +65,7 @@ func _physics_process(delta):
 		get_input()
 		move_and_slide()
 	if goback:
+		Global.day+=1;
 		get_tree().change_scene_to_packed(zemelapis)
 
 

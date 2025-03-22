@@ -146,6 +146,19 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 				click = false
 			
 func enemyMove(ecurrentposi, enemyi):
+	if player.mesh.material.albedo_color.a == 0:
+		$"../StaticBody3D2/Camera3D".current = false
+		enemyi.get_child(0).current = true
+		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
+		var tween = create_tween()
+		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+		await tween.finished
+		var tween2 = create_tween()
+		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+		await tween2.finished
+		enemyi.get_child(0).current = false
+		$"../StaticBody3D2/Camera3D".current = true
+		return ecurrentposi
 	if !turn:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:

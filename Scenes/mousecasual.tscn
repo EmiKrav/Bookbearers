@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmkyqhjlvdd31"]
+
+[ext_resource type="PackedScene" uid="uid://cr11qqd4q8dik" path="res://Bookbearers/Blender/mousecasual.glb" id="1_kht1s"]
+
+[node name="mousecasual" instance=ExtResource("1_kht1s")]

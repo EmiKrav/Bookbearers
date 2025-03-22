@@ -1,5 +1,5 @@
 [
-	[0,0,"aaaaaaaaa"],
-	[1,1,"bbbbbbbb"],
-	[2,0,"cccccccc"]
+	[0,0,"Tu atrodai labai alkanas, prašau nevalgyk manęs"],
+	[1,1,"Aš vegetaras, valgau tik duoną. Tik dabar nebeturiu jos, nes tie prakeikti žandarai ją pavogė!"],
+	[2,0,"Nieko, aš tau padėsiu"]
 ]

@@ -6,10 +6,12 @@ extends Node3D
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
 @onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 @onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
+@onready var sky = load("res://Bookbearers/Materials/sky.material")
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var playermovementPoints = 2
+@export var maxplayermovementPoints = 2
+@export var playermovementPoints = maxplayermovementPoints
 @export var playerhealth = 10
 
 var changetofight = false
@@ -19,7 +21,7 @@ var changetometalhouse = false
 
 var V = 65;
 var par =[]
-var dist = []
+var dist = [];
 var grafas
 var tra = []
 var playercurrentgraphspot = Global.grafspot
@@ -46,11 +48,12 @@ var procesas = false
 var paspaus = false
 var atspaust = false
 
+
 func _ready():
 	get_tree().paused = false;
 	mainas()
 	updatequests()
-	
+	$CanvasLayer/Panel/TextureRect3/Label.text = "Day " + str(Global.day);
 	if Global.grafspot == 5:
 		$enemy.queue_free()
 	#if Global.grafspot == 8:
@@ -163,7 +166,7 @@ func _ready():
 		#if snapped(i.position.z - player.position.z,0.1) >= snapped(-4.6,0.1) and i.position.x - player.position.x == 0:
 			#i.queue_free()
 	
-func _process(delta):
+func _process(_delta):
 	if redraw:
 		if selected:
 			redraw = false
@@ -205,11 +208,10 @@ func judeti(numeris):
 			pos = $GridMap3.map_to_local(langelistomove)
 		
 		movethere(pos,langelistomove,ind)
-		
 					
 
 func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
-	if turn && canmove:
+	if _shape_idx!= 2 && turn && canmove:
 		if event is InputEventMouseButton:
 			click = true
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !selected and !moving:
@@ -279,12 +281,13 @@ func movethere(pos, langelistomove,grafnumr):
 	moving = true
 	selected = false
 	redraw = true
-	canmove = false
+	#canmove = false
 	atspaust = false
 	var posic 
 	var movpoint = 0
 	for v in range(1,tra[grafnumr].size()):
-		movpoint += 1
+		if movpoint < maxplayermovementPoints - 1:
+			movpoint += 1
 		if grafas[tra[grafnumr][v]][4] == "G":
 			posic = $GridMap.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
 		elif grafas[tra[grafnumr][v]][4] == "G2":
@@ -297,19 +300,12 @@ func movethere(pos, langelistomove,grafnumr):
 		$StaticBody3D2.position.z = posic.z - camz
 		playercurrentgraphspot = tra[grafnumr][v]
 		Global.grafspot = playercurrentgraphspot
+		
 		var tween = create_tween()
 		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
 		await tween.finished
-	if movpoint == 0:
-		if playercurrentgraphspot == 8:
-			$VilkoNamai/Label3D.visible = true;
-			changetowerehouse = true
-		if playercurrentgraphspot == 30:
-			$EglesNamai/Label3D.visible = true;
-			changetotreehouse = true
-		if playercurrentgraphspot == 51:
-			$RobotoNamai/Label3D.visible = true;
-			changetometalhouse = true
+		print(movpoint)
+		playermovementPoints -= movpoint
 	#var tween = create_tween()
 	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
 	#await tween.finished
@@ -320,9 +316,17 @@ func movethere(pos, langelistomove,grafnumr):
 	playercurrentgraphspot = grafnumr
 	Global.grafspot = playercurrentgraphspot
 	mainas()
-	
+	if playercurrentgraphspot == 8:
+		$VilkoNamai/Label3D.visible = true;
+		changetowerehouse = true
+	if playercurrentgraphspot == 30:
+		$EglesNamai/Label3D.visible = true;
+		changetotreehouse = true
+	if playercurrentgraphspot == 51:
+		$RobotoNamai/Label3D.visible = true;
+		changetometalhouse = true
 	for i in range(0, V):
-		if dist[i] <= playermovementPoints:
+		if dist[i] <= maxplayermovementPoints:
 			var mapposx = grafas[i][3][0]
 			var mapposy = grafas[i][3][1]
 			var mapposz = grafas[i][3][2]
@@ -363,34 +367,56 @@ func movethere(pos, langelistomove,grafnumr):
 			#var ppos = %player.position
 			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
 				#y.queue_free()
-		for i in $GridMap4.get_used_cells().size():
-			var pos2 = $GridMap4.map_to_local($GridMap4.get_used_cells()[i])
-			if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
-				y.queue_free()
-		for i in $GridMap5.get_used_cells().size():
-			var pos2 = $GridMap5.map_to_local($GridMap5.get_used_cells()[i])
-			if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
-				y.queue_free()
+		#for i in $GridMap4.get_used_cells().size():
+			#var pos2 = $GridMap4.map_to_local($GridMap4.get_used_cells()[i])
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				#y.queue_free()
+		#for i in $GridMap5.get_used_cells().size():
+			#var pos2 = $GridMap5.map_to_local($GridMap5.get_used_cells()[i])
+			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
+				#y.queue_free()
 func _on_texture_rect_pressed():
 	if !moving:
+		canmove = false
 		skillusage = false
 		skill = false
 		skilling = false
+		for i in range(0, langeliai.get_child_count()):
+			if langeliai.get_child(i) != null:
+				langeliai.get_child(i).queue_free()
 		$"CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
 		$"CanvasLayer/Panel/TextureRect"["disabled"]= true
+		#$DirectionalLight3D["light_energy"] = 0;
+		var tween = create_tween()
+		tween.tween_property(sky, "albedo_color", Color(0, 0, 0, 0), 1)
+		var tween2 = create_tween()
+		tween2.tween_property($DirectionalLight3D, "light_energy", 0, 1)
+		var tween3 = create_tween()
+		tween3.tween_property($CanvasLayer/Panel, "modulate", Color(0, 0, 0), 1)
+		await tween.finished
+		await get_tree().create_timer(1.0).timeout
+		tween = create_tween()
+		Global.day+=1;
+		$CanvasLayer/Panel/TextureRect3/Label.text = "Day " + str(Global.day);
+		tween.tween_property(sky, "albedo_color", Color(1, 1, 1, 0), 1)
+		tween2 = create_tween()
+		tween2.tween_property($DirectionalLight3D, "light_energy", 1, 1)
+		tween3 = create_tween()
+		tween3.tween_property($CanvasLayer/Panel, "modulate", Color(1, 1, 1), 1)
+		await tween.finished
 		turn = false
 		turn = true
-		canmove = true
 		skillusage = true
 		$"CanvasLayer/Panel/TextureRect"["disabled"]= false
 		$"CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff"
-		
+		playermovementPoints = maxplayermovementPoints
+		canmove = true
 func  minDistance(dist, sptSet):
-	var min = 9223372036854775807
+	var mini = 9223372036854775807
 	var min_index = -1
 	for v in range(0, V):
-		if (sptSet[v] == false && dist[v] <= min):
-			min = dist[v];
+		if (sptSet[v] == false && dist[v] <= mini):
+			mini = dist[v];
 			min_index = v;
 			
 	return min_index;
@@ -457,11 +483,12 @@ func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shap
 	changetofight = true
 func updatequests():
 	if Global.quests != null:
-		$CanvasLayer/Panel/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.quests)
-		$CanvasLayer/Panel/TextureRect2.texture.height += 10
+		$CanvasLayer/Panel/VBoxContainer/TextureRect2.texture.height += 50
+		$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.quests)
+		
 	
-
-
+#
+#
 func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	if playercurrentgraphspot == 8:
 		$VilkoNamai/Label3D.visible = true;

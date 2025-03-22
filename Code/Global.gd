@@ -12,6 +12,8 @@ var istryntg : Array
 var posiblequests = [[0,"Steal back wheat \n",false]]
 var quests
 
+var day = 1
+
 func AddName(Name):
 	Global.childName = Name
 
