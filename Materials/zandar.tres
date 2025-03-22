@@ -8,5 +8,6 @@ alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
 depth_draw_mode = 1
-shading_mode = 0
 albedo_texture = ExtResource("1_t2ap8")
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)

@@ -72,7 +72,7 @@ func _ready():
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
 	for i in $GridMap.get_used_cells().size():
 		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
-		pos2 += Vector3(0,1.5,0)
+		pos2 += Vector3(0,1.0,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2
@@ -84,7 +84,7 @@ func _ready():
 		lang.position = pos2
 	for i in $GridMap2.get_used_cells().size():
 		var pos2 = $GridMap2.map_to_local($GridMap2.get_used_cells()[i])
-		pos2 += Vector3(0,1.5,0)
+		pos2 += Vector3(0,1.0,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2
@@ -96,7 +96,7 @@ func _ready():
 		lang.position = pos2
 	for i in $GridMap3.get_used_cells().size():
 		var pos2 = $GridMap3.map_to_local($GridMap3.get_used_cells()[i])
-		pos2 += Vector3(0,1.5,0)
+		pos2 += Vector3(0,1.0,0)
 		#var lang = langelis.instantiate()
 		#langeliai.add_child(lang)
 		#lang.position = pos2

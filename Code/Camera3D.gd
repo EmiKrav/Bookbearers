@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
-@export var speed = 10
+@export var speedupdown = 10
+@export var speedlr = 20
 @export var rotationspeed = 0.5
 
 @export var upriba = 10
@@ -11,8 +12,8 @@ extends CharacterBody3D
 
 func _process(delta):
 	if Global.cameramove:	
-		var left = transform.basis.z.normalized() * speed
-		var backward = transform.basis.x.normalized() * speed
+		var left = transform.basis.z.normalized() * speedlr
+		var backward = transform.basis.x.normalized() * speedlr
 		
 		
 		if Input.is_action_pressed("left"):
@@ -26,13 +27,13 @@ func _process(delta):
 			
 			
 		if Input.is_action_pressed("up") :
-			if position.y + speed * delta < upriba:
-				position.y += speed * delta
+			if position.y + speedupdown * delta < upriba:
+				position.y += speedupdown * delta
 			else:
 				position.y = upriba 
 		if Input.is_action_pressed("down"):
-			if position.y - speed * delta > dpriba:
-				position.y -= speed * delta
+			if position.y - speedupdown * delta > dpriba:
+				position.y -= speedupdown * delta
 			else:
 				position.y = dpriba
 			

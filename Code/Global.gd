@@ -14,6 +14,8 @@ var quests
 
 var day = 1
 
+var camerapos = null
+
 func AddName(Name):
 	Global.childName = Name
 

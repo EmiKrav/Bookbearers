@@ -21962,8 +21962,10 @@ mesh = ExtResource("10_ubbju")
 skeleton = NodePath("../..")
 
 [node name="Grass257" type="MultiMeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 0, -0.95)
 
 [node name="Grass" parent="Grass257" instance=ExtResource("11_w6ius")]
+transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 1.426, 0.998, 15.878)
 
 [node name="Grass2" parent="Grass257" instance=ExtResource("11_w6ius")]
 transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -0.60146, 0.997581, 15.8777)
