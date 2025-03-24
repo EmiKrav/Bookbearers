@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=3 uid="uid://c7rauur2rx5ic"]
+[gd_scene load_steps=38 format=3 uid="uid://c7rauur2rx5ic"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_81alu"]
 [ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_3wemk"]
 [ext_resource type="Script" path="res://Bookbearers/Code/MapFight.gd" id="3_uu2b1"]
 [ext_resource type="Material" uid="uid://3s2t06rekbws" path="res://Bookbearers/Materials/player.tres" id="4_4itab"]
 [ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_dqayo"]
+[ext_resource type="Texture2D" uid="uid://bx65irwvrxaki" path="res://Bookbearers/Textures/mousebookbringerfightmodehead.png" id="6_0np4r"]
 [ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="6_lxcrk"]
 [ext_resource type="Texture2D" uid="uid://ctv2ny2uy6may" path="res://Bookbearers/Textures/cloudkrita.png" id="7_y6gxx"]
 [ext_resource type="MeshLibrary" uid="uid://dyfm6gy1agqq6" path="res://Bookbearers/Tiles/Tilesturt2.tres" id="8_irc4m"]
@@ -46,63 +47,54 @@ size = Vector2(1.25, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="Gradient" id="Gradient_wh1ay"]
+[sub_resource type="Gradient" id="Gradient_e5run"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xvd74"]
-gradient = SubResource("Gradient_wh1ay")
+gradient = SubResource("Gradient_e5run")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Gradient" id="Gradient_0vweo"]
-offsets = PackedFloat32Array(0, 0.00495049)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_33hqx"]
-gradient = SubResource("Gradient_0vweo")
-width = 150
-height = 150
-fill_from = Vector2(0, 1)
-
-[sub_resource type="Gradient" id="Gradient_2otp0"]
+[sub_resource type="Gradient" id="Gradient_35nj8"]
 offsets = PackedFloat32Array(0, 0.00526316)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_g8b3q"]
-gradient = SubResource("Gradient_2otp0")
+gradient = SubResource("Gradient_35nj8")
 width = 150
 height = 20
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_q53am"]
+[sub_resource type="Gradient" id="Gradient_yt5xe"]
 offsets = PackedFloat32Array(0.994737, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dta8k"]
-gradient = SubResource("Gradient_q53am")
+gradient = SubResource("Gradient_yt5xe")
 width = 100
 height = 20
 fill_from = Vector2(1, 0)
 
-[sub_resource type="Gradient" id="Gradient_13swi"]
+[sub_resource type="Gradient" id="Gradient_pndpw"]
 offsets = PackedFloat32Array(0.995215, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sy6e1"]
-gradient = SubResource("Gradient_13swi")
+gradient = SubResource("Gradient_pndpw")
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_p1kn7"]
+[sub_resource type="Gradient" id="Gradient_jq1bd"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_jwreb"]
-gradient = SubResource("Gradient_p1kn7")
+gradient = SubResource("Gradient_jq1bd")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_765lj"]
+[sub_resource type="Gradient" id="Gradient_wfh3i"]
 offsets = PackedFloat32Array(0.983108, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_l6k37"]
-gradient = SubResource("Gradient_765lj")
+gradient = SubResource("Gradient_wfh3i")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
@@ -321,7 +313,8 @@ metadata/_edit_use_anchors_ = true
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = SubResource("GradientTexture2D_33hqx")
+texture = ExtResource("6_0np4r")
+expand_mode = 1
 
 [node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
 layout_direction = 2
@@ -369,6 +362,18 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 texture_normal = SubResource("GradientTexture2D_sy6e1")
 stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -21945,9 +21950,11 @@ transform = Transform3D(-0.998391, 0, 0.0567103, 0, 1, 0, -0.0567103, 0, -0.9983
 mesh = ExtResource("9_3hpg0")
 skeleton = NodePath("../..")
 
-[node name="Grass257" type="MultiMeshInstance3D" parent="."]
+[node name="Grass257" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 0, -0.95)
 
 [node name="Grass" parent="Grass257" instance=ExtResource("10_qd410")]
+transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 1.426, 0.998, 15.878)
 
 [node name="Grass2" parent="Grass257" instance=ExtResource("10_qd410")]
 transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -0.60146, 0.997581, 15.8777)
@@ -22716,6 +22723,7 @@ transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -14.6108, 0.997581, 
 
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton4" to="GridMap" method="_on_texture_button_4_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_pressed"]

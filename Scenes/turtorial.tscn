@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=39 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
 [ext_resource type="Material" uid="uid://c5pj6y3xqvsrr" path="res://Bookbearers/Materials/gridmapunderneath.tres" id="2_e4dco"]
@@ -11,6 +11,7 @@
 [ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="7_alftl"]
 [ext_resource type="ArrayMesh" uid="uid://dhifn2fafftsd" path="res://Bookbearers/Blender/tree.obj" id="10_ubbju"]
 [ext_resource type="PackedScene" uid="uid://brux6wtfrbpjx" path="res://Bookbearers/Scenes/grass.tscn" id="11_w6ius"]
+[ext_resource type="Texture2D" uid="uid://bx65irwvrxaki" path="res://Bookbearers/Textures/mousebookbringerfightmodehead.png" id="12_t4u5r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm63p"]
 
@@ -55,68 +56,6 @@ size = Vector2(1.25, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
 size = Vector3(4.36224, 1.91614, 1.04297)
 
-[sub_resource type="Gradient" id="Gradient_r0hc1"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0jhg0"]
-gradient = SubResource("Gradient_r0hc1")
-width = 100
-height = 50
-fill_to = Vector2(0, 0)
-
-[sub_resource type="Gradient" id="Gradient_dnhbv"]
-offsets = PackedFloat32Array(0, 0.00495049)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kk52g"]
-gradient = SubResource("Gradient_dnhbv")
-width = 150
-height = 150
-fill_from = Vector2(0, 1)
-
-[sub_resource type="Gradient" id="Gradient_1vlca"]
-offsets = PackedFloat32Array(0, 0.00526316)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ofys"]
-gradient = SubResource("Gradient_1vlca")
-width = 150
-height = 20
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_okksf"]
-offsets = PackedFloat32Array(0.994737, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0hirv"]
-gradient = SubResource("Gradient_okksf")
-width = 100
-height = 20
-fill_from = Vector2(1, 0)
-
-[sub_resource type="Gradient" id="Gradient_1027q"]
-offsets = PackedFloat32Array(0.995215, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_r1dfk"]
-gradient = SubResource("Gradient_1027q")
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_os1ws"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x1h1v"]
-gradient = SubResource("Gradient_os1ws")
-width = 100
-height = 80
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_swhok"]
-offsets = PackedFloat32Array(0.983108, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bosuy"]
-gradient = SubResource("Gradient_swhok")
-width = 100
-height = 80
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b61tq"]
 shading_mode = 0
 albedo_texture = ExtResource("6_g6t1f")
@@ -125,6 +64,59 @@ heightmap_enabled = true
 [sub_resource type="SphereMesh" id="SphereMesh_v0r45"]
 material = SubResource("StandardMaterial3D_b61tq")
 flip_faces = true
+
+[sub_resource type="Gradient" id="Gradient_wh1ay"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pp1ow"]
+gradient = SubResource("Gradient_wh1ay")
+width = 100
+height = 50
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_2otp0"]
+offsets = PackedFloat32Array(0, 0.00526316)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yg8dd"]
+gradient = SubResource("Gradient_2otp0")
+width = 150
+height = 20
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_q53am"]
+offsets = PackedFloat32Array(0.994737, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wa7pv"]
+gradient = SubResource("Gradient_q53am")
+width = 100
+height = 20
+fill_from = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="Gradient_13swi"]
+offsets = PackedFloat32Array(0.995215, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iwdp0"]
+gradient = SubResource("Gradient_13swi")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_p1kn7"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6tkx7"]
+gradient = SubResource("Gradient_p1kn7")
+width = 100
+height = 80
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_765lj"]
+offsets = PackedFloat32Array(0.983108, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8itjy"]
+gradient = SubResource("Gradient_765lj")
+width = 100
+height = 80
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
 
 [node name="Turtorial" type="Node3D"]
 
@@ -168,7 +160,7 @@ script = ExtResource("3_h0tnh")
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="player" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.06726, 1.91171, 15)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.13615, 1.99648, 14.9435)
 mesh = SubResource("PlaneMesh_p0mc2")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_ehobq")
@@ -288,180 +280,6 @@ shape = SubResource("BoxShape3D_ueenk")
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.1, 0.458, 1.045)
 shape = SubResource("BoxShape3D_ueenk")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Panel" type="Panel" parent="CanvasLayer"]
-self_modulate = Color(1, 1, 1, 0)
-clip_contents = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureButton" parent="CanvasLayer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.902778
-anchor_top = 0.910494
-anchor_right = 0.989584
-anchor_bottom = 0.987654
-offset_top = -0.000366211
-offset_right = -0.000610352
-grow_horizontal = 0
-grow_vertical = 0
-texture_normal = SubResource("GradientTexture2D_0jhg0")
-stretch_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.15
-anchor_top = 0.27
-anchor_right = 0.85
-anchor_bottom = 0.73
-grow_horizontal = 2
-grow_vertical = 2
-text = "End Turn"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.731481
-anchor_right = 0.130208
-anchor_bottom = 1.0
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-texture = SubResource("GradientTexture2D_kk52g")
-
-[node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
-layout_direction = 2
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-max_value = 10.0
-nine_patch_stretch = true
-stretch_margin_left = 150
-stretch_margin_top = 10
-stretch_margin_bottom = 10
-texture_under = SubResource("GradientTexture2D_3ofys")
-texture_progress = SubResource("GradientTexture2D_0hirv")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
-modulate = Color(1, 0.0196078, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-text = "10/10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.337
-anchor_top = 0.877
-anchor_right = 0.663
-anchor_bottom = 1.0
-offset_top = -0.296143
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureButton4" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.75
-texture_normal = SubResource("GradientTexture2D_r1dfk")
-stretch_mode = 0
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("GradientTexture2D_x1h1v")
-stretch_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9
-anchor_right = 1.0
-anchor_bottom = 0.2875
-grow_horizontal = 0
-text = "⌛0/1"
-
-[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
-layout_mode = 1
-offset_right = 38.0
-offset_bottom = 23.0
-text = "⚔️2"
-
-[node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("GradientTexture2D_x1h1v")
-stretch_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "⌛0/3"
-
-[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
-layout_mode = 1
-offset_right = 38.0
-offset_bottom = 23.0
-text = "⚔️1"
-
-[node name="TextureButton3" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("GradientTexture2D_bosuy")
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "⌛0/3"
-
-[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
-layout_mode = 1
-offset_left = 0.000488281
-offset_top = -0.999878
-offset_right = 38.0005
-offset_bottom = 22.0001
-text = "⚔️1"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("7_alftl")
@@ -21961,7 +21779,7 @@ transform = Transform3D(-0.998391, 0, 0.0567103, 0, 1, 0, -0.0567103, 0, -0.9983
 mesh = ExtResource("10_ubbju")
 skeleton = NodePath("../..")
 
-[node name="Grass257" type="MultiMeshInstance3D" parent="."]
+[node name="Grass257" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 0, -0.95)
 
 [node name="Grass" parent="Grass257" instance=ExtResource("11_w6ius")]
@@ -22732,15 +22550,196 @@ transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -12.5386, 0.997581, 
 [node name="Grass256" parent="Grass257" instance=ExtResource("11_w6ius")]
 transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -14.6108, 0.997581, -13.9905)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+self_modulate = Color(1, 1, 1, 0)
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureButton" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.902778
+anchor_top = 0.910494
+anchor_right = 0.989584
+anchor_bottom = 0.987654
+offset_top = -0.000366211
+offset_right = -0.000610352
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = SubResource("GradientTexture2D_pp1ow")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.27
+anchor_right = 0.85
+anchor_bottom = 0.73
+grow_horizontal = 2
+grow_vertical = 2
+text = "End Turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.731481
+anchor_right = 0.130208
+anchor_bottom = 1.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("12_t4u5r")
+expand_mode = 1
+
+[node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+max_value = 10.0
+nine_patch_stretch = true
+stretch_margin_left = 150
+stretch_margin_top = 10
+stretch_margin_bottom = 10
+texture_under = SubResource("GradientTexture2D_yg8dd")
+texture_progress = SubResource("GradientTexture2D_wa7pv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
+modulate = Color(1, 0.0196078, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.337
+anchor_top = 0.877
+anchor_right = 0.663
+anchor_bottom = 1.0
+offset_top = -0.296143
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureButton4" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+texture_normal = SubResource("GradientTexture2D_iwdp0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_6tkx7")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.2875
+grow_horizontal = 0
+text = "⌛0/1"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton"]
+layout_mode = 1
+offset_right = 38.0
+offset_bottom = 23.0
+text = "⚔️2"
+
+[node name="TextureButton2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_6tkx7")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "⌛0/3"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton2"]
+layout_mode = 1
+offset_right = 38.0
+offset_bottom = 23.0
+text = "⚔️1"
+
+[node name="TextureButton3" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("GradientTexture2D_8itjy")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "⌛0/3"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton3"]
+layout_mode = 1
+offset_left = 0.000488281
+offset_top = -0.999878
+offset_right = 38.0005
+offset_bottom = 22.0001
+text = "⚔️1"
+
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton4" to="GridMap" method="_on_texture_button_4_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton2" to="GridMap" method="_on_texture_button_2_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton3" to="GridMap" method="_on_texture_button_3_pressed"]

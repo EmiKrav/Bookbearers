@@ -45,6 +45,7 @@ var skilling = true
 var usingskills = false
 var skill2curcoldown = 0
 var skill3curcoldown = 0
+var skillset = 1;
 
 @onready var player = $player
 @onready var enemy = $enemy
@@ -354,7 +355,7 @@ func shoot_ray():
 func map_selection(selection: Dictionary):
 	if selection.is_empty():
 		return
-	if selection["collider"] is GridMap:
+	if str(selection["collider"]) == "GridMap:<GridMap#38419826008>":
 		var gridmap: GridMap = selection["collider"]
 		var locsel = to_local(selection.position)
 		var pos = gridmap.local_to_map(locsel)
@@ -625,6 +626,8 @@ func _on_texture_rect_pressed():
 		skillusage = true
 		skillusage2 = true
 		skillusage3 = true
+		usingskills = false
+		skilling = true
 		$"../CanvasLayer/Panel/TextureRect"["disabled"]= false
 		$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff"
@@ -640,11 +643,19 @@ func _on_texture_rect_pressed():
 		playermovementPointsz = maxplayermovementPoints
 		
 func _on_texture_button_pressed():
-	if skillusage:
+	if skillusage and !usingskills:
+		skill2 = false
+		skill3 = false
 		langeliomat.albedo_color.a = 1
 		if skill == false:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffbd"
+			if skillusage2 and skill2curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+			if skillusage3 and skill3curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
 			skill=true
 		elif skill == true:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
 			skill = false
 
 func _on_texture_button_mouse_entered():
@@ -661,11 +672,20 @@ func _on_texture_button_mouse_exited():
 
 
 func _on_texture_button_2_pressed():
-	if skillusage2:
+	if skillusage2 and !usingskills:
+		skill = false
+		skill3 = false
 		langeliomat.albedo_color.a = 1
 		if skill2 == false:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffbd"
+			if skillusage:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+			if skillusage3 and skill3curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
+			
 			skill2=true
 		elif skill2 == true:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
 			skill2 = false
 
 
@@ -683,11 +703,20 @@ func _on_texture_button_2_mouse_exited():
 
 
 func _on_texture_button_3_pressed():
-	if skillusage3:
+	if skillusage3 and !usingskills:
+		skill = false
+		skill2 = false
 		langeliomat.albedo_color.a = 1
 		if skill3 == false:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffbd"
+			if skillusage2 and skill2curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+			if skillusage:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+			
 			skill3=true
 		elif skill3 == true:
+			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
 			skill3 = false
 
 
@@ -702,3 +731,18 @@ func _on_texture_button_3_mouse_entered():
 
 func _on_texture_button_3_mouse_exited():
 	skilling = true
+
+
+func _on_texture_button_4_pressed():
+	if skillset == 1:
+		skillset = 2;
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton4/Label".text=str(skillset)
+		return
+	if skillset == 2:
+		skillset = 3;
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton4/Label".text=str(skillset)
+		return
+	if skillset == 3:
+		skillset = 1;
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton4/Label".text=str(skillset)
+		return
