@@ -10,7 +10,7 @@ extends Node3D
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var maxplayermovementPoints = 2
+@export var maxplayermovementPoints = 20
 @export var playermovementPoints = maxplayermovementPoints
 @export var playerhealth = 10
 
@@ -50,6 +50,16 @@ var atspaust = false
 
 
 func _ready():
+	sky["albedo_color"] = Color(0, 0, 0, 0)
+	$DirectionalLight3D["light_energy"] = 0
+	$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
+		
+	var tween = create_tween()
+	tween.tween_property(sky, "albedo_color", Color(1, 1, 1, 0), 1)
+	var tween2 = create_tween()
+	tween2.tween_property($DirectionalLight3D, "light_energy", 1, 1)
+	var tween3 = create_tween()
+	tween3.tween_property($CanvasLayer/Panel, "modulate", Color(1, 1, 1), 1)
 	get_tree().paused = false;
 	mainas()
 	updatequests()
@@ -69,6 +79,9 @@ func _ready():
 		player.position += Vector3(0,1,0)
 	var pos = Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2])
 	pcurrentpos = pos
+	$StaticBody3D2.position.x = player.position.x - 0.355
+	$StaticBody3D2.position.z = player.position.z + 2.0
+	$StaticBody3D2.rotation = Vector3(-0.5,0,0)
 	cells = $GridMap.get_used_cells() + $GridMap2.get_used_cells() + $GridMap3.get_used_cells()
 	for i in $GridMap.get_used_cells().size():
 		var pos2 = $GridMap.map_to_local($GridMap.get_used_cells()[i])
@@ -294,22 +307,23 @@ func movethere(pos, langelistomove,grafnumr):
 			posic = $GridMap2.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
 		elif grafas[tra[grafnumr][v]][4] == "G3":
 			posic = $GridMap3.map_to_local(Vector3i(grafas[tra[grafnumr][v]][3][0],grafas[tra[grafnumr][v]][3][1],grafas[tra[grafnumr][v]][3][2]))
-		var camx = player.position.x - $StaticBody3D2.position.x
-		var camz = player.position.z - $StaticBody3D2.position.z
-		$StaticBody3D2.position.x = posic.x - camx
-		$StaticBody3D2.position.z = posic.z - camz
+		
+		
 		playercurrentgraphspot = tra[grafnumr][v]
 		Global.grafspot = playercurrentgraphspot
 		
 		var tween = create_tween()
 		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
 		await tween.finished
-		print(movpoint)
+		#print(movpoint)
 		playermovementPoints -= movpoint
 	#var tween = create_tween()
 	#tween.tween_property(player, "position", Vector3(pos.x, 1, pos.z), 1)
 	#await tween.finished
 	$player/Camera3D2.current = false
+	$StaticBody3D2.position.x = player.position.x - 0.355
+	$StaticBody3D2.position.z = player.position.z + 2.0
+	$StaticBody3D2.rotation = Vector3(-0.5,0,0)
 	$"StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
@@ -483,11 +497,8 @@ func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shap
 	changetofight = true
 func updatequests():
 	if Global.quests != null:
-		$CanvasLayer/Panel/VBoxContainer/TextureRect2.texture.height += 50
+		$CanvasLayer/Panel/VBoxContainer/TextureRect2.texture.height = Global.questheight
 		$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.quests)
-		
-	
-#
 #
 func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	if playercurrentgraphspot == 8:

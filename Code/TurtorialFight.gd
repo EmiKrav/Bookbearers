@@ -106,6 +106,17 @@ func playermove(langelistomove):
 	await tween2.finished
 	
 	$player/Camera3D2.current = false
+	var left = player.transform.basis.z.normalized()
+	var backward = player.transform.basis.x.normalized()
+	if prad.x > langelistomove.x:
+		$"../StaticBody3D2/Camera3D".transform.origin += left.cross(Vector3.UP) / 35
+	if prad.x < langelistomove.x:
+		$"../StaticBody3D2/Camera3D".transform.origin -= left.cross(Vector3.UP) / 35
+	if prad.z > langelistomove.z:
+		$"../StaticBody3D2/Camera3D".transform.origin += backward.cross(Vector3.UP) / 35
+	if prad.z < langelistomove.z:
+		$"../StaticBody3D2/Camera3D".transform.origin -= backward.cross(Vector3.UP) / 35
+	
 	$"../StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
@@ -138,7 +149,6 @@ func _process(_delta):
 	if !click && !moving && selected:
 		if Input.is_action_pressed("Click"):
 			if shoot_ray() != null:
-				print("2")
 				var langelistomove = shoot_ray()
 				if movemcellls.has(langelistomove):
 					playermove(langelistomove)

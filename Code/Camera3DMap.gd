@@ -27,31 +27,31 @@ func _process(delta):
 			
 			
 		if Input.is_action_pressed("up") :
-			if position.y + speed * delta < upriba:
-				position.y += speed * delta
+			if global_position.y + speed * delta < upriba:
+				global_position.y += speed * delta
 			else:
-				position.y = upriba 
+				global_position.y = upriba 
 		if Input.is_action_pressed("down"):
-			if position.y - speed * delta > dpriba:
-				position.y -= speed * delta
+			if global_position.y - speed * delta > dpriba:
+				global_position.y -= speed * delta
 			else:
-				position.y = dpriba
+				global_position.y = dpriba
 			
 		if Input.is_action_pressed("rotate_down"):
-			if rotation.x + rotationspeed * delta < rdriba:
-				rotation.x += rotationspeed * delta
+			if global_rotation.x + rotationspeed * delta < rdriba:
+				global_rotation.x += rotationspeed * delta
 			else:
-				rotation.x = rdriba 
+				global_rotation.x = rdriba 
 		if Input.is_action_pressed("rotate_up"):
-			if rotation.x - rotationspeed * delta > ruriba:
-				rotation.x -= rotationspeed * delta
+			if global_rotation.x - rotationspeed * delta > ruriba:
+				global_rotation.x -= rotationspeed * delta
 			else:
-				rotation.x = ruriba 
+				global_rotation.x = ruriba 
 		if Input.is_action_pressed("rotate_left"):
-			rotation.y += rotationspeed * delta
+			global_rotation.y += rotationspeed * delta
 			
 		if Input.is_action_pressed("rotate_right"):
-			rotation.y -= rotationspeed * delta
+			global_rotation.y -= rotationspeed * delta
 			
 			
 		

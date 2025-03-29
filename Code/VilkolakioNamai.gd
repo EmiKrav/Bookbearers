@@ -6,7 +6,7 @@ const JUMP_VELOCITY = -400.0
 var kalbeti = false
 var dialogas
 var eilute = 0
-
+var questnr = 0
 var goback = false
 @onready var firstfight = preload("res://Bookbearers/Scenes/firstfight.tscn")
 @onready var childhead = preload("res://Bookbearers/Textures/mousechild.png")
@@ -54,18 +54,19 @@ func _physics_process(delta):
 				kalbeti = false
 				$"../CanvasLayer".visible = false
 				eilute = 0
-				if Global.quests != null:
-					if Global.posiblequests[0][2] == false:
-						Global.quests += Global.posiblequests[0][1]
-				else:
-					Global.quests = Global.posiblequests[0][1]
-					Global.posiblequests[0][2] = true
+				
 				
 	else:
 		get_input()
 		move_and_slide()
 	if goback:
 		Global.day+=1;
+		if Global.quests != null:
+			if Global.posiblequests[questnr][2] == false:
+				Global.quests += Global.posiblequests[questnr][1]
+		else:
+			Global.quests = Global.posiblequests[questnr][1]
+			Global.posiblequests[questnr][2] = true
 		get_tree().change_scene_to_packed(zemelapis)
 
 
