@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://byndplie3ech2"]
+
+[ext_resource type="PackedScene" uid="uid://c3gd8x7o1tsgo" path="res://Bookbearers/Blender/scroll.glb" id="1_yjko1"]
+
+[node name="scroll" instance=ExtResource("1_yjko1")]
