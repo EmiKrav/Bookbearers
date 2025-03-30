@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp1dyqyn7ip24"]
+
+[ext_resource type="PackedScene" uid="uid://c6c7s4bybnrg2" path="res://Bookbearers/Blender/camp.glb" id="1_jrlif"]
+
+[node name="camp" instance=ExtResource("1_jrlif")]
