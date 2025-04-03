@@ -4,6 +4,7 @@ extends Node3D
 @onready var fog = preload("res://Bookbearers/Scenes/fog.tscn")
 @onready var trees = preload("res://Bookbearers/Scenes/trees.tscn")
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
+@onready var vaikokova = load("res://Bookbearers/Scenes/childSteal.tscn")
 @onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 @onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 @onready var sky = load("res://Bookbearers/Materials/sky.material")
@@ -12,12 +13,14 @@ extends Node3D
 @onready var player = %player
 @export var maxplayermovementPoints = 20
 @export var playermovementPoints = maxplayermovementPoints
-@export var playerhealth = 10
+@export var playerhealth = Global.health
 
 var changetofight = false
+var changetochildfight = false
 var changetowerehouse = false
 var changetotreehouse = false
 var changetometalhouse = false
+var changetocamp = false
 
 var V = 65;
 var par =[]
@@ -50,10 +53,13 @@ var atspaust = false
 
 
 func _ready():
+	$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
+	$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(playerhealth) + "/10"
+	
 	sky["albedo_color"] = Color(0, 0, 0, 0)
 	$DirectionalLight3D["light_energy"] = 0
 	$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
-		
+	
 	var tween = create_tween()
 	tween.tween_property(sky, "albedo_color", Color(1, 1, 1, 0), 1)
 	var tween2 = create_tween()
@@ -61,13 +67,9 @@ func _ready():
 	var tween3 = create_tween()
 	tween3.tween_property($CanvasLayer/Panel, "modulate", Color(1, 1, 1), 1)
 	get_tree().paused = false;
-	mainas()
 	updatequests()
+	mainas()
 	$CanvasLayer/Panel/TextureRect3/Label.text = "Day " + str(Global.day);
-	if Global.grafspot == 5:
-		$enemy.queue_free()
-	#if Global.grafspot == 8:
-		#changetowerehouse =
 	if grafas[playercurrentgraphspot][4] == "G":
 		player.position =  $GridMap.map_to_local(Vector3i(grafas[playercurrentgraphspot][3][0],grafas[playercurrentgraphspot][3][1],grafas[playercurrentgraphspot][3][2]))
 		player.position += Vector3(0,1,0)
@@ -194,6 +196,9 @@ func _process(_delta):
 	if changetofight:
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
+	if	changetochildfight:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(vaikokova)
 	if changetowerehouse:
 		if Input.is_action_just_pressed("ui_accept"):
 			Global.grafspot = playercurrentgraphspot
@@ -206,6 +211,24 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			Global.grafspot = playercurrentgraphspot
 			get_tree().change_scene_to_packed(werehouse)
+	if changetocamp:
+		if Input.is_action_just_pressed("ui_accept"):
+			Global.grafspot = playercurrentgraphspot
+			Global.health = 10
+			$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
+			$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(Global.health) + "/10"
+			sky["albedo_color"] = Color(0, 0, 0, 0)
+			$DirectionalLight3D["light_energy"] = 0
+			$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
+			Global.day += 1
+			$CanvasLayer/Panel/TextureRect3/Label.text = "Day " + str(Global.day);
+			var tween = create_tween()
+			tween.tween_property(sky, "albedo_color", Color(1, 1, 1, 0), 1)
+			var tween2 = create_tween()
+			tween2.tween_property($DirectionalLight3D, "light_energy", 1, 1)
+			var tween3 = create_tween()
+			tween3.tween_property($CanvasLayer/Panel, "modulate", Color(1, 1, 1), 1)
+	
 				
 func judeti(numeris):
 		$"StaticBody3D2/Camera3D".current = false
@@ -330,15 +353,16 @@ func movethere(pos, langelistomove,grafnumr):
 	playercurrentgraphspot = grafnumr
 	Global.grafspot = playercurrentgraphspot
 	mainas()
-	if playercurrentgraphspot == 8:
-		$VilkoNamai/Label3D.visible = true;
-		changetowerehouse = true
-	if playercurrentgraphspot == 30:
-		$EglesNamai/Label3D.visible = true;
-		changetotreehouse = true
-	if playercurrentgraphspot == 51:
-		$RobotoNamai/Label3D.visible = true;
-		changetometalhouse = true
+	#if playercurrentgraphspot == 8:
+		#player.position.z+=0.5
+		#$VilkoNamai/Label3D.visible = true;
+		#changetowerehouse = true
+	#if playercurrentgraphspot == 30:
+		#$EglesNamai/Label3D.visible = true;
+		#changetotreehouse = true
+	#if playercurrentgraphspot == 51:
+		#$RobotoNamai/Label3D.visible = true;
+		#changetometalhouse = true
 	for i in range(0, V):
 		if dist[i] <= maxplayermovementPoints:
 			var mapposx = grafas[i][3][0]
@@ -494,12 +518,29 @@ func mainas():
 
 
 func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	changetofight = true
+	pass
+	#Global.enemy.append(area.get_parent().get_child(1)["text"])
+	#changetofight = true
 func updatequests():
+	Global.quests = null;
+	for i in Global.posiblequests.size():
+		if Global.posiblequests[i][2] == true:
+			if Global.quests != null:
+				Global.quests += Global.posiblequests[i][1]
+				Global.questheight += 80
+			else:
+				Global.quests = Global.posiblequests[i][1]
 	if Global.quests != null:
 		$CanvasLayer/Panel/VBoxContainer/TextureRect2.texture.height = Global.questheight
-		$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.quests)
-#
+		$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text = str(Global.quests)
+		if Global.questnr.has(0) or Global.questnr.has(4):
+			$QuestEnemies/questenemy.visible = true;
+		else:
+			$QuestEnemies/questenemy.visible = false;
+		if Global.questnr.has(2):
+			$QuestEnemies/questenemy2.visible = true;
+		else:
+			$QuestEnemies/questenemy2.visible = false;
 func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	if playercurrentgraphspot == 8:
 		$VilkoNamai/Label3D.visible = true;
@@ -524,3 +565,35 @@ func _on_metal_house_area_shape_exited(area_rid, area, area_shape_index, local_s
 	if playercurrentgraphspot != 51:
 		$RobotoNamai/Label3D.visible = false;
 		changetometalhouse = false
+
+
+func _on_camp_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	changetocamp = true
+	if playercurrentgraphspot == 13:
+		$Camps/Camp/Label3D.visible = true
+	if playercurrentgraphspot == 17:
+		$Camps/Camp2/Label3D.visible = true
+	if playercurrentgraphspot == 39:
+		$Camps/Camp3/Label3D.visible = true
+	if playercurrentgraphspot == 57:
+		$Camps/Camp4/Label3D.visible = true
+
+func _on_camp_area_3d_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	changetocamp = false
+	$Camps/Camp/Label3D.visible = false
+	$Camps/Camp2/Label3D.visible = false
+	$Camps/Camp3/Label3D.visible = false
+	$Camps/Camp4/Label3D.visible = false
+	
+
+
+func _on_mouse_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if area["collision_layer"] == 32 and area.get_parent().visible == true:
+		changetochildfight = true
+	if area["collision_layer"] == 8:
+		Global.scrolls.append(area.get_parent().get_child(1)["text"])
+		area.get_parent().queue_free()
+	if area["collision_layer"] == 2:
+		Global.enemy.append(area.get_parent().get_child(1)["text"])
+		changetofight = true
+

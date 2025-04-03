@@ -1,0 +1,5 @@
+[
+	[0,0,"Labas vilke"],
+	[1,1,"Labas, Daugiau neturiu ką tau pasakyti, turi keliauti toliau"],
+	[2,0,"Gerai, netrukdau tau"]
+]

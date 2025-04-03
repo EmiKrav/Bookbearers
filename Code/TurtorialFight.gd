@@ -461,7 +461,7 @@ func shoot_ray():
 func map_selection(selection: Dictionary):
 	if selection.is_empty():
 		return
-	if str(selection["collider"]) == "GridMap:<GridMap#40835745064>":
+	if selection["collider"] is GridMap:
 		var gridmap: GridMap = selection["collider"]
 		var locsel = to_local(selection.position)
 		var pos = gridmap.local_to_map(locsel)

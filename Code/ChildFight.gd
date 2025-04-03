@@ -13,6 +13,8 @@ var playermovementPointsz = maxplayermovementPoints
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
 
+@export var questnr = Global.currentquest
+
 var selected = false
 var pcurrentpos : Vector3i
 var ecurrentpos: Vector3i
@@ -84,7 +86,19 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if turnssurvived == 6:
+	if turnssurvived == 1:
+		Global.quests = null;
+		Global.posiblequests[questnr][2] = false
+		Global.posiblequests[questnr+1][2] = true
+		for i in Global.posiblequests.size():
+			if Global.posiblequests[i][2] == true:
+				if Global.quests != null:
+					Global.quests += Global.posiblequests[i][1]
+				else:
+					Global.quests = Global.posiblequests[i][1]
+		Global.questnr.erase(questnr)
+		Global.questnr.append(Global.posiblequests[questnr+1][0])
+		Global.posiblequests[questnr][3] = true
 		get_tree().paused = true;
 		await get_tree().create_timer(3).timeout
 		get_tree().change_scene_to_packed(zemelapis)

@@ -14,6 +14,30 @@ var goback = false
 
 @onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var pirmaspokalbis = "res://Bookbearers/Dialogai/dialogassuvilku.txt"
+var paskutinispokalbis = "res://Bookbearers/Dialogai/paskutinisdialogassuvilku.txt"
+var pokalbis
+func _ready():
+	if 	Global.posiblequests[5][3] == true:
+		pokalbis = paskutinispokalbis
+		Global.posiblequests[5][2] = false
+	elif Global.posiblequests[4][3] == true:
+		Global.posiblequests[5][3] = true
+		Global.posiblequests[4][2] = false
+		pokalbis = pirmaspokalbis
+	elif Global.posiblequests[2][3] == true:
+		Global.posiblequests[3][3] = true
+		Global.posiblequests[2][2] = false
+		questnr = 4
+		pokalbis = pirmaspokalbis
+	elif Global.posiblequests[0][3] == true:
+		Global.posiblequests[1][3] = true
+		Global.posiblequests[1][2] = false
+		questnr = 2
+		pokalbis = pirmaspokalbis
+	elif Global.posiblequests[0][3] == false:
+		questnr = 0
+		pokalbis = pirmaspokalbis
 func get_input():
 	var input_direction = Input.get_vector("left2d", "right2d", "up2d", "down2d")
 	velocity = input_direction * SPEED
@@ -64,9 +88,12 @@ func _physics_process(delta):
 		if Global.quests != null:
 			if Global.posiblequests[questnr][2] == false:
 				Global.quests += Global.posiblequests[questnr][1]
+				Global.posiblequests[questnr][2] = true
+				Global.questnr.append(Global.posiblequests[questnr][0])
 		else:
 			Global.quests = Global.posiblequests[questnr][1]
 			Global.posiblequests[questnr][2] = true
+			Global.questnr.append(Global.posiblequests[questnr][0])
 		get_tree().change_scene_to_packed(zemelapis)
 
 
@@ -76,7 +103,7 @@ func _on_area_2d_body_entered(body):
 	
 func mainas():    
 	var number = []
-	var file = FileAccess.open("res://Bookbearers/Dialogai/dialogassuvilku.txt", FileAccess.READ)
+	var file = FileAccess.open(pokalbis, FileAccess.READ)
 	var content = file.get_as_text()
 	dialogas = str_to_var(content)
 

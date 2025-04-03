@@ -11,7 +11,7 @@ extends GridMap
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
-@export var playerhealth = 10
+@export var playerhealth = Global.health
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
 @export var skill2coldown = 3
@@ -355,7 +355,7 @@ func shoot_ray():
 func map_selection(selection: Dictionary):
 	if selection.is_empty():
 		return
-	if str(selection["collider"]) == "GridMap:<GridMap#38419826008>":
+	if selection["collider"] is GridMap:
 		var gridmap: GridMap = selection["collider"]
 		var locsel = to_local(selection.position)
 		var pos = gridmap.local_to_map(locsel)
@@ -532,7 +532,8 @@ func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
-	playerhealth= playerhealth-2
+	playerhealth = playerhealth-2
+	Global.health -= 2 
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if player != null:
