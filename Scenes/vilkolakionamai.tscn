@@ -1,29 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://canti7bp6iw32"]
+[gd_scene load_steps=4 format=3 uid="uid://canti7bp6iw32"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/VilkolakioNamai.gd" id="1_thrr5"]
-[ext_resource type="Texture2D" uid="uid://cdtwm7cs7to6h" path="res://Bookbearers/Textures/mousechild.png" id="2_xesd4"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsyko"]
-radius = 35.865
-height = 190.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7pvn"]
-size = Vector2(282, 31)
-
-[sub_resource type="Gradient" id="Gradient_wis8u"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hfd2f"]
-gradient = SubResource("Gradient_wis8u")
-width = 284
-height = 32
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_10tk3"]
-size = Vector2(69, 70)
-
-[sub_resource type="Gradient" id="Gradient_5to6v"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bap3w"]
-gradient = SubResource("Gradient_5to6v")
 
 [sub_resource type="Gradient" id="Gradient_gryxu"]
 offsets = PackedFloat32Array(0.994845, 1)
@@ -35,39 +12,7 @@ fill_to = Vector2(1, 1)
 
 [node name="Namai" type="Node2D"]
 position = Vector2(480, 230)
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_thrr5")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(10, 4)
-shape = SubResource("CapsuleShape2D_hsyko")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(13.5, -16.5)
-scale = Vector2(0.0935185, 0.103646)
-texture = ExtResource("2_xesd4")
-
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(428, -183)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_o7pvn")
-
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
-texture = SubResource("GradientTexture2D_hfd2f")
-
-[node name="Area2D2" type="Area2D" parent="."]
-position = Vector2(-401, 248)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(1.5, -2)
-shape = SubResource("RectangleShape2D_10tk3")
-
-[node name="Sprite2D" type="Sprite2D" parent="Area2D2"]
-texture = SubResource("GradientTexture2D_bap3w")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -130,6 +75,3 @@ size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 50
 fit_content = true
 metadata/_edit_use_anchors_ = true
-
-[connection signal="body_entered" from="Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Area2D2" to="CharacterBody2D" method="_on_area_2d_2_body_entered"]

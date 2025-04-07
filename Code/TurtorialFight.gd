@@ -93,10 +93,6 @@ func playermove(langelistomove):
 	moving = true
 	selected = false
 	redraw = true
-	var camx = player.position.x - $"../StaticBody3D2".position.x
-	var camz = player.position.z - $"../StaticBody3D2".position.z
-	$"../StaticBody3D2".position.x = pos.x - camx
-	$"../StaticBody3D2".position.z = pos.z - camz
 	var prad = pcurrentpos
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
@@ -106,17 +102,10 @@ func playermove(langelistomove):
 	await tween2.finished
 	
 	$player/Camera3D2.current = false
-	var left = player.transform.basis.z.normalized()
-	var backward = player.transform.basis.x.normalized()
-	if prad.x > langelistomove.x:
-		$"../StaticBody3D2/Camera3D".transform.origin += left.cross(Vector3.UP) / 35
-	if prad.x < langelistomove.x:
-		$"../StaticBody3D2/Camera3D".transform.origin -= left.cross(Vector3.UP) / 35
-	if prad.z > langelistomove.z:
-		$"../StaticBody3D2/Camera3D".transform.origin += backward.cross(Vector3.UP) / 35
-	if prad.z < langelistomove.z:
-		$"../StaticBody3D2/Camera3D".transform.origin -= backward.cross(Vector3.UP) / 35
-	
+	$"../StaticBody3D2".position.x = player.position.x - 0.355
+	$"../StaticBody3D2".position.y = 5.0
+	$"../StaticBody3D2".position.z = player.position.z + 3.0
+	$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
 	$"../StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false

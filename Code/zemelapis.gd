@@ -55,7 +55,7 @@ var atspaust = false
 func _ready():
 	$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
 	$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(playerhealth) + "/10"
-	
+	$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.scrolls.size())
 	sky["albedo_color"] = Color(0, 0, 0, 0)
 	$DirectionalLight3D["light_energy"] = 0
 	$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
@@ -516,11 +516,6 @@ func mainas():
 				number[b].append(0)
 	dijekstra(number, playercurrentgraphspot);
 
-
-func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	pass
-	#Global.enemy.append(area.get_parent().get_child(1)["text"])
-	#changetofight = true
 func updatequests():
 	Global.quests = null;
 	for i in Global.posiblequests.size():
@@ -592,6 +587,7 @@ func _on_mouse_area_3d_area_shape_entered(area_rid, area, area_shape_index, loca
 		changetochildfight = true
 	if area["collision_layer"] == 8:
 		Global.scrolls.append(area.get_parent().get_child(1)["text"])
+		$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.scrolls.size())
 		area.get_parent().queue_free()
 	if area["collision_layer"] == 2:
 		Global.enemy.append(area.get_parent().get_child(1)["text"])

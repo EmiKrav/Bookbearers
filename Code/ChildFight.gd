@@ -40,6 +40,12 @@ var nearobj = false
 @onready var enemy = $enemy
 @onready var langeliai = $Node3D
 
+var chests = []
+var collect = false
+var chestcurrent = null
+var chestcurrentlabel = null
+var endturn = false
+
 func _ready():
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,0,15))
@@ -60,10 +66,6 @@ func playermove(langelistomove):
 	moving = true
 	selected = false
 	redraw = true
-	var camx = player.position.x - $"../StaticBody3D2".position.x
-	var camz = player.position.z - $"../StaticBody3D2".position.z
-	$"../StaticBody3D2".position.x = pos.x - camx
-	$"../StaticBody3D2".position.z = pos.z - camz
 	var prad = pcurrentpos
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
@@ -72,6 +74,10 @@ func playermove(langelistomove):
 	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
 	$player/Camera3D2.current = false
+	$"../StaticBody3D2".position.x = player.position.x - 0.355
+	$"../StaticBody3D2".position.y = 3.0
+	$"../StaticBody3D2".position.z = player.position.z + 3.0
+	$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
 	$"../StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
@@ -86,7 +92,7 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if turnssurvived == 1:
+	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(5):
 		Global.quests = null;
 		Global.posiblequests[questnr][2] = false
 		Global.posiblequests[questnr+1][2] = true
@@ -121,8 +127,16 @@ func _process(_delta):
 				var langelistomove = shoot_ray()
 				if movemcellls.has(langelistomove):
 					playermove(langelistomove)
-					
-	
+	if collect:
+		if Input.is_action_just_pressed("ui_accept"):
+			collect = false
+			chests.append(chestcurrent)
+			playermovementPointsx = -1
+			playermovementPointsz = -1
+			chestcurrentlabel.visible = false
+			$"../CanvasLayer/Panel/TextureRect/Label".text = str(chests.size())
+			chestcurrent = null
+			chestcurrentlabel = null
 		
 		
 func shoot_ray():
@@ -403,7 +417,7 @@ func _on_skill_2_pressed():
 
 
 func _on_end_turn_pressed():
-	if !moving:
+	if !moving and endturn:
 		Global.cameramove = false
 		skillusage = false
 		skillusage2 = false
@@ -450,3 +464,27 @@ func _on_area_3d_area_exited(area):
 	tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
 	await tween.finished
 
+
+
+func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if area["collision_layer"] == 4:
+		var chestlabel = area.get_parent().get_child(1)
+		var chestname = str(area.get_parent().name.substr(5,-1))
+		if !chests.has(chestname):
+			chestlabel.visible = true
+			chestcurrent = chestname
+			chestcurrentlabel = chestlabel
+			collect = true
+
+
+func _on_area_3d_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	if area["collision_layer"] == 4:
+		area.get_parent().get_child(1).visible = false
+
+
+func _on_end_turn_mouse_entered():
+	endturn = true;
+
+
+func _on_end_turn_mouse_exited():
+	endturn = false;
