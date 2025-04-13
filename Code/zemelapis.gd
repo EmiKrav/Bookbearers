@@ -200,19 +200,19 @@ func _process(_delta):
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(vaikokova)
 	if changetowerehouse:
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			get_tree().change_scene_to_packed(werehouse)
 	if changetotreehouse:
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			get_tree().change_scene_to_packed(werehouse)
 	if changetometalhouse:
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			get_tree().change_scene_to_packed(werehouse)
 	if changetocamp:
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			Global.health = 10
 			$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health

@@ -48,7 +48,7 @@ func _physics_process(delta):
 		$"CanvasLayer/Panel/VBoxContainer/HBoxContainer/RichTextLabel".text = dialogas[eilute][2]
 		$"CanvasLayer/Panel/TextureRect".size = $"CanvasLayer/Panel/VBoxContainer/HBoxContainer".size
 		$"CanvasLayer/Panel/TextureRect".global_position = $"CanvasLayer/Panel/VBoxContainer/HBoxContainer".global_position
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("skip"):
 			eilute +=1
 			if eilute< dialogas.size():
 				if dialogas[eilute][1] == 0:

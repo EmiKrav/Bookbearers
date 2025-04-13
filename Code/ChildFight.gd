@@ -18,6 +18,9 @@ var playermovementPointsz = maxplayermovementPoints
 var selected = false
 var pcurrentpos : Vector3i
 var ecurrentpos: Vector3i
+var ecurrentpos2: Vector3i
+var ecurrentpos3: Vector3i
+var ecurrentpos4: Vector3i
 var moving = false
 var redraw = false
 var click = false
@@ -38,6 +41,10 @@ var nearobj = false
 
 @onready var player = $player
 @onready var enemy = $enemy
+@onready var enemy2 = $enemy2
+@onready var enemy3 = $enemy3
+@onready var enemy4 = $enemy4
+
 @onready var langeliai = $Node3D
 
 var chests = []
@@ -45,14 +52,54 @@ var collect = false
 var chestcurrent = null
 var chestcurrentlabel = null
 var endturn = false
+var spacepressed = false
+
+var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
+var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
+var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
 
 func _ready():
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,0,15))
 	pcurrentpos = pos
-	enemy.position = Vector3(1,2,-15)
-	pos = local_to_map(Vector3(1,2,-15))
+	var rx = randomnrx.pick_random()
+	var rz = randomnrz.pick_random()
+	enemy.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
 	ecurrentpos = pos
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy2.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
+	ecurrentpos2 = pos
+	while(ecurrentpos2 == ecurrentpos):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy2.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos2 = pos
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy3.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
+	ecurrentpos3 = pos
+	while(ecurrentpos3 == ecurrentpos or ecurrentpos3 == ecurrentpos2):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy3.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos3 = pos
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy4.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
+	ecurrentpos4 = pos
+	while(ecurrentpos4 == ecurrentpos or ecurrentpos4 == ecurrentpos2 or ecurrentpos4 == ecurrentpos3):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy4.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos4 = pos
 	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)
@@ -128,7 +175,7 @@ func _process(_delta):
 				if movemcellls.has(langelistomove):
 					playermove(langelistomove)
 	if collect:
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("space"):
 			collect = false
 			chests.append(chestcurrent)
 			playermovementPointsx = -1
@@ -138,6 +185,11 @@ func _process(_delta):
 			chestcurrent = null
 			chestcurrentlabel = null
 		
+func _input(event):
+	if event is InputEventMouseButton:
+		spacepressed = false;
+	else:
+		spacepressed = true;
 		
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
@@ -175,24 +227,26 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 				click = false
 			
 func enemyMove(ecurrentposi, enemyi):
-	if player.mesh.material.albedo_color.a == 0:
-		$"../StaticBody3D2/Camera3D".current = false
-		enemyi.get_child(0).current = true
-		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
-		enemyi.get_child(0).current = false
-		$"../StaticBody3D2/Camera3D".current = true
-		return ecurrentposi
+	#if player.mesh.material.albedo_color.a == 0:
+		#$"../StaticBody3D2/Camera3D".current = false
+		#enemyi.get_child(0).current = true
+		#var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
+		#var tween = create_tween()
+		#tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+		#await tween.finished
+		#var tween2 = create_tween()
+		#tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+		#await tween2.finished
+		#enemyi.get_child(0).current = false
+		#$"../StaticBody3D2/Camera3D".current = true
+		#return ecurrentposi
 	if !turn:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
 		var ppos = pcurrentpos
+		if player.mesh.material.albedo_color.a == 0:
+			ppos = local_to_map(Vector3(randomnrx.pick_random(),1.5,randomnrzz.pick_random()))
 		var epos = ecurrentposi
 		var atstumasx = ppos.x - epos.x
 		var atstumasz = ppos.z - epos.z
@@ -417,7 +471,7 @@ func _on_skill_2_pressed():
 
 
 func _on_end_turn_pressed():
-	if !moving and endturn:
+	if !moving and endturn and !spacepressed:
 		Global.cameramove = false
 		skillusage = false
 		skillusage2 = false
@@ -429,8 +483,20 @@ func _on_end_turn_pressed():
 		turn = false
 		if enemy != null:
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
-			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
+			if !invisible and abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
 				await enemyAttack(enemy)
+		if enemy2 != null:
+			ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
+			if !invisible and abs(pcurrentpos.x - ecurrentpos2.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos2.z) <= enemyattackrange:
+				await enemyAttack(enemy)
+		if enemy3 != null:
+			ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
+			if !invisible and abs(pcurrentpos.x - ecurrentpos3.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos3.z) <= enemyattackrange:
+				await enemyAttack(enemy3)
+		if enemy4 != null:
+			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
+			if !invisible and abs(pcurrentpos.x - ecurrentpos4.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
+				await enemyAttack(enemy4)
 		turn = true
 		canmove = true
 		skillusage = true
@@ -450,6 +516,7 @@ func _on_end_turn_pressed():
 		turnssurvived +=1
 		playermovementPointsx = maxplayermovementPoints
 		playermovementPointsz = maxplayermovementPoints
+		endturn = false
 
 
 func _on_area_3d_area_entered(area):
@@ -485,6 +552,11 @@ func _on_area_3d_area_shape_exited(area_rid, area, area_shape_index, local_shape
 func _on_end_turn_mouse_entered():
 	endturn = true;
 
-
 func _on_end_turn_mouse_exited():
+	endturn = false;
+
+func _on_end_turn_button_down():
+	endturn = true;
+
+func _on_end_turn_button_up():
 	endturn = false;

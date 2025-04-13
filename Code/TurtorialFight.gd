@@ -56,25 +56,53 @@ var skillset = 1;
 @onready var enemy3 = $enemy3
 @onready var enemy4 = $enemy4
 @onready var langeliai = $Node3D
-
+var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
+var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 func _ready():
-	#noise.noise.seed = randi()%1000;
-	
+	#cells = $".".get_used_cells()
+	#for i in $".".get_used_cells().size():
+		#print( $".".map_to_local( $".".get_used_cells()[i]))
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
-	enemy.position = Vector3(1,2,-15)
-	pos = local_to_map(Vector3(1,1.5,-15))
+	var rx = randomnrx.pick_random()
+	var rz = randomnrz.pick_random()
+	enemy.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
 	ecurrentpos = pos
-	enemy2.position = Vector3(-1,2,-15)
-	pos = local_to_map(Vector3(-1,1.5,-15))
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy2.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
 	ecurrentpos2 = pos
-	enemy3.position = Vector3(1,2,-12.8)
-	pos = local_to_map(Vector3(1,1.5,-12.8))
+	while(ecurrentpos2 == ecurrentpos):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy2.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos2 = pos
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy3.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
 	ecurrentpos3 = pos
-	enemy4.position = Vector3(-1,2,-12.8)
-	pos = local_to_map(Vector3(-1,1.5,-12.8))
+	while(ecurrentpos3 == ecurrentpos or ecurrentpos3 == ecurrentpos2):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy3.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos3 = pos
+	rx = randomnrx.pick_random()
+	rz = randomnrz.pick_random()
+	enemy4.position = Vector3(rx,2,rz)
+	pos = local_to_map(Vector3(rx,1.5,rz))
 	ecurrentpos4 = pos
+	while(ecurrentpos4 == ecurrentpos or ecurrentpos4 == ecurrentpos2 or ecurrentpos4 == ecurrentpos3):
+		rx = randomnrx.pick_random()
+		rz = randomnrz.pick_random()
+		enemy4.position = Vector3(rx,2,rz)
+		pos = local_to_map(Vector3(rx,1.5,rz))
+		ecurrentpos4 = pos
 	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)

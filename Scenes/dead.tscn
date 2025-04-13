@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2di8c8c2krdc"]
+[gd_scene load_steps=6 format=3 uid="uid://b2di8c8c2krdc"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/dead.gd" id="1_w1xox"]
 
@@ -6,6 +6,13 @@
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_e3x3g"]
 gradient = SubResource("Gradient_e12dn")
+
+[sub_resource type="Gradient" id="Gradient_d3uxq"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3snw2"]
+gradient = SubResource("Gradient_d3uxq")
+width = 200
+height = 80
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_w1xox")
@@ -31,3 +38,33 @@ anchor_bottom = 0.517747
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.447917
+anchor_top = 0.8
+anchor_right = 0.552083
+anchor_bottom = 0.88
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("GradientTexture2D_3snw2")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Respawn
+(5 Books)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/TextureButton" to="." method="_on_texture_button_pressed"]
