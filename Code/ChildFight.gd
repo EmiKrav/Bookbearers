@@ -139,7 +139,7 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(5):
+	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(1):
 		Global.quests = null;
 		Global.posiblequests[questnr][2] = false
 		Global.posiblequests[questnr+1][2] = true

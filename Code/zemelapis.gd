@@ -9,6 +9,8 @@ extends Node3D
 @onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
 @onready var sky = load("res://Bookbearers/Materials/sky.material")
 
+@onready var thinking = load("res://Bookbearers/Scenes/afterfight.tscn")
+
 @onready var langeliai = %lang
 @onready var player = %player
 @export var maxplayermovementPoints = 20
@@ -21,6 +23,7 @@ var changetowerehouse = false
 var changetotreehouse = false
 var changetometalhouse = false
 var changetocamp = false
+var changetothinking = false
 
 var V = 65;
 var par =[]
@@ -53,9 +56,14 @@ var atspaust = false
 
 
 func _ready():
+	
+	get_tree().paused = false;
+	if (!Global.bookbearer):
+		$player/Mouse.queue_free()
+		$player/child.position.x -= 1.0
 	$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
 	$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(playerhealth) + "/10"
-	$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.scrolls.size())
+	$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.usedscrolls)
 	sky["albedo_color"] = Color(0, 0, 0, 0)
 	$DirectionalLight3D["light_energy"] = 0
 	$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
@@ -196,6 +204,9 @@ func _process(_delta):
 	if changetofight:
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
+	if changetothinking:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(thinking)
 	if	changetochildfight:
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(vaikokova)
@@ -587,9 +598,12 @@ func _on_mouse_area_3d_area_shape_entered(area_rid, area, area_shape_index, loca
 		changetochildfight = true
 	if area["collision_layer"] == 8:
 		Global.scrolls.append(area.get_parent().get_child(1)["text"])
-		$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.scrolls.size())
+		Global.usedscrolls +=1;
+		$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.usedscrolls)
 		area.get_parent().queue_free()
 	if area["collision_layer"] == 2:
-		Global.enemy.append(area.get_parent().get_child(1)["text"])
-		changetofight = true
-
+		if Global.bookbearer:
+			Global.enemy.append(area.get_parent().get_child(1)["text"])
+			changetofight = true
+		else:
+			changetothinking = true;

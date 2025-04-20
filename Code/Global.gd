@@ -22,11 +22,14 @@ var questheight = 80
 
 var health = 10;
 var scrolls = []
+var usedscrolls = 0;
 var enemy = []
 
 var day = 1
 
 var camerapos = null
+
+var bookbearer = true
 
 func AddName(Name):
 	Global.childName = Name

@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://Bookbearers/Code/VilkolakioNamai.gd" id="1_thrr5"]
 
-[sub_resource type="Gradient" id="Gradient_gryxu"]
+[sub_resource type="Gradient" id="Gradient_0eh84"]
 offsets = PackedFloat32Array(0.994845, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_un8av"]
-gradient = SubResource("Gradient_gryxu")
+gradient = SubResource("Gradient_0eh84")
 height = 300
 fill_to = Vector2(1, 1)
 

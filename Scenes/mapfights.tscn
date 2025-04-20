@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://c7rauur2rx5ic"]
+[gd_scene load_steps=39 format=3 uid="uid://c7rauur2rx5ic"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_81alu"]
 [ext_resource type="MeshLibrary" uid="uid://bc7i07lhpc85w" path="res://Bookbearers/Tiles/Tilesturt.tres" id="2_3wemk"]
@@ -34,6 +34,9 @@ albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ojjs7"]
 size = Vector2(1.25, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_56k3x"]
+size = Vector3(1.24121, 1, 1.70007)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_nyhfe"]
 size = Vector2(1.25, 2)
@@ -177,6 +180,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115,
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
+[node name="EnemyArea3D" type="Area3D" parent="GridMap/enemy"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy/EnemyArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_56k3x")
+
 [node name="enemy2" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.12, 2, -15)
 mesh = SubResource("PlaneMesh_nyhfe")
@@ -196,6 +205,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
+[node name="Enemy2Area3D" type="Area3D" parent="GridMap/enemy2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy2/Enemy2Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_56k3x")
+
 [node name="enemy3" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.88, 2, -12.8)
 mesh = SubResource("PlaneMesh_me6y2")
@@ -208,13 +223,18 @@ transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788
 [node name="Label3D" type="Label3D" parent="GridMap/enemy3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
-text = "1
-"
+text = "1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 0, 0.97907)
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+
+[node name="Enemy3Area3D" type="Area3D" parent="GridMap/enemy3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy3/Enemy3Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_56k3x")
 
 [node name="enemy4" type="MeshInstance3D" parent="GridMap"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.115, 2, -12.8)
@@ -234,6 +254,12 @@ text = "1"
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115, 0, 0.97907)
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+
+[node name="Enemy4Area3D" type="Area3D" parent="GridMap/enemy4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy4/Enemy4Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_56k3x")
 
 [node name="Node3D" type="Node3D" parent="GridMap"]
 
@@ -22724,6 +22750,10 @@ transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -12.5386, 0.997581, 
 transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -14.6108, 0.997581, -13.9905)
 
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy/EnemyArea3D" to="GridMap" method="_on_enemy_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy2/Enemy2Area3D" to="GridMap" method="_on_enemy_2_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy3/Enemy3Area3D" to="GridMap" method="_on_enemy_3_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy4/Enemy4Area3D" to="GridMap" method="_on_enemy_4_area_3d_input_event"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton4" to="GridMap" method="_on_texture_button_4_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_entered"]

@@ -5,15 +5,18 @@ extends GridMap
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 @onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
+@onready var enemyhead = preload("res://Bookbearers/Textures/enemyhead.png")
+@onready var playeryhead = preload("res://Bookbearers/Textures/mousebookbringerfightmodehead.png")
 
 
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
-@export var playerhealth = Global.health
+var playerhealth = Global.health
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
+@export var enemymaxhealth = 2
 @export var skill2coldown = 3
 @export var skill3coldown = 3
 @export var skilldmg = 2
@@ -106,10 +109,19 @@ func _ready():
 	othenemypos.append(ecurrentpos2)
 	othenemypos.append(ecurrentpos3)
 	othenemypos.append(ecurrentpos4)
+	enemy.get_child(1).text = str(enemymaxhealth)
+	enemy2.get_child(1).text =  str(enemymaxhealth)
+	enemy3.get_child(1).text =  str(enemymaxhealth)
+	enemy4.get_child(1).text =  str(enemymaxhealth)
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
 	
 func playermove(langelistomove):
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+
 	Global.cameramove = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
@@ -336,7 +348,6 @@ func useskill3():
 	usingskills = false
 	
 func useskill1():
-	
 	usingskills = true
 	var langelistomove = shoot_ray()
 	var ppos = pcurrentpos
@@ -392,6 +403,12 @@ func map_selection(selection: Dictionary):
 		return pos
 
 func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if turn && canmove && !usingskills:
 		if event is InputEventMouseButton:
 			click = true
@@ -406,6 +423,11 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 				click = false
 			
 func enemyMove(ecurrentposi, enemyi):
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemyi.get_child(1).text)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemyi.get_child(1).text + "/" + str(enemymaxhealth)
+			
 	if !turn:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -564,7 +586,9 @@ func enemyAttack(enemyi):
 	await get_tree().create_timer(1).timeout
 	playerhealth = playerhealth-2
 	Global.health -= 2 
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - playerhealth
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if player != null:
 		$player/Camera3D2.current = false
@@ -652,6 +676,11 @@ func _on_texture_rect_pressed():
 			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
 			if abs(pcurrentpos.x -ecurrentpos4.x )<= enemyattackrange and abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
 				await enemyAttack(enemy4)
+		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - playerhealth
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	
 		turn = true
 		canmove = true
 		skillusage = true
@@ -674,6 +703,12 @@ func _on_texture_rect_pressed():
 		playermovementPointsz = maxplayermovementPoints
 		
 func _on_texture_button_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage and !usingskills:
 		skill2 = false
 		skill3 = false
@@ -703,6 +738,12 @@ func _on_texture_button_mouse_exited():
 
 
 func _on_texture_button_2_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage2 and !usingskills:
 		skill = false
 		skill3 = false
@@ -734,6 +775,12 @@ func _on_texture_button_2_mouse_exited():
 
 
 func _on_texture_button_3_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage3 and !usingskills:
 		skill = false
 		skill2 = false
@@ -777,3 +824,38 @@ func _on_texture_button_4_pressed():
 		skillset = 1;
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton4/Label".text=str(skillset)
 		return
+
+
+func _on_enemy_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy.get_child(1).text + "/" + str(enemymaxhealth)
+
+func _on_enemy_2_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy2.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy2.get_child(1).text + "/" + str(enemymaxhealth)
+			
+
+func _on_enemy_3_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy3.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy3.get_child(1).text + "/" + str(enemymaxhealth)
+
+func _on_enemy_4_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy4.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy4.get_child(1).text + "/" + str(enemymaxhealth)
+			

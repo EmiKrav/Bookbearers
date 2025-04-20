@@ -5,7 +5,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CanvasLayer/TextureRect/Label.text = str(Global.childName)
-	if Global.scrolls.size() >= 5:
+	if Global.usedscrolls >= 2:
 		$CanvasLayer/TextureButton.visible = true
 		$CanvasLayer/TextureButton/Label.visible = true
 
@@ -38,9 +38,5 @@ func _on_texture_button_pressed():
 	elif Global.grafspot == 55:
 		Global.grafspot = 54
 		
-	Global.scrolls.remove_at(Global.scrolls.size()-1)
-	Global.scrolls.remove_at(Global.scrolls.size()-1)
-	Global.scrolls.remove_at(Global.scrolls.size()-1)
-	Global.scrolls.remove_at(Global.scrolls.size()-1)
-	Global.scrolls.remove_at(Global.scrolls.size()-1)
+	Global.usedscrolls -=5
 	get_tree().change_scene_to_packed(zemelapis)
