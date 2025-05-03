@@ -57,6 +57,16 @@ var spacepressed = false
 var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
+var ches2x = [-18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2]
+var ches2z = [-8, -6, -4, -2, 0, 2, 4]
+var ches1x = [-2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+var ches1z = [-12, -10, -8, -6, -4, -2 ,0]
+var ches3x = [-6, -4, -2, 0, 2, 4, 6, 8]
+var ches3z = [-16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4]
+var ches4x = [-6, -4, -2, 0, 2, 4, 6, 8]
+var ches4z = [16, 14, 12, 10, 8, 6, 4, 2, 0, -2, -4]
+var ches5x = [-8, -6, -4, -2, 0, 2, 4, 6, 8, 10]
+var ches5z = [14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6]
 
 func _ready():
 	player.position = Vector3(1,1.5,15)
@@ -100,9 +110,52 @@ func _ready():
 		enemy4.position = Vector3(rx,2,rz)
 		pos = local_to_map(Vector3(rx,1.5,rz))
 		ecurrentpos4 = pos
+	var cx = ches2x.pick_random()
+	var cz = ches2z.pick_random()
+	while((cx == -8 and cz == 2 ) or (cx == -12 and cz == 4)):
+		cx = ches2x.pick_random()
+		cz = ches2z.pick_random()
+	$Chests/Chest2.position.x += cx
+	$Chests/Chest2.position.z += cz
+	
+	cx = ches1x.pick_random()
+	cz = ches1z.pick_random()
+	while((cx == 8 and cz == -2 ) or (local_to_map($Chests/Chest1.position) == local_to_map($Chests/Chest2.position))):
+		cx = ches1x.pick_random()
+		cz = ches1z.pick_random()
+	$Chests/Chest1.position.x += cx
+	$Chests/Chest1.position.z += cz
+	
+	cx = ches3x.pick_random()
+	cz = ches3z.pick_random()
+	while((cx == -2 and cz == -6 ) or (local_to_map($Chests/Chest3.position) == local_to_map($Chests/Chest2.position)) or (local_to_map($Chests/Chest3.position) == local_to_map($Chests/Chest1.position))):
+		cx = ches3x.pick_random()
+		cz = ches3z.pick_random()
+	$Chests/Chest3.position.x += cx
+	$Chests/Chest3.position.z += cz
+	
+	cx = ches4x.pick_random()
+	cz = ches4z.pick_random()
+	while((cx == -2 and cz == 6 ) or (local_to_map($Chests/Chest4.position) == local_to_map($Chests/Chest3.position)) or (local_to_map($Chests/Chest4.position) == local_to_map($Chests/Chest2.position)) or (local_to_map($Chests/Chest4.position) == local_to_map($Chests/Chest1.position))):
+		cx = ches4x.pick_random()
+		cz = ches4z.pick_random()
+	$Chests/Chest4.position.x += cx
+	$Chests/Chest4.position.z += cz
+	
+	cx = ches5x.pick_random()
+	cz = ches5z.pick_random()
+	while((cx == 2 and cz == 4 ) or (local_to_map($Chests/Chest5.position) == local_to_map($Chests/Chest4.position)) or (local_to_map($Chests/Chest5.position) == local_to_map($Chests/Chest3.position)) or (local_to_map($Chests/Chest5.position) == local_to_map($Chests/Chest2.position)) or (local_to_map($Chests/Chest5.position) == local_to_map($Chests/Chest1.position))):
+		cx = ches4x.pick_random()
+		cz = ches4z.pick_random()
+	$Chests/Chest5.position.x += cx
+	$Chests/Chest5.position.z += cz
+	
 	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)
+	othenemypos.append(ecurrentpos2)
+	othenemypos.append(ecurrentpos3)
+	othenemypos.append(ecurrentpos4)
 	$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
 
 func playermove(langelistomove):
@@ -139,7 +192,7 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(1):
+	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(5):
 		Global.quests = null;
 		Global.posiblequests[questnr][2] = false
 		Global.posiblequests[questnr+1][2] = true
@@ -256,6 +309,9 @@ func enemyMove(ecurrentposi, enemyi):
 		var paieskaz
 		othenemypos.clear()
 		othenemypos.append(ecurrentpos)
+		othenemypos.append(ecurrentpos2)
+		othenemypos.append(ecurrentpos3)
+		othenemypos.append(ecurrentpos4)
 		othenemypos.erase(ecurrentposi)
 #1 simple movement find optimal position
 		if abs(atstumasx) > enemyattackrange || abs(atstumasz) > enemyattackrange:
@@ -388,7 +444,6 @@ func enemyMove(ecurrentposi, enemyi):
 		await tween2.finished
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
-		
 		return ecurrentposi
 		
 func enemyAttack(enemyi):
@@ -435,7 +490,9 @@ func showMovement(playermovementPointsx,playermovementPointsz):
 	
 	#if movemcellls.has(ecurrentpos):
 	movemcellls.erase(ecurrentpos)
-	
+	movemcellls.erase(ecurrentpos2)
+	movemcellls.erase(ecurrentpos3)
+	movemcellls.erase(ecurrentpos4)
 	for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
@@ -550,6 +607,8 @@ func _on_area_3d_area_shape_exited(area_rid, area, area_shape_index, local_shape
 
 
 func _on_end_turn_mouse_entered():
+	selected = false
+	redraw = true
 	endturn = true;
 
 func _on_end_turn_mouse_exited():
@@ -560,3 +619,13 @@ func _on_end_turn_button_down():
 
 func _on_end_turn_button_up():
 	endturn = false;
+
+
+func _on_skill_mouse_entered():
+	selected = false
+	redraw = true
+
+
+func _on_skill_2_mouse_entered():
+	selected = false
+	redraw = true

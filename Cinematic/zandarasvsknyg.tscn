@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://canti7bp6iw32"]
+[gd_scene load_steps=3 format=3 uid="uid://betoqt8blyugn"]
 
-[ext_resource type="Script" path="res://Bookbearers/Code/childfirstfigth.gd" id="1_fq8gr"]
-[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/Untitled design.ogv" id="1_srw6x"]
+[ext_resource type="Script" path="res://Bookbearers/Code/skill1.gd" id="1_45es0"]
+[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/animacijazandarasatakuoja.ogv" id="1_tev26"]
 
-[node name="Namai" type="Node2D"]
-script = ExtResource("1_fq8gr")
+[node name="zandarasvsknyg" type="Node2D"]
+script = ExtResource("1_45es0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stream = ExtResource("1_srw6x")
+stream = ExtResource("1_tev26")
 autoplay = true
 expand = true
 metadata/_edit_use_anchors_ = true

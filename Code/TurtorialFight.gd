@@ -5,17 +5,20 @@ extends GridMap
 @onready var langelimiromat = preload("res://Bookbearers/Materials/mirtieskuno.tres")
 @onready var namai = preload("res://Bookbearers/Scenes/namai.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
+@onready var enemyhead = preload("res://Bookbearers/Textures/enemyhead.png")
+@onready var playeryhead = preload("res://Bookbearers/Textures/mousebookbringerfightmodehead.png")
+@onready var tree =  preload("res://Bookbearers/Scenes/kelmas.tscn")
 
-#@onready var duobe = preload("res://Bookbearers/Efektai/map.material")
+@onready var skill1cin = preload("res://Bookbearers/Cinematic/skill1.tscn")
 
-var turnnumber=2;
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
-@export var playerhealth = 10
+var playerhealth = 10
 @export var enemymovementPoints = 3
 @export var enemyattackrange = 2
+@export var enemymaxhealth = 2
 @export var skill2coldown = 3
 @export var skill3coldown = 3
 @export var skilldmg = 2
@@ -47,7 +50,6 @@ var skilling = true
 var usingskills = false
 var skill2curcoldown = 0
 var skill3curcoldown = 0
-
 var skillset = 1;
 
 @onready var player = $player
@@ -55,13 +57,13 @@ var skillset = 1;
 @onready var enemy2 = $enemy2
 @onready var enemy3 = $enemy3
 @onready var enemy4 = $enemy4
-@onready var langeliai = $Node3D
+@onready var langeliai = $Langeliai
+
+
 var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
+
 func _ready():
-	#cells = $".".get_used_cells()
-	#for i in $".".get_used_cells().size():
-		#print( $".".map_to_local( $".".get_used_cells()[i]))
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
@@ -104,19 +106,51 @@ func _ready():
 		pos = local_to_map(Vector3(rx,1.5,rz))
 		ecurrentpos4 = pos
 	cells = get_used_cells()
+	cells.sort()
+	var intcount = 0
+	var r1 = randi_range(0, 15)
+	var r2 = randi_range(0, 15)
+	var r3 = randi_range(0, 15)
+	for i in cells:
+		if intcount < 16:
+			if (intcount == r1 || intcount == r2 || intcount == r3) && i != pcurrentpos && i != ecurrentpos && i != ecurrentpos2 && i != ecurrentpos3 && i != ecurrentpos4:	
+					$".".set_cell_item(i,-1)
+					var med = tree.instantiate()
+					$"../Node3D2".add_child(med)
+					med.position = map_to_local(i)
+		else:
+			intcount = 0
+			r1 = randi_range(0, 15)
+			r2 = randi_range(0, 15)
+			r3 = randi_range(0, 15)
+			if (intcount == r1 || intcount == r2 || intcount == r3) && i != pcurrentpos && i != ecurrentpos && i != ecurrentpos2 && i != ecurrentpos3 && i != ecurrentpos4:	
+					$".".set_cell_item(i,-1)
+					var med = tree.instantiate()
+					$"../Node3D2".add_child(med)
+					med.position = map_to_local(i)
+		intcount +=1;
+	cells = get_used_cells()
 	othenemypos.clear()
 	othenemypos.append(ecurrentpos)
 	othenemypos.append(ecurrentpos2)
 	othenemypos.append(ecurrentpos3)
 	othenemypos.append(ecurrentpos4)
+	enemy.get_child(1).text = str(enemymaxhealth)
+	enemy2.get_child(1).text =  str(enemymaxhealth)
+	enemy3.get_child(1).text =  str(enemymaxhealth)
+	enemy4.get_child(1).text =  str(enemymaxhealth)
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
 	
 func playermove(langelistomove):
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+
 	Global.cameramove = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
-	
 	var pos = map_to_local(langelistomove)
 	moving = true
 	selected = false
@@ -143,6 +177,7 @@ func playermove(langelistomove):
 	playermovementPointsz -=abs(prad.z-pab.z)
 	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
 		canmove = false
+		
 func _process(_delta):
 	if playerhealth <= 0:
 		if player != null:
@@ -169,7 +204,7 @@ func _process(_delta):
 				var langelistomove = shoot_ray()
 				if movemcellls.has(langelistomove):
 					playermove(langelistomove)
-					
+	
 	if skill == true and skillusage and skilling and !usingskills:
 		useskill1()
 	if skill2 == true and skillusage2 and skilling and !usingskills and skill2curcoldown == 0:
@@ -178,7 +213,11 @@ func _process(_delta):
 		useskill3()
 		
 func enemyhurt(langelistomove, dmg):
+	$"../CanvasLayer".visible = false
 	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
+		var anim1 = skill1cin.instantiate()
+		$"..".add_child(anim1)
+		await get_tree().create_timer(1).timeout
 		var gyv = enemy.get_child(1).text
 		enemy.get_child(1).text = str(str_to_var(gyv) - dmg) 
 		if str_to_var(enemy.get_child(1).text) <= 0:
@@ -191,6 +230,9 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
+		var anim1 = skill1cin.instantiate()
+		$"..".add_child(anim1)
+		await get_tree().create_timer(1).timeout
 		var gyv = enemy2.get_child(1).text
 		enemy2.get_child(1).text = str(str_to_var(gyv) - dmg) 
 		if str_to_var(enemy2.get_child(1).text) <= 0:
@@ -203,6 +245,9 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
+		var anim1 = skill1cin.instantiate()
+		$"..".add_child(anim1)
+		await get_tree().create_timer(1).timeout
 		var gyv = enemy3.get_child(1).text
 		enemy3.get_child(1).text = str(str_to_var(gyv) - dmg) 
 		if str_to_var(enemy3.get_child(1).text) <= 0:
@@ -215,6 +260,9 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
+		var anim1 = skill1cin.instantiate()
+		$"..".add_child(anim1)
+		await get_tree().create_timer(1).timeout
 		var gyv = enemy4.get_child(1).text
 		enemy4.get_child(1).text = str(str_to_var(gyv) - dmg) 
 		if str_to_var(enemy4.get_child(1).text) <= 0:
@@ -226,30 +274,14 @@ func enemyhurt(langelistomove, dmg):
 			lang.position = pos2
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
-func enemytrapped(langelistomove):
-	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
-		enemy.position -= Vector3(0,0.5,0);
-	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
-		enemy2.position -= Vector3(0,0.5,0);
-	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
-		enemy3.position -= Vector3(0,0.5,0);
-	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
-		enemy4.position -= Vector3(0,0.5,0);
-func enemyuntrapped(langelistomove):
-	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
-		enemy.position += Vector3(0,0.5,0);
-	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
-		enemy2.position += Vector3(0,0.5,0);
-	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
-		enemy3.position += Vector3(0,0.5,0);
-	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
-		enemy4.position += Vector3(0,0.5,0);
-
+			
+	$"../CanvasLayer".visible = true
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	
 func animacijalang():
-	moving = true;
-	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffff71"
-	$"../CanvasLayer/Panel/TextureRect"["disabled"]= true
-	await get_tree().create_timer(1).timeout
 	var tween = create_tween()
 	tween.tween_property(langeliai.get_child(0), "material_override:albedo_color:a", 0, 1)
 	if langeliai.get_child_count() > 1:
@@ -260,9 +292,6 @@ func animacijalang():
 		tween.tween_property(langeliai.get_child(3), "material_override:albedo_color:a", 0, 1)
 			#tween.tween_property(langeliomat, "albedo_color:a", 0, 3)
 	await tween.finished
-	moving = false;
-	$"../CanvasLayer/Panel/TextureRect"["self_modulate"] = "ffffffff"
-	$"../CanvasLayer/Panel/TextureRect"["disabled"]= false
 		
 func useskill2():
 	usingskills = true
@@ -270,7 +299,6 @@ func useskill2():
 	var ppos = pcurrentpos
 	var at1 : Array
 	if langelistomove != null :
-		var posd = map_to_local(langelistomove)
 		var atstumasx = ppos.x -langelistomove.x
 		var atstumasz = ppos.z -langelistomove.z
 		if abs(atstumasx) <= playerattackrange and abs(atstumasz) <= playerattackrange:
@@ -299,29 +327,14 @@ func useskill2():
 		for i in range(0, langeliai.get_child_count()):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
-	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-		
+	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove) and langeliai.get_child_count()>=1:
 		skill2 = false
 		skillusage2 = false
 		skill2curcoldown = skill2coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffff71"
-		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
-		#duobe.set_shader_parameter("duobe", true)
 		
-		var array: Array[Vector3] = []
-		for i in range(0, langeliai.get_child_count()):
-			if langeliai.get_child(i) != null:
-				array.append(langeliai.get_child(i).position)
-				var tween = create_tween()
-				tween.tween_property(langeliai.get_child(i), "material_override:albedo_color:a", 0, 0)
-	
-		#duobe.set_shader_parameter("duobkord", array)
-		for i in range(0,array.size()):
-			enemytrapped(local_to_map(array[i]))
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
 		await animacijalang()
-		#duobe.set_shader_parameter("duobe", false)
-		for i in range(0,array.size()):
-			enemyuntrapped(local_to_map(array[i]))
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				at1.append(local_to_map(langeliai.get_child(i).position))
@@ -329,6 +342,7 @@ func useskill2():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill2dmg)
 	usingskills = false
+	
 func useskill3():
 	usingskills = true
 	var langelistomove = shoot_ray()
@@ -363,18 +377,12 @@ func useskill3():
 		for i in range(0, langeliai.get_child_count()):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
-	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
+	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove) and langeliai.get_child_count()>=1:
 		skill3 = false
 		skillusage3 = false
 		skill3curcoldown = skill3coldown
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
-		#var ugnis = ugnis.instantiate()
-		#$'.'.add_child(ugnis)
-		#var pos = map_to_local(langelistomove)
-		#var plpos = map_to_local(pcurrentpos)
-		#var dis = Vector3(pos.x, pos.y + 1.3, plpos.z); 
-		#ugnis.position = dis + Vector3(0,1.3,0)#map_to_local(pcurrentpos) + Vector3(0,1.3,-1.0)
 		await animacijalang()
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -383,6 +391,7 @@ func useskill3():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skill3dmg)
 	usingskills = false
+	
 func useskill1():
 	usingskills = true
 	var langelistomove = shoot_ray()
@@ -404,52 +413,8 @@ func useskill1():
 		for i in range(0, langeliai.get_child_count()):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
-	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove):
-		
-		#if skillset == 1:
-			#var zaibas = zaibas.instantiate()
-			#$'.'.add_child(zaibas)
-			#var pos = map_to_local(langelistomove)
-			#zaibas.position = map_to_local(pcurrentpos + Vector3i(0,1.5,0))
-			#zaibas.get_child(1).position = pos
-			#await get_tree().create_timer(20).timeout
-		#if skillset == 3:
-			#var grandine = grandine.instantiate()
-			#$'.'.add_child(grandine)
-			#var pos = map_to_local(langelistomove)
-			#grandine.position = map_to_local(pcurrentpos + Vector3i(0,1.0,0))
-			#await get_tree().create_timer(10).timeout
-			#var tweengrand = create_tween()
-			#tweengrand.tween_property(grandine, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
-			#tweengrand.finished
-			#await get_tree().create_timer(5).timeout
-		#if skillset == 2:
-			#var lektuvas = lektuvai.instantiate()
-			#$'.'.add_child(lektuvas)
-			#var pos = map_to_local(langelistomove)
-			#lektuvas.position = map_to_local(pcurrentpos) + Vector3(0,3,0)
-			##print(lektuvomat.get_shader_parameter("sk"));
-			#await get_tree().create_timer(5).timeout
-			#var angle = Vector2(lektuvas.position.x, lektuvas.position.z).angle_to(Vector2(pos.x,pos.z));
-			#var rotationlek = 0;
-			##dv
-			#if (lektuvas.position.x < pos.x && lektuvas.position.z > pos.z):
-				#rotationlek += angle; 
-			##kv
-			#if (lektuvas.position.x > pos.x && lektuvas.position.z > pos.z):
-				#rotationlek += angle;
-			##da
-			#if (lektuvas.position.z < pos.z && lektuvas.position.x < pos.x):
-				#rotationlek = -angle - PI;
-			## ka
-			#if (lektuvas.position.z < pos.z && lektuvas.position.x > pos.x):
-				#rotationlek += -angle + PI;
-			#var tweenlekr = create_tween()
-			#tweenlekr.tween_property(lektuvas, "rotation", Vector3(lektuvas.rotation.x, lektuvas.rotation.y + rotationlek, lektuvas.rotation.z), 3)
-			#await tweenlekr.finished
-			#var tweenlek = create_tween()
-			#tweenlek.tween_property(lektuvas, "position", Vector3(pos.x, pos.y+ 1.0, pos.z), 3)
-			#tweenlek.finished
+	#print(langelistomove)
+	if langelistomove != null && Input.is_action_just_pressed("Click") && cells.has(langelistomove) and langeliai.get_child_count()>=1:
 		skill = false
 		skillusage = false
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffff71"
@@ -462,7 +427,6 @@ func useskill1():
 		for i in range(0,at1.size()):
 			enemyhurt(at1[i], skilldmg)
 	usingskills = false
-	
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -472,7 +436,6 @@ func shoot_ray():
 	var ray_query = PhysicsRayQueryParameters3D.create(from,to)
 	var raycast_result = get_world_3d().direct_space_state.intersect_ray(ray_query)
 	var selection = map_selection(raycast_result)
-	#print(selection)
 	return selection
 
 func map_selection(selection: Dictionary):
@@ -485,6 +448,12 @@ func map_selection(selection: Dictionary):
 		return pos
 
 func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if turn && canmove && !usingskills:
 		if event is InputEventMouseButton:
 			click = true
@@ -499,6 +468,11 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 				click = false
 			
 func enemyMove(ecurrentposi, enemyi):
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemyi.get_child(1).text)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemyi.get_child(1).text + "/" + str(enemymaxhealth)
+			
 	if !turn:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -655,8 +629,10 @@ func enemyAttack(enemyi):
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
-	playerhealth= playerhealth-2
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+	playerhealth = playerhealth-2
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - playerhealth
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
 	if player != null:
 		$player/Camera3D2.current = false
@@ -712,16 +688,6 @@ func showMovement(playermovementPointsx, playermovementPointsz):
 
 func _on_texture_rect_pressed():
 	if !moving:
-		$"../CanvasLayer".visible=false;
-		#var meninis = meninis.instantiate()
-		#$"..".add_child(meninis)
-		#await get_tree().create_timer(4).timeout
-		#meninis.get_child(0).get_child(1).visible=true
-		#meninis.get_child(0).get_child(1).text="TURN: "+str(turnnumber);
-		#await get_tree().create_timer(2).timeout
-		#meninis.queue_free()
-		turnnumber+=1;
-		$"../CanvasLayer".visible=true;
 		Global.cameramove = false
 		skillusage = false
 		skill = false
@@ -754,6 +720,11 @@ func _on_texture_rect_pressed():
 			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
 			if abs(pcurrentpos.x -ecurrentpos4.x )<= enemyattackrange and abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
 				await enemyAttack(enemy4)
+		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - playerhealth
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	
 		turn = true
 		canmove = true
 		skillusage = true
@@ -776,6 +747,12 @@ func _on_texture_rect_pressed():
 		playermovementPointsz = maxplayermovementPoints
 		
 func _on_texture_button_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage and !usingskills:
 		skill2 = false
 		skill3 = false
@@ -805,11 +782,17 @@ func _on_texture_button_mouse_exited():
 
 
 func _on_texture_button_2_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage2 and !usingskills:
 		skill = false
 		skill3 = false
 		langeliomat.albedo_color.a = 1
-		if skill2 == false:
+		if skill2 == false and skill2curcoldown == 0:
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffbd"
 			if skillusage:
 				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
@@ -836,11 +819,17 @@ func _on_texture_button_2_mouse_exited():
 
 
 func _on_texture_button_3_pressed():
+	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+	selected = false
+	redraw = true
 	if skillusage3 and !usingskills:
 		skill = false
 		skill2 = false
 		langeliomat.albedo_color.a = 1
-		if skill3 == false:
+		if skill3 == false and skill3curcoldown == 0:
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffbd"
 			if skillusage2 and skill2curcoldown == 0:
 				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
@@ -851,7 +840,6 @@ func _on_texture_button_3_pressed():
 		elif skill3 == true:
 			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
 			skill3 = false
-
 
 
 func _on_texture_button_3_mouse_entered():
@@ -880,3 +868,55 @@ func _on_texture_button_4_pressed():
 		skillset = 1;
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton4/Label".text=str(skillset)
 		return
+
+
+func _on_enemy_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy.get_child(1).text + "/" + str(enemymaxhealth)
+
+func _on_enemy_2_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy2.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy2.get_child(1).text + "/" + str(enemymaxhealth)
+			
+
+func _on_enemy_3_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy3.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy3.get_child(1).text + "/" + str(enemymaxhealth)
+
+func _on_enemy_4_area_3d_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed == true and !usingskills:
+			$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = enemyhead
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = enemymaxhealth
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = enemymaxhealth - int(enemy4.get_child(1).text)
+			$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = enemy4.get_child(1).text + "/" + str(enemymaxhealth)
+			
+
+
+func _on_texture_rect_mouse_entered():
+	selected = false
+	redraw = true
+	skilling = false
+	selected = false
+	skill = false
+	skill2 = false
+	skill3 = false
+	if $"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] == Color("ffffffbd"):
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+	if $"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] == Color("ffffffbd"):
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+	if $"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] == Color("ffffffbd"):
+		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
+	

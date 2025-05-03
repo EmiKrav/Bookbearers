@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dgyrelfj4nws4"]
+[gd_scene load_steps=40 format=3 uid="uid://dgyrelfj4nws4"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_ypa8j"]
 [ext_resource type="Material" uid="uid://c5pj6y3xqvsrr" path="res://Bookbearers/Materials/gridmapunderneath.tres" id="2_e4dco"]
@@ -41,16 +41,25 @@ height = 0.1
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85odk"]
 albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ojjs7"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_4ajbn"]
 size = Vector2(1.25, 2)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_nyhfe"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_3c7k3"]
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8s5n"]
+albedo_color = Color(0.0360225, 0.139905, 0.339232, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g75up"]
+size = Vector3(1.24121, 1, 1.70007)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l1e5y"]
 size = Vector2(1.25, 2)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_me6y2"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_q6peo"]
 size = Vector2(1.25, 2)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_dvftp"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_wvtpb"]
 size = Vector2(1.25, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueenk"]
@@ -90,14 +99,6 @@ gradient = SubResource("Gradient_q53am")
 width = 100
 height = 20
 fill_from = Vector2(1, 0)
-
-[sub_resource type="Gradient" id="Gradient_13swi"]
-offsets = PackedFloat32Array(0.995215, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_iwdp0"]
-gradient = SubResource("Gradient_13swi")
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_p1kn7"]
 
@@ -180,87 +181,107 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.067
 mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
+[node name="Langeliai" type="Node3D" parent="GridMap"]
+
 [node name="enemy" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.77, 2, -15)
-mesh = SubResource("PlaneMesh_ojjs7")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.885, 2, -15)
+mesh = SubResource("PlaneMesh_4ajbn")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy"]
-transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.13, -0.595)
-script = SubResource("GDScript_xvnbr")
+transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
-text = "2"
+text = "1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.19, -0.0489998, 0.979)
-mesh = SubResource("CylinderMesh_fdhe6")
-surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115, 0, 0.97907)
+mesh = SubResource("CylinderMesh_3c7k3")
+surface_material_override/0 = SubResource("StandardMaterial3D_f8s5n")
+
+[node name="EnemyArea3D" type="Area3D" parent="GridMap/enemy"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy/EnemyArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_g75up")
 
 [node name="enemy2" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.25, 2, -15)
-mesh = SubResource("PlaneMesh_nyhfe")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.12, 2, -15)
+mesh = SubResource("PlaneMesh_l1e5y")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy2"]
-transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.06, -0.455)
-script = SubResource("GDScript_xvnbr")
+transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy2"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
-text = "2"
+text = "1"
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="GridMap/enemy2"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.15, 0, 0.979)
-mesh = SubResource("CylinderMesh_fdhe6")
-surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 0, 0.97907)
+mesh = SubResource("CylinderMesh_3c7k3")
+surface_material_override/0 = SubResource("StandardMaterial3D_f8s5n")
+
+[node name="Enemy2Area3D" type="Area3D" parent="GridMap/enemy2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy2/Enemy2Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_g75up")
 
 [node name="enemy3" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.745, 2, -12.8)
-mesh = SubResource("PlaneMesh_me6y2")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.88, 2, -12.8)
+mesh = SubResource("PlaneMesh_q6peo")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy3"]
-transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.06, -0.455)
-script = SubResource("GDScript_xvnbr")
+transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
-text = "2"
+text = "1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy3"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.172, 0, 0.979)
-mesh = SubResource("CylinderMesh_fdhe6")
-surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.12, 0, 0.97907)
+mesh = SubResource("CylinderMesh_3c7k3")
+surface_material_override/0 = SubResource("StandardMaterial3D_f8s5n")
+
+[node name="Enemy3Area3D" type="Area3D" parent="GridMap/enemy3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy3/Enemy3Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_g75up")
 
 [node name="enemy4" type="MeshInstance3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.25, 2, -12.8)
-mesh = SubResource("PlaneMesh_dvftp")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.115, 2, -12.8)
+mesh = SubResource("PlaneMesh_wvtpb")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_5ofdg")
 
 [node name="Camera3D2" type="Camera3D" parent="GridMap/enemy4"]
-transform = Transform3D(-1, 8.74228e-08, 0, 2.26267e-08, 0.258819, -0.965926, -8.44439e-08, -0.965926, -0.258819, 0, -2.235, -0.555)
-script = SubResource("GDScript_xvnbr")
+transform = Transform3D(1, 0, 0, 0, -0.642788, 0.766044, 0, -0.766044, -0.642788, 0, 1.35, -1.65)
 
 [node name="Label3D" type="Label3D" parent="GridMap/enemy4"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.117857, 0, -0.924268)
 visible = false
-text = "2"
+text = "1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMap/enemy4"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.144, -0.0419998, 0.979)
-mesh = SubResource("CylinderMesh_fdhe6")
-surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.115, 0, 0.97907)
+mesh = SubResource("CylinderMesh_3c7k3")
+surface_material_override/0 = SubResource("StandardMaterial3D_f8s5n")
 
-[node name="Node3D" type="Node3D" parent="GridMap"]
+[node name="Enemy4Area3D" type="Area3D" parent="GridMap/enemy4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy4/Enemy4Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
+shape = SubResource("BoxShape3D_g75up")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]
 transform = Transform3D(43.36, 0, 0, 0, 43.36, 0, 0, 0, 43.36, 0, 0, -49.8416)
@@ -22650,25 +22671,6 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureButton4" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.75
-texture_normal = SubResource("GradientTexture2D_iwdp0")
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureButton4"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -22738,9 +22740,15 @@ offset_right = 38.0005
 offset_bottom = 22.0001
 text = "⚔️1"
 
+[node name="Node3D2" type="Node3D" parent="."]
+
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy/EnemyArea3D" to="GridMap" method="_on_enemy_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy2/Enemy2Area3D" to="GridMap" method="_on_enemy_2_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy3/Enemy3Area3D" to="GridMap" method="_on_enemy_3_area_3d_input_event"]
+[connection signal="input_event" from="GridMap/enemy4/Enemy4Area3D" to="GridMap" method="_on_enemy_4_area_3d_input_event"]
+[connection signal="mouse_entered" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/Panel/TextureRect" to="GridMap" method="_on_texture_rect_pressed"]
-[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton4" to="GridMap" method="_on_texture_button_4_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureButton" to="GridMap" method="_on_texture_button_pressed"]

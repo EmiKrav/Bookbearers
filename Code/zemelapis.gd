@@ -13,7 +13,7 @@ extends Node3D
 
 @onready var langeliai = %lang
 @onready var player = %player
-@export var maxplayermovementPoints = 20
+@export var maxplayermovementPoints = 2
 @export var playermovementPoints = maxplayermovementPoints
 @export var playerhealth = Global.health
 

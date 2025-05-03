@@ -38,6 +38,13 @@ var nearobj = false
 @onready var enemy = $enemy
 @onready var langeliai = $Node3D
 
+var spacepressed = false
+var endturn = false
+var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
+var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
+var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
+
+
 func _ready():
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,0,15))
@@ -58,10 +65,6 @@ func playermove(langelistomove):
 	moving = true
 	selected = false
 	redraw = true
-	var camx = player.position.x - $"../StaticBody3D2".position.x
-	var camz = player.position.z - $"../StaticBody3D2".position.z
-	$"../StaticBody3D2".position.x = pos.x - camx
-	$"../StaticBody3D2".position.z = pos.z - camz
 	var prad = pcurrentpos
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
@@ -70,6 +73,10 @@ func playermove(langelistomove):
 	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
 	$player/Camera3D2.current = false
+	$"../StaticBody3D2".position.x = player.position.x - 0.355
+	$"../StaticBody3D2".position.y = 3.0
+	$"../StaticBody3D2".position.z = player.position.z + 3.0
+	$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
 	$"../StaticBody3D2/Camera3D".current = true
 	pcurrentpos = langelistomove
 	moving = false
@@ -110,6 +117,11 @@ func _process(_delta):
 					
 	
 		
+func _input(event):
+	if event is InputEventMouseButton:
+		spacepressed = false;
+	else:
+		spacepressed = true;
 		
 func shoot_ray():
 	var camera = get_viewport().get_camera_3d()
@@ -147,24 +159,26 @@ func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 				click = false
 			
 func enemyMove(ecurrentposi, enemyi):
-	if player.mesh.material.albedo_color.a == 0:
-		$"../StaticBody3D2/Camera3D".current = false
-		enemyi.get_child(0).current = true
-		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
-		enemyi.get_child(0).current = false
-		$"../StaticBody3D2/Camera3D".current = true
-		return ecurrentposi
+	#if player.mesh.material.albedo_color.a == 0:
+		#$"../StaticBody3D2/Camera3D".current = false
+		#enemyi.get_child(0).current = true
+		#var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
+		#var tween = create_tween()
+		#tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+		#await tween.finished
+		#var tween2 = create_tween()
+		#tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+		#await tween2.finished
+		#enemyi.get_child(0).current = false
+		#$"../StaticBody3D2/Camera3D".current = true
+		#return ecurrentposi
 	if !turn:
 		for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
 				langeliai.get_child(i).queue_free()
 		var ppos = pcurrentpos
+		if player.mesh.material.albedo_color.a == 0:
+			ppos = local_to_map(Vector3(randomnrx.pick_random(),1.5,randomnrzz.pick_random()))
 		var epos = ecurrentposi
 		var atstumasx = ppos.x - epos.x
 		var atstumasz = ppos.z - epos.z
@@ -306,7 +320,6 @@ func enemyMove(ecurrentposi, enemyi):
 		await tween2.finished
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
-		
 		return ecurrentposi
 		
 func enemyAttack(enemyi):
@@ -435,4 +448,26 @@ func _on_area_3d_area_exited(area):
 	var tween = create_tween()
 	tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
 	await tween.finished
+func _on_end_turn_mouse_entered():
+	selected = false
+	redraw = true
+	endturn = true;
 
+func _on_end_turn_mouse_exited():
+	endturn = false;
+
+func _on_end_turn_button_down():
+	endturn = true;
+
+func _on_end_turn_button_up():
+	endturn = false;
+
+
+func _on_skill_mouse_entered():
+	selected = false
+	redraw = true
+
+
+func _on_skill_2_mouse_entered():
+	selected = false
+	redraw = true
