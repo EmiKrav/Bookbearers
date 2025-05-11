@@ -5,15 +5,20 @@ extends GridMap
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
 @onready var langeliomat = preload("res://Bookbearers/Materials/langelis.tres")
 
+@onready var ugnis = preload("res://Bookbearers/Scenes/ugnis.tscn")
+@onready var kelmas =  preload("res://Bookbearers/Scenes/kelmas.tscn")
+
 var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
+@onready var cinematic = preload("res://Bookbearers/Scenes/cinematicvideo.tscn")
+
 
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
 @export var playerhealth = 1
-@export var enemymovementPoints = 3
+@export var enemymovementPoints = 0
 @export var enemyattackrange = 2
 
 var selected = false
@@ -47,17 +52,34 @@ var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
 
-
+var nearchar = false
+var nearchar2 = false
+var nearchar3 = false
 func _ready():
-	player.position = Vector3(1,1.5,15)
-	var pos = local_to_map(Vector3(1,0,15))
+	#player.position = Vector3(1,1.5,15)
+	var pos = local_to_map(player.position)
 	pcurrentpos = pos
 	enemy.position = Vector3(1,2,-15)
 	pos = local_to_map(Vector3(1,2,-15))
 	ecurrentpos = pos
 	cells = get_used_cells()
+	cells.sort()
 	othenemypos.clear()
-	othenemypos.append(ecurrentpos)
+	#var kel = -1;
+	#for i in cells:
+		#kel+=1
+		##if i.x == 2 and i.z == 11:
+			##$".".set_cell_item(i,-1)
+			##break
+		##if i.x == -1 and i.z == 2:
+			##$".".set_cell_item(i,-1)
+			##break
+		#if i.x == -2 and i.z == -3:
+			#$".".set_cell_item(i,-1)
+			#break
+	#print(kel)
+	#othenemypos.append(ecurrentpos)
+	#othenemypos.append(pos)
 	$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
 
 func playermove(langelistomove):
@@ -94,11 +116,7 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if turnssurvived == 6:
-		get_tree().paused = true;
-		await get_tree().create_timer(3).timeout
-		get_tree().change_scene_to_packed(zemelapis)
-		
+
 	if redraw:
 		if selected:
 			redraw = false
@@ -198,9 +216,9 @@ func enemyMove(ecurrentposi, enemyi):
 		var movz = ecurrentposi.z
 		var paieskax
 		var paieskaz
-		othenemypos.clear()
-		othenemypos.append(ecurrentpos)
-		othenemypos.erase(ecurrentposi)
+		#othenemypos.clear()
+		#othenemypos.append(ecurrentpos)
+		#othenemypos.erase(ecurrentposi)
 #1 simple movement find optimal position
 		if abs(atstumasx) > enemyattackrange || abs(atstumasz) > enemyattackrange:
 			if abs(atstumasx) > enemyattackrange:	
@@ -377,7 +395,15 @@ func showMovement(playermovementPointsx,playermovementPointsz):
 				movemcellls.append(mappos)
 	
 	#if movemcellls.has(ecurrentpos):
-	movemcellls.erase(ecurrentpos)
+	#movemcellls.erase(ecurrentpos)
+
+	#movemcellls.erase(Vetor3(2,1,11))
+	if $vilkas != null:
+		movemcellls.erase(cells[247])
+	if $vilkas2 != null:
+		movemcellls.erase(cells[170])
+	if $vilkas3 != null:
+		movemcellls.erase(cells[142])
 	
 	for i in range(0, langeliai.get_child_count()):
 			if langeliai.get_child(i) != null:
@@ -426,8 +452,105 @@ func _on_end_turn_pressed():
 		turn = false
 		if enemy != null:
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
-			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
-				await enemyAttack(enemy)
+			#if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
+				#await enemyAttack(enemy)
+			if !nearchar and !nearchar2 and !nearchar3 and !nearobj and !invisible:
+				$"../StaticBody3D2".position.x = player.position.x - 0.355
+				$"../StaticBody3D2".position.y = 3.0
+				$"../StaticBody3D2".position.z = player.position.z + 3.0
+				$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
+				var ugn = ugnis.instantiate()
+				get_parent().add_child(ugn)
+				ugn.position = player.position
+				var tween = create_tween()
+				for u in ugn.get_children():
+					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 2)
+					tween.set_parallel()
+				await tween.finished
+				playerhealth= playerhealth-2
+				$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
+				$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
+			elif nearobj and invisible:
+				var tr
+				if $HidingTree != null:
+					tr = $HidingTree
+				elif $HidingTree2 != null:
+					tr = $HidingTree2
+				elif $HidingTree3 != null:
+					tr = $HidingTree3
+				$"../StaticBody3D2".position.x = tr.position.x - 0.355
+				$"../StaticBody3D2".position.y = 3.0
+				$"../StaticBody3D2".position.z = tr.position.z + 3.0
+				$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
+				var ugn = ugnis.instantiate()
+				get_parent().add_child(ugn)
+				var pozoftree = map_to_local(local_to_map(tr.position))
+				ugn.position = map_to_local(local_to_map(tr.position))
+				ugn.position.y -= 1.5
+				var tween = create_tween()
+				for u in ugn.get_children():
+					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
+					tween.set_parallel()
+				await tween.finished
+				ugn.queue_free()
+				tr.queue_free()
+				var kelmas = kelmas.instantiate()
+				get_parent().add_child(kelmas)
+				kelmas.position = pozoftree
+				kelmas.position.y -= 2.0
+				nearobj = false
+				invisible = false
+			elif nearchar:
+				$"../StaticBody3D2".position.x = $vilkas.position.x - 0.355
+				$"../StaticBody3D2".position.y = 3.0
+				$"../StaticBody3D2".position.z = $vilkas.position.z + 3.0
+				$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
+				var ugn = ugnis.instantiate()
+				get_parent().add_child(ugn)
+				ugn.position = map_to_local(local_to_map($vilkas.position))
+				ugn.position.y -= 1.5
+				var tween = create_tween()
+				for u in ugn.get_children():
+					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
+					tween.set_parallel()
+				await tween.finished
+				ugn.queue_free()
+				$vilkas.queue_free()
+				nearchar = false
+			elif nearchar2:
+				$"../StaticBody3D2".position.x = $vilkas2.position.x - 0.355
+				$"../StaticBody3D2".position.y = 3.0
+				$"../StaticBody3D2".position.z = $vilkas2.position.z + 3.0
+				$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
+				var ugn = ugnis.instantiate()
+				get_parent().add_child(ugn)
+				ugn.position = map_to_local(local_to_map($vilkas2.position))
+				ugn.position.y -= 1.5
+				var tween = create_tween()
+				for u in ugn.get_children():
+					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
+					tween.set_parallel()
+				await tween.finished
+				ugn.queue_free()
+				$vilkas2.queue_free()
+				nearchar2 = false
+			elif nearchar3:
+				$"../StaticBody3D2".position.x = $vilkas3.position.x - 0.355
+				$"../StaticBody3D2".position.y = 3.0
+				$"../StaticBody3D2".position.z = $vilkas3.position.z + 3.0
+				$"../StaticBody3D2".rotation = Vector3(-0.5,0,0)
+				var ugn = ugnis.instantiate()
+				get_parent().add_child(ugn)
+				ugn.position = map_to_local(local_to_map($vilkas3.position))
+				ugn.position.y -= 1.5
+				var tween = create_tween()
+				for u in ugn.get_children():
+					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
+					tween.set_parallel()
+				await tween.finished
+				ugn.queue_free()
+				$vilkas3.queue_free()
+				nearchar3 = false
 		turn = true
 		canmove = true
 		skillusage = true
@@ -483,3 +606,39 @@ func _on_skill_mouse_entered():
 func _on_skill_2_mouse_entered():
 	selected = false
 	redraw = true
+
+
+func _on_skill_mouse_exited():
+	pass # Replace with function body.
+
+
+func _on_skill_2_mouse_exited():
+	pass # Replace with function body.
+
+
+func _on_char_area_3d_area_entered(area):
+	nearchar = true
+
+
+func _on_char_area_3d_area_exited(area):
+	nearchar = false
+
+
+func _on_char_2_area_3d_area_entered(area):
+	nearchar2 = true
+
+
+func _on_char_2_area_3d_area_exited(area):
+	nearchar2 = false
+
+
+func _on_char_3_area_3d_area_entered(area):
+	nearchar3 = true
+
+
+func _on_char_3_area_3d_area_exited(area):
+	nearchar3 = false
+
+
+func _on_win_area_area_entered(area):
+	get_tree().change_scene_to_packed(cinematic)

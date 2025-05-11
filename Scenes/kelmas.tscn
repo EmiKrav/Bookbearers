@@ -3,8 +3,10 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y84mw"]
 resource_name = "Material.001"
 cull_mode = 2
-albedo_color = Color(0.33324, 0.178864, 0.0593939, 1)
+albedo_color = Color(0.0901961, 0.027451, 0.00392157, 1)
 roughness = 0.5
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_02svl"]
 _surfaces = [{

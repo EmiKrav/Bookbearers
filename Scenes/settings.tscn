@@ -1,0 +1,259 @@
+[gd_scene load_steps=12 format=3 uid="uid://ims11p1xe0vn"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/settings.gd" id="1_1kl02"]
+
+[sub_resource type="Gradient" id="Gradient_vci3g"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pn75o"]
+gradient = SubResource("Gradient_vci3g")
+width = 469
+height = 104
+fill_from = Vector2(0.978903, 1)
+
+[sub_resource type="Gradient" id="Gradient_kil08"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6umpx"]
+gradient = SubResource("Gradient_kil08")
+width = 125
+height = 109
+
+[sub_resource type="Gradient" id="Gradient_gbf8j"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1n8xn"]
+gradient = SubResource("Gradient_gbf8j")
+width = 434
+
+[sub_resource type="Gradient" id="Gradient_mk3ep"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_01j16"]
+gradient = SubResource("Gradient_mk3ep")
+width = 496
+height = 109
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l0ijv"]
+gradient = SubResource("Gradient_kil08")
+width = 450
+height = 109
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_23dhh"]
+gradient = SubResource("Gradient_kil08")
+width = 665
+height = 109
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_1kl02")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("GradientTexture2D_pn75o")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1258
+anchor_top = -0.0288462
+anchor_right = 0.8742
+anchor_bottom = 1.02885
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "OPTIONS"
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Musicvd" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+
+[node name="Label2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("GradientTexture2D_1n8xn")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2/Label2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.426267
+anchor_top = 0.28125
+anchor_right = 0.573733
+anchor_bottom = 0.71875
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "MUSIC: "
+metadata/_edit_use_anchors_ = true
+
+[node name="Musicvu" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="sfxvd" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+
+[node name="Label2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("GradientTexture2D_1n8xn")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3/Label2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.426267
+anchor_top = 0.28125
+anchor_right = 0.573733
+anchor_bottom = 0.71875
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "SFX: "
+metadata/_edit_use_anchors_ = true
+
+[node name="sfxvu" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+
+[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("GradientTexture2D_01j16")
+
+[node name="TextureRect5" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRect6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRect6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.151376
+anchor_right = 0.744444
+anchor_bottom = 0.848624
+offset_left = 20.0
+offset_right = 20.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "FULLSCREEN"
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRectsize" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_l0ijv")
+stretch_mode = 0
+
+[node name="TextureRectsizechoose" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRectsize"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_6umpx")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRectsize"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.151376
+anchor_right = 0.62
+anchor_bottom = 0.848624
+offset_left = 25.0
+offset_right = 25.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "1920×1080"
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect2" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_23dhh")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.343609
+anchor_top = -0.00458716
+anchor_right = 0.656391
+anchor_bottom = 1.00459
+offset_left = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "BACK"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2/Musicvd" to="." method="_on_musicvd_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2/Musicvu" to="." method="_on_musicvu_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3/sfxvd" to="." method="_on_sfxvd_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer3/sfxvu" to="." method="_on_sfxvu_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRect6/TextureRect5" to="." method="_on_texture_rect_5_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRectsize" to="." method="_on_texture_rectsize_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRectsize/TextureRectsizechoose" to="." method="_on_texture_rectsizechoose_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/TextureRect2" to="." method="_on_texture_rect_2_pressed"]

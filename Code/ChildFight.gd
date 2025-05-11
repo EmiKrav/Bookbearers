@@ -15,6 +15,9 @@ var playermovementPointsz = maxplayermovementPoints
 
 @export var questnr = Global.currentquest
 
+@onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
+var paused = false
+
 var selected = false
 var pcurrentpos : Vector3i
 var ecurrentpos: Vector3i
@@ -239,6 +242,15 @@ func _process(_delta):
 			chestcurrentlabel = null
 		
 func _input(event):
+	if Input.is_action_pressed("Esc"):
+		if !paused:
+			var w = menu.instantiate()
+			$".".add_child(w)
+			paused = true
+			get_tree().paused = true;
+		else:
+			get_tree().paused = false;
+			paused = false
 	if event is InputEventMouseButton:
 		spacepressed = false;
 	else:

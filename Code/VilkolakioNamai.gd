@@ -14,6 +14,9 @@ var goback = false
 var pirmaspokalbis = "res://Bookbearers/Dialogai/dialogassuvilku.txt"
 var paskutinispokalbis = "res://Bookbearers/Dialogai/paskutinisdialogassuvilku.txt"
 var pokalbis
+
+@onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
+var paused = false
 func _ready():
 	if 	Global.posiblequests[5][3] == true:
 		pokalbis = paskutinispokalbis
@@ -84,7 +87,13 @@ func mainas():
 	var content = file.get_as_text()
 	dialogas = str_to_var(content)
 
-
-
-func _on_area_2d_2_body_entered(body):
-	goback = true
+func _input(event):
+	if Input.is_action_pressed("Esc"):
+		if !paused:
+			var w = menu.instantiate()
+			$".".add_child(w)
+			paused = true
+			get_tree().paused = true;
+		else:
+			get_tree().paused = false;
+			paused = false

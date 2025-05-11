@@ -7,11 +7,12 @@
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_jeedd"]
 gradient = SubResource("Gradient_g27yw")
 
-[sub_resource type="Gradient" id="Gradient_vci3g"]
+[sub_resource type="Gradient" id="Gradient_rlu1x"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3h8nu"]
-gradient = SubResource("Gradient_vci3g")
-width = 284
+gradient = SubResource("Gradient_rlu1x")
+width = 724
+height = 114
 fill_from = Vector2(0.978903, 1)
 
 [sub_resource type="Gradient" id="Gradient_n1n8o"]
@@ -78,6 +79,19 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 texture = SubResource("GradientTexture2D_3h8nu")
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0290055
+anchor_top = 0.0175439
+anchor_right = 0.970994
+anchor_bottom = 0.982456
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Bringers of Books"
+metadata/_edit_use_anchors_ = true
+
 [node name="Button" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
@@ -86,12 +100,38 @@ size_flags_vertical = 6
 texture_normal = SubResource("GradientTexture2D_wbge1")
 script = ExtResource("1_jjpvw")
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0366242
+anchor_top = -0.09375
+anchor_right = 0.963376
+anchor_bottom = 1.09375
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "New Game"
+metadata/_edit_use_anchors_ = true
+
 [node name="Button2" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 texture_normal = SubResource("GradientTexture2D_p7qui")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.106796
+anchor_top = -0.09375
+anchor_right = 0.893204
+anchor_bottom = 1.09375
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "Continue"
+metadata/_edit_use_anchors_ = true
 
 [node name="Button3" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
@@ -100,6 +140,19 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 texture_normal = SubResource("GradientTexture2D_6knu4")
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.154605
+anchor_top = -0.09375
+anchor_right = 0.845395
+anchor_bottom = 1.09375
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "Options"
+metadata/_edit_use_anchors_ = true
+
 [node name="Button4" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
@@ -107,5 +160,19 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 texture_normal = SubResource("GradientTexture2D_aer10")
 
+[node name="Label" type="Label" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.308333
+anchor_top = -0.09375
+anchor_right = 0.691667
+anchor_bottom = 1.09375
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "Quit"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button3" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_3_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button4" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_4_pressed"]

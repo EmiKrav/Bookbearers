@@ -11,6 +11,9 @@ extends Node3D
 
 @onready var thinking = load("res://Bookbearers/Scenes/afterfight.tscn")
 
+@onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
+var paused = false
+
 @onready var langeliai = %lang
 @onready var player = %player
 @export var maxplayermovementPoints = 2
@@ -54,7 +57,7 @@ var procesas = false
 var paspaus = false
 var atspaust = false
 
-
+var spacepressed = false
 func _ready():
 	
 	get_tree().paused = false;
@@ -425,7 +428,7 @@ func movethere(pos, langelistomove,grafnumr):
 			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
 				#y.queue_free()
 func _on_texture_rect_pressed():
-	if !moving:
+	if !moving 	and !spacepressed:
 		canmove = false
 		skillusage = false
 		skill = false
@@ -607,3 +610,19 @@ func _on_mouse_area_3d_area_shape_entered(area_rid, area, area_shape_index, loca
 			changetofight = true
 		else:
 			changetothinking = true;
+
+func _input(event):
+	if Input.is_action_pressed("Esc"):
+		if !paused:
+			var w = menu.instantiate()
+			$".".add_child(w)
+			paused = true
+			get_tree().paused = true;
+		else:
+			get_tree().paused = false;
+			paused = false
+	if event is InputEventMouseButton:
+		spacepressed = false;
+	else:
+		spacepressed = true;
+		

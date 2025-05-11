@@ -11,6 +11,7 @@ extends GridMap
 
 @onready var skill1cin = preload("res://Bookbearers/Cinematic/skill1.tscn")
 
+var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 @export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
@@ -62,7 +63,8 @@ var skillset = 1;
 
 var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
-
+var spacepressed = false
+var paused = false
 func _ready():
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
@@ -142,6 +144,21 @@ func _ready():
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton2/Label".text = "⌛"+ str(skill2curcoldown) + "/" + str(skill2coldown)
 	$"../CanvasLayer/Panel/VBoxContainer/TextureButton3/Label".text = "⌛"+ str(skill3curcoldown) + "/" + str(skill3coldown)
 	
+func _input(event):
+	if Input.is_action_pressed("Esc"):
+		if !paused:
+			var w = menu.instantiate()
+			get_parent().add_child(w)
+			paused = true
+			get_tree().paused = true;
+		else:
+			get_tree().paused = false;
+			paused = false
+	if event is InputEventMouseButton:
+		spacepressed = false;
+	else:
+		spacepressed = true;
+		
 func playermove(langelistomove):
 	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
@@ -687,7 +704,7 @@ func showMovement(playermovementPointsx, playermovementPointsz):
 		lang["material_override"]= langeliomat
 
 func _on_texture_rect_pressed():
-	if !moving:
+	if !moving and !spacepressed:
 		Global.cameramove = false
 		skillusage = false
 		skill = false
@@ -747,26 +764,27 @@ func _on_texture_rect_pressed():
 		playermovementPointsz = maxplayermovementPoints
 		
 func _on_texture_button_pressed():
-	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
-	selected = false
-	redraw = true
-	if skillusage and !usingskills:
-		skill2 = false
-		skill3 = false
-		langeliomat.albedo_color.a = 1
-		if skill == false:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffbd"
-			if skillusage2 and skill2curcoldown == 0:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
-			if skillusage3 and skill3curcoldown == 0:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
-			skill=true
-		elif skill == true:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
-			skill = false
+	if !spacepressed:
+		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+		selected = false
+		redraw = true
+		if skillusage and !usingskills:
+			skill2 = false
+			skill3 = false
+			langeliomat.albedo_color.a = 1
+			if skill == false:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffbd"
+				if skillusage2 and skill2curcoldown == 0:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+				if skillusage3 and skill3curcoldown == 0:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
+				skill=true
+			elif skill == true:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+				skill = false
 
 func _on_texture_button_mouse_entered():
 	skilling = false
@@ -782,27 +800,28 @@ func _on_texture_button_mouse_exited():
 
 
 func _on_texture_button_2_pressed():
-	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
-	selected = false
-	redraw = true
-	if skillusage2 and !usingskills:
-		skill = false
-		skill3 = false
-		langeliomat.albedo_color.a = 1
-		if skill2 == false and skill2curcoldown == 0:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffbd"
-			if skillusage:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
-			if skillusage3 and skill3curcoldown == 0:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
-			
-			skill2=true
-		elif skill2 == true:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
-			skill2 = false
+	if !spacepressed:
+		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+		selected = false
+		redraw = true
+		if skillusage2 and !usingskills:
+			skill = false
+			skill3 = false
+			langeliomat.albedo_color.a = 1
+			if skill2 == false and skill2curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffbd"
+				if skillusage:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+				if skillusage3 and skill3curcoldown == 0:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
+				
+				skill2=true
+			elif skill2 == true:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+				skill2 = false
 
 
 func _on_texture_button_2_mouse_entered():
@@ -819,27 +838,28 @@ func _on_texture_button_2_mouse_exited():
 
 
 func _on_texture_button_3_pressed():
-	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
-	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
-	selected = false
-	redraw = true
-	if skillusage3 and !usingskills:
-		skill = false
-		skill2 = false
-		langeliomat.albedo_color.a = 1
-		if skill3 == false and skill3curcoldown == 0:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffbd"
-			if skillusage2 and skill2curcoldown == 0:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
-			if skillusage:
-				$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
-			
-			skill3=true
-		elif skill3 == true:
-			$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
-			skill3 = false
+	if !spacepressed:
+		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
+		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/10"
+		selected = false
+		redraw = true
+		if skillusage3 and !usingskills:
+			skill = false
+			skill2 = false
+			langeliomat.albedo_color.a = 1
+			if skill3 == false and skill3curcoldown == 0:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffbd"
+				if skillusage2 and skill2curcoldown == 0:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton2"["self_modulate"] = "ffffffff"
+				if skillusage:
+					$"../CanvasLayer/Panel/VBoxContainer/TextureButton"["self_modulate"] = "ffffffff"
+				
+				skill3=true
+			elif skill3 == true:
+				$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
+				skill3 = false
 
 
 func _on_texture_button_3_mouse_entered():

@@ -15,46 +15,46 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chial"]
 
-[sub_resource type="Gradient" id="Gradient_qipgx"]
+[sub_resource type="Gradient" id="Gradient_4axik"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_gkqt0"]
-gradient = SubResource("Gradient_qipgx")
+gradient = SubResource("Gradient_4axik")
 width = 100
 height = 50
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Gradient" id="Gradient_med0a"]
+[sub_resource type="Gradient" id="Gradient_awbuu"]
 offsets = PackedFloat32Array(0, 0.00526316)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7g3nn"]
-gradient = SubResource("Gradient_med0a")
+gradient = SubResource("Gradient_awbuu")
 width = 150
 height = 20
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_7hghq"]
+[sub_resource type="Gradient" id="Gradient_q7gh4"]
 offsets = PackedFloat32Array(0.994737, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_omj71"]
-gradient = SubResource("Gradient_7hghq")
+gradient = SubResource("Gradient_q7gh4")
 width = 100
 height = 20
 fill_from = Vector2(1, 0)
 
-[sub_resource type="Gradient" id="Gradient_17ngm"]
+[sub_resource type="Gradient" id="Gradient_8xlvv"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xpu62"]
-gradient = SubResource("Gradient_17ngm")
+gradient = SubResource("Gradient_8xlvv")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_gtm0e"]
+[sub_resource type="Gradient" id="Gradient_eiel7"]
 offsets = PackedFloat32Array(0.990385, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_00jhf"]
-gradient = SubResource("Gradient_gtm0e")
+gradient = SubResource("Gradient_eiel7")
 width = 100
 height = 80
 fill_from = Vector2(1, 1)
@@ -124,13 +124,13 @@ size = Vector3(5.35461, 2.06494, 5.32764)
 [sub_resource type="PlaneMesh" id="PlaneMesh_jo5ol"]
 size = Vector2(32, 32)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocnck"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ooa33"]
 shading_mode = 0
 albedo_texture = ExtResource("8_5if25")
 heightmap_enabled = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_b4x8a"]
-material = SubResource("StandardMaterial3D_ocnck")
+material = SubResource("StandardMaterial3D_ooa33")
 flip_faces = true
 
 [node name="FirstFight" type="Node3D"]
@@ -4232,7 +4232,7 @@ mesh = ExtResource("9_l3rbj")
 skeleton = NodePath("../..")
 
 [node name="Tree931" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D(-0.961074, 0, -0.276292, 0, 1, 0, 0.276292, 0, -0.961074, 5.06293, 0, -14.6048)
+transform = Transform3D(-0.961074, 0, -0.276292, 0, 1, 0, 0.276292, 0, -0.961074, 6.82194, 0, -18.3842)
 mesh = ExtResource("9_l3rbj")
 skeleton = NodePath("../..")
 
