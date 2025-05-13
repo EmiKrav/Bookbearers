@@ -1,14 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkiovkes8q8qn"]
+[gd_scene load_steps=7 format=3 uid="uid://bkiovkes8q8qn"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/NameEdit.gd" id="1_q6hwd"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_u6ptv"]
 
-[sub_resource type="Gradient" id="Gradient_e6xcg"]
+[sub_resource type="Gradient" id="Gradient_urdja"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_l32q6"]
-gradient = SubResource("Gradient_e6xcg")
+gradient = SubResource("Gradient_urdja")
 width = 504
+height = 109
+
+[sub_resource type="Gradient" id="Gradient_kil08"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u2yr7"]
+gradient = SubResource("Gradient_kil08")
+width = 665
 height = 109
 
 [node name="Node2D" type="Node2D"]
@@ -67,5 +74,35 @@ theme_override_font_sizes/font_size = 55
 text = "BEGIN"
 metadata/_edit_use_anchors_ = true
 
+[node name="TextureRect2" type="TextureButton" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.326823
+anchor_top = 0.85
+anchor_right = 0.673177
+anchor_bottom = 0.959
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("GradientTexture2D_u2yr7")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/TextureRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.343609
+anchor_top = -0.00458716
+anchor_right = 0.656391
+anchor_bottom = 1.00459
+offset_left = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "BACK"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="text_changed" from="CanvasLayer/Panel/VBoxContainer/LineEdit" to="CanvasLayer/Panel/VBoxContainer/TextureRect2" method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureRect2" to="CanvasLayer/Panel/VBoxContainer/TextureRect2" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/TextureRect2" to="CanvasLayer/Panel/VBoxContainer/TextureRect2" method="_on_texture_rect_2_pressed"]

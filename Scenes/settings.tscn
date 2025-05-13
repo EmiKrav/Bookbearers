@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ims11p1xe0vn"]
+[gd_scene load_steps=13 format=3 uid="uid://ims11p1xe0vn"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/settings.gd" id="1_1kl02"]
 
@@ -35,8 +35,10 @@ gradient = SubResource("Gradient_kil08")
 width = 450
 height = 109
 
+[sub_resource type="Gradient" id="Gradient_72mw2"]
+
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_23dhh"]
-gradient = SubResource("Gradient_kil08")
+gradient = SubResource("Gradient_72mw2")
 width = 665
 height = 109
 

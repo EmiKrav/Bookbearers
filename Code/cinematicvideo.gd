@@ -1,13 +1,63 @@
-extends VideoStreamPlayer
+extends CanvasLayer
 
 
 @onready var turtorial = preload("res://Bookbearers/Scenes/turtorial.tscn")
-
-
+var textas = "res://Bookbearers/Dialogai/AllGametext.txt"
+var checked = true
+var scrollcheck = true
+var firsts = 0
+var ch = true
+var tekstas
+func _ready():
+	mainas()
+	%Textas.text = tekstas[0][1]
+	#str("Pradzia. Vaikas pasislepes po paklode skaito knyga apie knygnesius.Vaikas pasislepes po paklod.Vaikas pasislepes po paklode skaito knyga apie knygnesius.Vaikas pasislepes po paklode skaito knyga apie knygnesiusVaikas pasislepes po paklode skaito knyga apie knygnesius. Pabaiga")
+	%Textas.fit_content=true
+	%Textas.visible_characters = -1
+	%Textas.visible_ratio = 1
+	%Begin.visible =true
+	await get_tree().create_timer(0.1).timeout
+	print(%Textas.size.y)
+	firsts = %Textas.size.y + %Begin.size.y
+	#+ ($Panel/VBoxContainer.size.y/4)
+	ch = false
+	%Begin.visible =false
+	%Textas.fit_content=false
+	%Textas.visible_characters = 0
+	%Textas.visible_ratio = 0
+	$Timer.wait_time = %Textas.text.length()
+	$Timer.start()
 func _process(delta):
+	if !ch:
+		if %Textas["visible_characters"] != -1:
+			%Textas["visible_characters"] = ($Timer.wait_time - $Timer.time_left) * 20
+		if %Textas["visible_characters"] > 100  and %Textas.size.y < firsts  and %Begin.visible == false:
+			%Textas.position.y -= delta * 60
+			%Textas.size.y += delta * 60
+		if %Begin.visible and scrollcheck:
+			%Textas.scroll_active = true
+			%Textas.get_v_scroll_bar().visible = false
+			%Textas.scroll_to_line(%Textas.get_line_count())
+			scroll()
+		if %Textas.size.y >= firsts and checked:
+			button()
 	if Input.is_action_just_pressed("Skip"):
 		get_tree().change_scene_to_packed(turtorial)
 
+func button():
+	await get_tree().create_timer(5).timeout
+	if checked:
+		%Begin.visible = true
+		%Begin.disabled = false
+		checked = false
+func scroll():
+	scrollcheck = false
 
-func _on_finished():
+func _on_begin_pressed():
 	get_tree().change_scene_to_packed(turtorial)
+	
+func mainas():    
+	var number = []
+	var file = FileAccess.open(textas, FileAccess.READ)
+	var content = file.get_as_text()
+	tekstas = str_to_var(content)

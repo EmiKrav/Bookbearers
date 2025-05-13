@@ -17,3 +17,7 @@ func _on_line_edit_text_changed(new_text):
 		$".".disabled = false
 	else :
 		$".".disabled = true
+
+
+func _on_texture_rect_2_pressed():
+	get_tree().change_scene_to_file("res://Bookbearers/Scenes/mainmenu.tscn")

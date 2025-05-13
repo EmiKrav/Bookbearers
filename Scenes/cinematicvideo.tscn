@@ -1,9 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://y17k3joujnjk"]
+[gd_scene load_steps=6 format=3 uid="uid://y17k3joujnjk"]
 
-[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/Untitled design.ogv" id="1_7uq86"]
 [ext_resource type="Script" path="res://Bookbearers/Code/cinematicvideo.gd" id="2_msuqa"]
 
+[sub_resource type="Gradient" id="Gradient_of6ja"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8vg47"]
+gradient = SubResource("Gradient_of6ja")
+fill_from = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="Gradient_e6xcg"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a70ew"]
+gradient = SubResource("Gradient_e6xcg")
+width = 504
+height = 109
+
 [node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("2_msuqa")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -13,19 +26,61 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Panel"]
+[node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-stream = ExtResource("1_7uq86")
-autoplay = true
-expand = true
-script = ExtResource("2_msuqa")
+texture = SubResource("GradientTexture2D_8vg47")
 metadata/_edit_use_anchors_ = true
 
-[connection signal="finished" from="Panel/VideoStreamPlayer" to="Panel/VideoStreamPlayer" method="_on_finished"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Textas" type="RichTextLabel" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 100
+scroll_active = false
+autowrap_mode = 2
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="Begin" type="TextureButton" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+disabled = true
+texture_normal = SubResource("GradientTexture2D_a70ew")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Begin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.338294
+anchor_top = 0.151376
+anchor_right = 0.661706
+anchor_bottom = 0.848624
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "BEGIN"
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="Panel/VBoxContainer/Begin" to="." method="_on_begin_pressed"]
