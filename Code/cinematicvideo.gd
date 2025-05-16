@@ -17,7 +17,7 @@ func _ready():
 	%Textas.visible_ratio = 1
 	%Begin.visible =true
 	await get_tree().create_timer(0.1).timeout
-	print(%Textas.size.y)
+	#print(%Textas.size.y)
 	firsts = %Textas.size.y + %Begin.size.y
 	#+ ($Panel/VBoxContainer.size.y/4)
 	ch = false
@@ -60,4 +60,5 @@ func mainas():
 	var number = []
 	var file = FileAccess.open(textas, FileAccess.READ)
 	var content = file.get_as_text()
-	tekstas = str_to_var(content)
+	var actual_string = content.format({"insertname": Global.childName})
+	tekstas = str_to_var(actual_string)

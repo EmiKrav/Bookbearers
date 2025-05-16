@@ -1,5 +1,5 @@
 [
-	[0,0,"Labas vilke"],
-	[1,1,"Labas, Daugiau neturiu ką tau pasakyti, turi keliauti toliau"],
-	[2,0,"Gerai, netrukdau tau"]
+	[0,1,"I am so hungry!"],
+	[1,0,"Please don't eat me, sir. I am too young to die. I haven't tried all the cheese yet!"],
+	[2,1,"Oh, don't worry child, I don't eat mice, I am a vegetarian. I only eat bread."]
 ]

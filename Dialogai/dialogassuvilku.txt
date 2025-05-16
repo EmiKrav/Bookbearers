@@ -1,5 +1,14 @@
 [
-	[0,0,"Tu atrodai labai alkanas, prašau nevalgyk manęs"],
-	[1,1,"Aš vegetaras, valgau tik duoną. Tik dabar nebeturiu jos, nes tie prakeikti žandarai ją pavogė!"],
-	[2,0,"Nieko, aš tau padėsiu"]
+	[0,1,"I am so hungry!"],
+	[1,0,"Please don't eat me, sir. I am too young to die. I haven't tried all the cheese yet!"],
+	[2,1,"Oh, don't worry child, I don't eat mice, I am a vegetarian. I only eat bread."],
+	[3,0,"Well that's good. I guess sorry for asuming? Anyways, I need to-"],
+	[4,1,"You see, I am just so soooooo sad that I can't finish writing this book. It was so good. I was just finishing explaining why we are creators of our own fate, but I got so hungy I forgot what I wanted to write."],
+	[5,0,"Well you should eat then and maybe you will remember."],
+	[6,1,"That is an excellent idea, little one. Unfortunately those evil creatures stole my wheat and now I can't make my favorite bread."],
+	[7,0,"Oh no! That is terrible. How could they."],
+	[8,1,"Yes, yes. That is the life of a writer in these trying times. I wouldn't really care about me, but now, nobody will know the answer to the question."],
+	[9,0,"What question?"],
+	[10,1,"Exactly. I can't remember. Because I am just sooo hungry."],
+	[11,0,"It's just not right. Those gendarmes are making you suffer so much. You know what? I will help you. I will steal back everything they stole from you."],
 ]
