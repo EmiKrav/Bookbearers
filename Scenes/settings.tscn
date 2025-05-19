@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://ims11p1xe0vn"]
+[gd_scene load_steps=14 format=3 uid="uid://ims11p1xe0vn"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/settings.gd" id="1_1kl02"]
+[ext_resource type="AudioStream" uid="uid://ch46w8j8ltp5d" path="res://Bookbearers/Sounds/atmosphere-mystic-fantasy-orchestral-music-335263.mp3" id="2_tob51"]
 
 [sub_resource type="Gradient" id="Gradient_vci3g"]
 
@@ -276,6 +277,10 @@ metadata/_edit_use_anchors_ = true
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_tob51")
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer/Musicvd" to="." method="_on_musicvd_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer/Musicvu" to="." method="_on_musicvu_pressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3py6c0q7yn36"]
+[gd_scene load_steps=15 format=3 uid="uid://c3py6c0q7yn36"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Newgamepress.gd" id="1_jjpvw"]
+[ext_resource type="AudioStream" uid="uid://ch46w8j8ltp5d" path="res://Bookbearers/Sounds/atmosphere-mystic-fantasy-orchestral-music-335263.mp3" id="2_o1w08"]
 
 [sub_resource type="Gradient" id="Gradient_g27yw"]
 
@@ -173,6 +174,11 @@ theme_override_font_sizes/font_size = 55
 text = "Quit"
 metadata/_edit_use_anchors_ = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_o1w08")
+autoplay = true
+
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button2" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button3" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_3_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button4" to="CanvasLayer/Panel/HBoxContainer/VBoxContainer3/Button" method="_on_button_4_pressed"]

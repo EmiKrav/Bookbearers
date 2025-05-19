@@ -1,5 +1,7 @@
 extends GridMap
 
+@onready var stolenobject = preload("res://Bookbearers/Scenes/stolenobject.tscn")
+
 @onready var langelis = preload("res://Bookbearers/Scenes/ejimolangelis.tscn")
 @onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
 @onready var mirtis = preload("res://Bookbearers/Scenes/dead.tscn")
@@ -237,6 +239,8 @@ func _process(_delta):
 			playermovementPointsx = -1
 			playermovementPointsz = -1
 			chestcurrentlabel.visible = false
+			var stolenobject = stolenobject.instantiate()
+			get_parent().add_child(stolenobject)
 			$"../CanvasLayer/Panel/TextureRect/Label".text = str(chests.size())
 			chestcurrent = null
 			chestcurrentlabel = null

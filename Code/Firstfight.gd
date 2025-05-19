@@ -8,7 +8,10 @@ extends GridMap
 var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 
-@export var maxplayermovementPoints = 4
+@onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsvaikas.tscn")
+
+
+@export var maxplayermovementPoints = 40
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
@@ -90,11 +93,16 @@ func playermove(langelistomove):
 	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
 		canmove = false
 func _process(_delta):
-	if playerhealth <= 0:
+	if Global.animationplaying:
+		$"../CanvasLayer".visible = false
+	if !Global.animationplaying:
+		$"../CanvasLayer".visible = true
+	if playerhealth <= 0 and !Global.animationplaying:		
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
 	if turnssurvived == 6:
+		Global.firstchildturtorialcomplete = true
 		get_tree().paused = true;
 		await get_tree().create_timer(3).timeout
 		get_tree().change_scene_to_packed(zemelapis)
@@ -335,12 +343,16 @@ func enemyMove(ecurrentposi, enemyi):
 		return ecurrentposi
 		
 func enemyAttack(enemyi):
+	Global.animationplaying = true
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
 	await get_tree().create_timer(1).timeout
 	if dodge == true:
 		dodge = false
 	else:
+		var anim1 = enemyattackanim.instantiate()
+		$"..".add_child(anim1)
+		
 		playerhealth= playerhealth-2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"

@@ -8,6 +8,7 @@ var scrollcheck = true
 var firsts = 0
 var ch = true
 var tekstas
+
 func _ready():
 	mainas()
 	%Textas.text = tekstas[0][1]
@@ -25,6 +26,7 @@ func _ready():
 	%Textas.fit_content=false
 	%Textas.visible_characters = 0
 	%Textas.visible_ratio = 0
+	$Panel2.visible = false
 	$Timer.wait_time = %Textas.text.length()
 	$Timer.start()
 func _process(delta):
