@@ -11,7 +11,7 @@ var paused = false
 @onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsvaikas.tscn")
 
 
-@export var maxplayermovementPoints = 40
+@export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
@@ -52,6 +52,8 @@ var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
 
 
 func _ready():
+	if Music.sk != 5:
+		Music.play5()
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,0,15))
 	pcurrentpos = pos
@@ -72,12 +74,14 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
+	Music.playsoundwalking()
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
+	Music.SoundStop()
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
 	$"../StaticBody3D2".position.y = 3.0
@@ -332,12 +336,15 @@ func enemyMove(ecurrentposi, enemyi):
 		$"../StaticBody3D2/Camera3D".current = false
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
+		if locsel.x != enemyi.position.x or locsel.z != enemyi.position.z:
+			Music.playsoundwalking()
+			var tween = create_tween()
+			tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+			await tween.finished
+			var tween2 = create_tween()
+			tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+			await tween2.finished
+			Music.SoundStop()
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
 		return ecurrentposi
@@ -356,9 +363,9 @@ func enemyAttack(enemyi):
 		playerhealth= playerhealth-2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
-	if player != null:
+	if player != null and playerhealth > 0:
 		$player/Camera3D2.current = false
-	$"../StaticBody3D2/Camera3D".current = true
+		$"../StaticBody3D2/Camera3D".current = true
 	
 func showMovement(playermovementPointsx,playermovementPointsz):
 #draw around

@@ -1,19 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2di8c8c2krdc"]
+[gd_scene load_steps=6 format=3 uid="uid://b2di8c8c2krdc"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/dead.gd" id="1_w1xox"]
-[ext_resource type="AudioStream" uid="uid://b4q4ak0s5i1mb" path="res://Bookbearers/Sounds/sad-documentary-sorrowful-music-342263.mp3" id="2_opg3x"]
+[ext_resource type="Texture2D" uid="uid://deirci3djn82w" path="res://Bookbearers/Textures/Picture1.png" id="2_qd5aj"]
+[ext_resource type="FontFile" uid="uid://mchrktj88wp" path="res://Bookbearers/Textures/font.tres" id="2_vmnyw"]
+[ext_resource type="FontVariation" uid="uid://oytls3fj4y5e" path="res://Bookbearers/Textures/settings.tres" id="3_ln6cd"]
 
-[sub_resource type="Gradient" id="Gradient_e12dn"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_e3x3g"]
-gradient = SubResource("Gradient_e12dn")
-
-[sub_resource type="Gradient" id="Gradient_d3uxq"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3snw2"]
-gradient = SubResource("Gradient_d3uxq")
-width = 200
-height = 80
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8l2bp"]
+load_path = "res://.godot/imported/cover.png-e8eeac306016c26e19e79291c95dca07.ctex"
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_w1xox")
@@ -21,55 +14,114 @@ script = ExtResource("1_w1xox")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = -0.04
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 1.04
+offset_top = 40.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_e3x3g")
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("2_qd5aj")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/TextureRect"]
+[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer/TextureRect"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.482639
-anchor_top = 0.482253
-anchor_right = 0.517361
-anchor_bottom = 0.517747
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = -357.0
+offset_right = 465.0
+offset_bottom = 208.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+alignment = 1
+vertical = true
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureRect/BoxContainer"]
+custom_minimum_size = Vector2(40, 500)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ln6cd")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer"]
 visible = false
-anchors_preset = -1
-anchor_left = 0.447917
-anchor_top = 0.8
-anchor_right = 0.552083
-anchor_bottom = 0.88
-grow_horizontal = 2
+custom_minimum_size = Vector2(800, 240)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -80.0
+grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture_normal = SubResource("GradientTexture2D_3snw2")
-metadata/_edit_use_anchors_ = true
+texture_normal = SubResource("CompressedTexture2D_8l2bp")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/TextureButton"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "Respawn
-(5 Books)"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_vmnyw")
+theme_override_font_sizes/font_size = 56
+text = "Respawn - four Books"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_opg3x")
-autoplay = true
+[node name="TextureButton2" type="TextureButton" parent="CanvasLayer"]
+visible = false
+custom_minimum_size = Vector2(800, 240)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = -240.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("CompressedTexture2D_8l2bp")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureButton2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -338.5
+offset_top = -52.0
+offset_right = 338.5
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_vmnyw")
+theme_override_font_sizes/font_size = 58
+text = "Back to main menu"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/TextureButton2" to="." method="_on_texture_button_2_pressed"]

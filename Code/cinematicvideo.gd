@@ -2,7 +2,7 @@ extends CanvasLayer
 
 
 @onready var turtorial = preload("res://Bookbearers/Scenes/turtorial.tscn")
-var textas = "res://Bookbearers/Dialogai/AllGametext.txt"
+@onready var textas = "res://Bookbearers/Dialogai/AllGameText.txt"
 var checked = true
 var scrollcheck = true
 var firsts = 0
@@ -10,9 +10,10 @@ var ch = true
 var tekstas
 
 func _ready():
+	if Music.sk != 4:
+		Music.play4()
 	mainas()
-	%Textas.text = tekstas[0][1]
-	#str("Pradzia. Vaikas pasislepes po paklode skaito knyga apie knygnesius.Vaikas pasislepes po paklod.Vaikas pasislepes po paklode skaito knyga apie knygnesius.Vaikas pasislepes po paklode skaito knyga apie knygnesiusVaikas pasislepes po paklode skaito knyga apie knygnesius. Pabaiga")
+	%Textas.text = "[center]%s[/center]" % tekstas[0][1]
 	%Textas.fit_content=true
 	%Textas.visible_characters = -1
 	%Textas.visible_ratio = 1
@@ -41,13 +42,13 @@ func _process(delta):
 			%Textas.get_v_scroll_bar().visible = false
 			%Textas.scroll_to_line(%Textas.get_line_count())
 			scroll()
-		if %Textas.size.y >= firsts and checked:
+		if %Textas.visible_ratio == 1.0:
 			button()
 	if Input.is_action_just_pressed("Skip"):
 		get_tree().change_scene_to_packed(turtorial)
 
 func button():
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(2).timeout
 	if checked:
 		%Begin.visible = true
 		%Begin.disabled = false
@@ -59,7 +60,6 @@ func _on_begin_pressed():
 	get_tree().change_scene_to_packed(turtorial)
 	
 func mainas():    
-	var number = []
 	var file = FileAccess.open(textas, FileAccess.READ)
 	var content = file.get_as_text()
 	var actual_string = content.format({"insertname": Global.childName})

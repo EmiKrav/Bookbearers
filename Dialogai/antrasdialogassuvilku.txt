@@ -1,0 +1,11 @@
+[
+[0,1,"Wow! You did it! You got back the wheet I stole."],
+[0,0,"Wait. What did you just say?"],
+[0,1,"I said thank you so musch, my friend. They stole this wheet and my flour."],
+[0,0,"Wait, I thought you said they only stole wheat?"],
+[0,1,"Come on kid, everyone knows that you can't make bread without flour."],
+[0,0,"Fine, I will help you again, but you should know I am getting suspicious about you, sir."],
+[0,1,"Wolf, just call me wolf."],
+[0,0,"Cool name! And you can call me -"],
+[0,1,"No time for that, go on, I think I am starting to remember an idea I had."]
+]

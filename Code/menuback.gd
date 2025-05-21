@@ -2,7 +2,6 @@ extends Node2D
 
 
 func _on_texture_rect_2_pressed():
-	get_tree().paused = false;
 	if Global.grafspot == 5:
 		Global.grafspot = 2
 		Global.enemy.remove_at(Global.enemy.size()-1)
@@ -29,6 +28,8 @@ func _on_texture_rect_2_pressed():
 		Global.grafspot = 30
 	elif Global.grafspot == 55:
 		Global.grafspot = 54
+	get_tree().paused = false;
+	Music.MusicStop()
 	get_tree().change_scene_to_file("res://Bookbearers/Scenes/mainmenu.tscn")
 
 func _input(event):

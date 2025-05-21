@@ -10,7 +10,7 @@ extends GridMap
 
 var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
-@onready var cinematic = preload("res://Bookbearers/Scenes/cinematicvideo.tscn")
+@onready var cinematic = preload("res://Bookbearers/Scenes/paskutinisvideo.tscn")
 
 
 @export var maxplayermovementPoints = 4
@@ -454,7 +454,7 @@ func _on_end_turn_pressed():
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
 			#if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
 				#await enemyAttack(enemy)
-			if !nearchar and !nearchar2 and !nearchar3 and !nearobj and !invisible:
+			if !nearchar and !nearchar2 and !nearchar3 and (!nearobj or !invisible):
 				$"../StaticBody3D2".position.x = player.position.x - 0.355
 				$"../StaticBody3D2".position.y = 3.0
 				$"../StaticBody3D2".position.z = player.position.z + 3.0

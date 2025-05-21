@@ -6,10 +6,13 @@ extends Node3D
 @onready var kova = load("res://Bookbearers/Scenes/mapfights.tscn")
 @onready var vaikokova = load("res://Bookbearers/Scenes/childSteal.tscn")
 @onready var werehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
-@onready var treehouse = load("res://Bookbearers/Scenes/vilkolakionamai.tscn")
+@onready var treehouse = load("res://Bookbearers/Scenes/eglesnamai.tscn")
+@onready var metalhouse = load("res://Bookbearers/Scenes/robotonamai.tscn")
 @onready var sky = load("res://Bookbearers/Materials/sky.material")
 
 @onready var thinking = load("res://Bookbearers/Scenes/afterfight.tscn")
+@onready var boss = load("res://Bookbearers/Scenes/bossfight.tscn")
+@onready var kidnap = load("res://Bookbearers/Scenes/knygnesiopagrobimas.tscn")
 
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
@@ -17,6 +20,7 @@ var paused = false
 @onready var langeliai = %lang
 @onready var player = %player
 @export var maxplayermovementPoints = 2
+
 @export var playermovementPoints = maxplayermovementPoints
 @export var playerhealth = Global.health
 
@@ -27,6 +31,8 @@ var changetotreehouse = false
 var changetometalhouse = false
 var changetocamp = false
 var changetothinking = false
+var changetobossfight = false
+var changetokidnap = false
 
 var V = 65;
 var par =[]
@@ -59,13 +65,19 @@ var atspaust = false
 
 var spacepressed = false
 func _ready():
-	
 	get_tree().paused = false;
+	if Global.autopereiti:
+		maxplayermovementPoints = 20
+		playermovementPoints = maxplayermovementPoints
+	if Music.sk != 6:
+		Music.play6()
+	$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
+	$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(playerhealth) + "/10"
 	if (!Global.bookbearer):
 		$player/Mouse.queue_free()
 		$player/child.position.x -= 1.0
-	$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
-	$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(playerhealth) + "/10"
+		$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 0
+		$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = "1/1"
 	$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.usedscrolls)
 	sky["albedo_color"] = Color(0, 0, 0, 0)
 	$DirectionalLight3D["light_energy"] = 0
@@ -204,6 +216,12 @@ func _process(_delta):
 				if langeliai.get_child(i) != null:
 					langeliai.get_child(i).queue_free()
 			selected = false
+	if changetobossfight:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(boss)
+	if changetokidnap:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(kidnap)
 	if changetofight:
 		Global.grafspot = playercurrentgraphspot
 		get_tree().change_scene_to_packed(kova)
@@ -220,11 +238,14 @@ func _process(_delta):
 	if changetotreehouse:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
-			get_tree().change_scene_to_packed(werehouse)
+			get_tree().change_scene_to_packed(treehouse)
 	if changetometalhouse:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
-			get_tree().change_scene_to_packed(werehouse)
+			get_tree().change_scene_to_packed(metalhouse)
+	if changetofight:
+		Global.grafspot = playercurrentgraphspot
+		get_tree().change_scene_to_packed(boss)
 	if changetocamp:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
@@ -428,6 +449,7 @@ func movethere(pos, langelistomove,grafnumr):
 			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
 				#y.queue_free()
 func _on_texture_rect_pressed():
+	print(Global.currentquest)
 	if !moving 	and !spacepressed:
 		canmove = false
 		skillusage = false
@@ -604,7 +626,7 @@ func _on_mouse_area_3d_area_shape_entered(area_rid, area, area_shape_index, loca
 		Global.usedscrolls +=1;
 		$CanvasLayer/Panel/VBoxContainer2/TextureRect/Label.text = str(Global.usedscrolls)
 		area.get_parent().queue_free()
-	if area["collision_layer"] == 2:
+	if area["collision_layer"] == 2 and !Global.autopereiti:
 		if Global.bookbearer:
 			Global.enemy.append(area.get_parent().get_child(1)["text"])
 			changetofight = true
@@ -625,4 +647,10 @@ func _input(event):
 		spacepressed = false;
 	else:
 		spacepressed = true;
-		
+
+
+func _on_camptured_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if Global.bookbearer:
+		changetokidnap = true
+	else:
+		changetobossfight = true

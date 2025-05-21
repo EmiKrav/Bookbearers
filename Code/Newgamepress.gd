@@ -7,6 +7,12 @@ extends TextureButton
 @onready var cinematic = preload("res://Bookbearers/Scenes/cinematicvideo.tscn")
 
 
+func  _ready():
+	if Music.Mmuted == false:
+		Music.MusicResume()
+	if Music.sk != 2:
+		Music.play2()
+
 func _on_pressed():
 	get_tree().change_scene_to_packed(insertName)
 

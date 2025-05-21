@@ -5,6 +5,8 @@ extends TextureButton
 
 func  _ready():
 	$".".disabled = true
+	if Music.sk != 3:
+		Music.play3()
 	
 
 func _on_pressed():

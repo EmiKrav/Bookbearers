@@ -14,7 +14,7 @@ extends GridMap
 @onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsknyg.tscn")
 
 var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
-@export var maxplayermovementPoints = 40
+@export var maxplayermovementPoints = 4
 var playermovementPointsx = maxplayermovementPoints
 var playermovementPointsz = maxplayermovementPoints
 @export var playerattackrange = 3
@@ -68,6 +68,8 @@ var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var spacepressed = false
 var paused = false
 func _ready():
+	if Music.sk != 5:
+		Music.play5()
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
@@ -175,14 +177,14 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
-	$"../AudioStreamPlayer2".playing = true
+	Music.playsoundwalking()
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
 	await tween2.finished
-	$"../AudioStreamPlayer2".playing = false
+	Music.SoundStop()
 	
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
@@ -657,12 +659,16 @@ func enemyMove(ecurrentposi, enemyi):
 		$"../StaticBody3D2/Camera3D".current = false
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
+		await get_tree().create_timer(1).timeout
+		if locsel.x != enemyi.position.x or locsel.z != enemyi.position.z:
+			Music.playsoundwalking()
+			var tween = create_tween()
+			tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+			await tween.finished
+			var tween2 = create_tween()
+			tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+			await tween2.finished
+			Music.SoundStop()
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
 		
@@ -683,6 +689,7 @@ func enemyAttack(enemyi):
 	if player != null:
 		$player/Camera3D2.current = false
 	$"../StaticBody3D2/Camera3D".current = true
+	await get_tree().create_timer(1).timeout
 			
 func showMovement(playermovementPointsx, playermovementPointsz):
 #draw around

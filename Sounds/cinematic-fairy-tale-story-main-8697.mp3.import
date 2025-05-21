@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://5cpovudlnxpg"
+uid="uid://dxtlyu04slsli"
 path="res://.godot/imported/cinematic-fairy-tale-story-main-8697.mp3-6f219d03025d7188323bb628dea730e1.mp3str"
 
 [deps]
@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/cinematic-fairy-tale-story-main-8697.mp3-6f21
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

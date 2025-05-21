@@ -1,20 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck5vtrpvq3rjc"]
+[gd_scene load_steps=5 format=3 uid="uid://ck5vtrpvq3rjc"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/menuback.gd" id="1_wwrwi"]
+[ext_resource type="FontFile" uid="uid://mchrktj88wp" path="res://Bookbearers/Textures/font.tres" id="3_3gg08"]
 
-[sub_resource type="Gradient" id="Gradient_ar7ka"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2eqvh"]
+load_path = "res://.godot/imported/cover.png-e8eeac306016c26e19e79291c95dca07.ctex"
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x0es7"]
-gradient = SubResource("Gradient_ar7ka")
-width = 969
-height = 229
-
-[sub_resource type="Gradient" id="Gradient_5fwwj"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tctpt"]
-gradient = SubResource("Gradient_5fwwj")
-width = 504
-height = 109
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sonp6"]
+load_path = "res://.godot/imported/juosta.png-f531a8d3c7be288e6ff77783292957bc.ctex"
 
 [node name="MenuBack" type="Node2D"]
 process_mode = 2
@@ -23,9 +16,11 @@ script = ExtResource("1_wwrwi")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -36,49 +31,62 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -63.0
-offset_right = 250.0
-offset_bottom = 63.0
+offset_left = -700.0
+offset_top = -275.0
+offset_right = 700.0
+offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 50
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(1400, 500)
 layout_mode = 2
-texture = SubResource("GradientTexture2D_x0es7")
+size_flags_vertical = 3
+texture = SubResource("CompressedTexture2D_2eqvh")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureRect"]
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureRect"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0314757
-anchor_top = 0.259825
-anchor_right = 0.968524
-anchor_bottom = 0.740175
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -58.0
+offset_right = 456.0
+offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3gg08")
+theme_override_font_sizes/font_size = 95
 text = "Go back to main menu?"
-metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = SubResource("GradientTexture2D_tctpt")
+texture_normal = SubResource("CompressedTexture2D_sonp6")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureRect2"]
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/TextureRect2"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.365079
-anchor_top = -0.00458716
-anchor_right = 0.634921
-anchor_bottom = 1.00459
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.5
+offset_top = -58.0
+offset_right = 88.5
+offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
-text = "YES"
-metadata/_edit_use_anchors_ = true
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3gg08")
+theme_override_font_sizes/font_size = 95
+text = "Yes"
 
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/TextureRect2" to="." method="_on_texture_rect_2_pressed"]

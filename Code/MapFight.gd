@@ -202,7 +202,7 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
-	if enemieskilled == 4:
+	if enemieskilled == 4 or Global.autopereiti:
 		await get_tree().create_timer(3).timeout
 		get_tree().change_scene_to_packed(zemelapis)
 	if redraw:

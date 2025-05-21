@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" format=3 uid="uid://oytls3fj4y5e"]
+
+[resource]
+variation_embolden = 2.0
+opentype_features = {
+1869509997: 6
+}
+spacing_glyph = 11
+spacing_top = 4

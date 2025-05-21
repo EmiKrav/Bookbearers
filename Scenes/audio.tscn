@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://tovkw4nbucad"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/audioins.gd" id="1_sfoe7"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+volume_db = -50.0
+max_polyphony = 100
+script = ExtResource("1_sfoe7")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

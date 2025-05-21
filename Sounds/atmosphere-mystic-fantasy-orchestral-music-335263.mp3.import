@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://ch46w8j8ltp5d"
+uid="uid://cdp007ra1olqp"
 path="res://.godot/imported/atmosphere-mystic-fantasy-orchestral-music-335263.mp3-229cf35e28c9df3c793175359133bb1d.mp3str"
 
 [deps]
@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/atmosphere-mystic-fantasy-orchestral-music-33
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

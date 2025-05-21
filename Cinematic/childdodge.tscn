@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcnfd1wr76feh"]
 
-[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/zandanimchildkilled.ogv" id="1_oopne"]
+[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/animchildattacked.ogv" id="1_shx66"]
 
 [node name="childDodge" type="Node2D"]
 
@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stream = ExtResource("1_oopne")
+stream = ExtResource("1_shx66")
 autoplay = true
 expand = true
 metadata/_edit_use_anchors_ = true

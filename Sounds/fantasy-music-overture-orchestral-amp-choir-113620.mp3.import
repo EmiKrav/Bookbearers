@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://cxdbur2sjropu"
+uid="uid://wr3ngf06do8e"
 path="res://.godot/imported/fantasy-music-overture-orchestral-amp-choir-113620.mp3-d7437081d3db028d7abcce710ae4057d.mp3str"
 
 [deps]
@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/fantasy-music-overture-orchestral-amp-choir-1
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

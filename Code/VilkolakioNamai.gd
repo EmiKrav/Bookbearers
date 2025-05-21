@@ -13,8 +13,10 @@ var goback = false
 @onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
 var pirmaspokalbis = "res://Bookbearers/Dialogai/dialogassuvilku.txt"
 var paskutinispokalbis = "res://Bookbearers/Dialogai/paskutinisdialogassuvilku.txt"
-var pokalbis
+var antraspokalbis = "res://Bookbearers/Dialogai/antrasdialogassuvilku.txt"
+var treciaspokalbis = "res://Bookbearers/Dialogai/antrasdialogassuvilku.txt"
 
+var pokalbis
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 func _ready():
@@ -24,17 +26,17 @@ func _ready():
 	elif Global.posiblequests[4][3] == true:
 		Global.posiblequests[5][3] = true
 		Global.posiblequests[4][2] = false
-		pokalbis = pirmaspokalbis
+		pokalbis = paskutinispokalbis
 	elif Global.posiblequests[2][3] == true:
 		Global.posiblequests[3][3] = true
 		Global.posiblequests[2][2] = false
 		questnr = 4
-		pokalbis = pirmaspokalbis
+		pokalbis = treciaspokalbis
 	elif Global.posiblequests[0][3] == true:
 		Global.posiblequests[1][3] = true
 		Global.posiblequests[1][2] = false
 		questnr = 2
-		pokalbis = pirmaspokalbis
+		pokalbis = antraspokalbis
 	elif Global.posiblequests[0][3] == false:
 		questnr = 0
 		pokalbis = pirmaspokalbis

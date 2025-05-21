@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://c04sgh1qyakln"
+uid="uid://cogil160a5qgo"
 path="res://.godot/imported/dramatic-soundtrack-epic-cinematic-trailer-background-intro-theme-263131.mp3-30f3aa8c10fd93e9ebaad317568282dc.mp3str"
 
 [deps]
@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/dramatic-soundtrack-epic-cinematic-trailer-ba
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

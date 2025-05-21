@@ -1,0 +1,120 @@
+[gd_scene load_steps=8 format=3 uid="uid://du28udjt0n0rx"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/Titraigd.gd" id="1_dnq8f"]
+[ext_resource type="FontFile" uid="uid://catba08bdydo6" path="res://Bookbearers/Textures/OldRocket-Wy19O.otf" id="2_4n8fa"]
+[ext_resource type="FontFile" uid="uid://cel5ry8majh6m" path="res://Bookbearers/Textures/KeramiqueScript_PERSONAL_USE_ONLY.otf" id="2_g3wqv"]
+
+[sub_resource type="Gradient" id="Gradient_of6ja"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hj6x2"]
+gradient = SubResource("Gradient_of6ja")
+fill_from = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="Gradient_e6xcg"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_76jnf"]
+gradient = SubResource("Gradient_e6xcg")
+width = 504
+height = 109
+
+[node name="Titrai" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_dnq8f")
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_hj6x2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Textas" type="RichTextLabel" parent="CanvasLayer/Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_4n8fa")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+scroll_active = false
+autowrap_mode = 2
+selection_enabled = true
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="Begin" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture_normal = SubResource("GradientTexture2D_76jnf")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Begin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -151.0
+offset_top = -49.0
+offset_right = 151.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.858824, 0.345098, 0.0941176, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_g3wqv")
+theme_override_font_sizes/font_size = 80
+text = "THE END"
+
+[node name="Panel2" type="Panel" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_hj6x2")
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/Begin" to="CanvasLayer" method="_on_begin_pressed"]

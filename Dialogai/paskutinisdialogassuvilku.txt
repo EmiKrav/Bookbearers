@@ -1,5 +1,14 @@
 [
-	[0,1,"I am so hungry!"],
-	[1,0,"Please don't eat me, sir. I am too young to die. I haven't tried all the cheese yet!"],
-	[2,1,"Oh, don't worry child, I don't eat mice, I am a vegetarian. I only eat bread."]
+[0,0,"Here is your bread."],
+[0,1,"Thank you! I am eternally grateful."],
+[0,0,"You better be."],
+[0,1,"Nam nam nam. So delicious. I always wonder how do they make it."],
+[0,0,"Whaaaaaat???? Are you saying it isn't your bread?"],
+[0,1,"Yeah, I kind of never figured out how to make it."],
+[0,0,"Are you serious? Whose bread is this? Whose bread did I stole?"],
+[0,1,"Doesn't matter, it is all in my belly now."],
+[0,0,"Unbelievable"],
+[0,1,"So where was I? Oh, right. To eat or not to eat, that is the question. The end. All done. There's your book."],
+[0,0,"I am not saying thank you!"],
+[0,1,"You're welcome. See you around."]
 ]

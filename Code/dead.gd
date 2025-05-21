@@ -1,13 +1,16 @@
 extends Node2D
 
-@onready var zemelapis = preload("res://Bookbearers/Scenes/zemelapis.tscn")
-
+@onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
+@onready var menu = load("res://Bookbearers/Scenes/mainmenu.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$CanvasLayer/TextureRect/Label.text = str(Global.childName)
-	if Global.usedscrolls >= 2:
+	if Music.sk != 7:
+		Music.play7()
+	$CanvasLayer/TextureRect/BoxContainer/Label.text = str(Global.childName)
+	if Global.usedscrolls >= 5:
 		$CanvasLayer/TextureButton.visible = true
-		$CanvasLayer/TextureButton/Label.visible = true
+	else:
+		$CanvasLayer/TextureButton2.visible = true
 
 func _on_texture_button_pressed():
 	Global.health = 10;
@@ -40,3 +43,10 @@ func _on_texture_button_pressed():
 		
 	Global.usedscrolls -=5
 	get_tree().change_scene_to_packed(zemelapis)
+
+
+func _on_texture_button_2_pressed():
+	Global.turtorialcomplete = false
+	Global.firstchildturtorialcomplete = false
+	Global.childName = "?Name?"
+	get_tree().change_scene_to_packed(menu)

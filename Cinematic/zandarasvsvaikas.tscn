@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://btwnkewj81sej"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/skill1.gd" id="1_puj1g"]
-[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/animchildattacked.ogv" id="2_7mwpv"]
+[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/zandanimchildkilled.ogv" id="2_qr0xh"]
 
 [node name="zandarasvsvaikas" type="Node2D"]
 script = ExtResource("1_puj1g")
@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stream = ExtResource("2_7mwpv")
+stream = ExtResource("2_qr0xh")
 autoplay = true
 expand = true
 metadata/_edit_use_anchors_ = true

@@ -1,0 +1,20 @@
+[
+[0,0,"Wolf! I got you your flour, now go make that bread! Oh and give me that book you are writing. I really need it."],
+[0,1,"So I have been thinking."],
+[0,0,"Oh no. "],
+[0,1,"Why make something, when there is already so much of it out there."],
+[0,0,"No, no, no. I am not doing this again. No way!"],
+[0,1,"Listen. "],
+[0,0,"No."],
+[0,1,"If I am being honest, I completely forgot how to make bread."],
+[0,0,"What!!!!???"],
+[0,1,"Yeah. I thought maybe I will remember, but no, head is empty."],
+[0,0,"I can't believe this! "],
+[0,1,"But! Not all is lost. You can just steal the bread from them."],
+[0,0,"Just steal the bread! Like it is easy."],
+[0,1,"Do it for your friend Wolfu."],
+[0,0,"No."],
+[0,1,"Please. I will share it with you."],
+[0,0,"Share it????!!!! I will be taking at least half! Even though I don't even like bread."],
+[0,1,"Great! I will be waiting."]
+]
