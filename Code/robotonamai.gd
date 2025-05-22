@@ -18,12 +18,15 @@ var pokalbis
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 func _ready():
-	if 	Global.posiblequests[9][3] == true:
+	pokalbis = paskutinispokalbis
+	if 	Global.posiblequests[9][3] == false and Global.posiblequests[9][2] == true:
 		pokalbis = paskutinispokalbis
 		Global.posiblequests[9][2] = false
-	else:
-		Global.posiblequests[8][3] = true
+		Global.posiblequests[9][3] = true
+		Global.posiblequests[8][2] = false
+	elif 	Global.posiblequests[8][3] == false and Global.posiblequests[8][2] == false:
 		pokalbis = pirmaspokalbis
+		Global.posiblequests[8][2] = true
 	mainas()
 	kalbeti = true
 func _physics_process(delta):
@@ -55,15 +58,6 @@ func _physics_process(delta):
 				goback = true
 	if goback:
 		Global.day+=1;
-		if Global.quests != null:
-			if Global.posiblequests[questnr][2] == false:
-				Global.quests += Global.posiblequests[questnr][1]
-				Global.posiblequests[questnr][2] = true
-				Global.questnr.append(Global.posiblequests[questnr][0])
-		else:
-			Global.quests = Global.posiblequests[questnr][1]
-			Global.posiblequests[questnr][2] = true
-			Global.questnr.append(Global.posiblequests[questnr][0])
 		get_tree().change_scene_to_packed(zemelapis)
 
 

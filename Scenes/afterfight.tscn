@@ -1,23 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtv476qh85eak"]
+[gd_scene load_steps=6 format=3 uid="uid://dtv476qh85eak"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/afterfight.gd" id="1_bvou1"]
-[ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/Untitled design.ogv" id="2_c36lc"]
+[ext_resource type="Texture2D" uid="uid://cdtwm7cs7to6h" path="res://Bookbearers/Textures/mousechild.png" id="2_l8ued"]
+[ext_resource type="Texture2D" uid="uid://bknodjdamcv6d" path="res://Bookbearers/Textures/juosta.png" id="2_oh1bv"]
+
+[sub_resource type="Gradient" id="Gradient_ntk3b"]
+offsets = PackedFloat32Array(0.994845, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xyf0k"]
+gradient = SubResource("Gradient_ntk3b")
+height = 300
+fill_to = Vector2(1, 1)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_bvou1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Panel"]
-layout_mode = 1
+[node name="Panel2" type="Panel" parent="CanvasLayer"]
+self_modulate = Color(0.0784314, 0.0784314, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,9 +26,66 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stream = ExtResource("2_c36lc")
-autoplay = true
-expand = true
+mouse_filter = 1
+
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_oh1bv")
+expand_mode = 4
+stretch_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.709
+offset_bottom = -6.10352e-05
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+texture = ExtResource("2_l8ued")
+expand_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.722
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_xyf0k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Enter"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[connection signal="finished" from="CanvasLayer/Panel/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 50
+text = "I need to avoid any fights"
+fit_content = true
+metadata/_edit_use_anchors_ = true

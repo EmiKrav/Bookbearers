@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://deumce56pc6p7"]
+[gd_scene load_steps=6 format=3 uid="uid://deumce56pc6p7"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/robotonamai.gd" id="1_0c480"]
+[ext_resource type="FontFile" uid="uid://catba08bdydo6" path="res://Bookbearers/Textures/OldRocket-Wy19O.otf" id="2_805i7"]
+[ext_resource type="Texture2D" uid="uid://bknodjdamcv6d" path="res://Bookbearers/Textures/juosta.png" id="2_rn30p"]
 
-[sub_resource type="Gradient" id="Gradient_ntk3b"]
+[sub_resource type="Gradient" id="Gradient_htwom"]
 offsets = PackedFloat32Array(0.994845, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ypi5v"]
-gradient = SubResource("Gradient_ntk3b")
+gradient = SubResource("Gradient_htwom")
 height = 300
 fill_to = Vector2(1, 1)
 
@@ -60,6 +62,8 @@ size_flags_vertical = 8
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("2_805i7")
+theme_override_font_sizes/font_size = 51
 text = "Enter"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer"]
@@ -71,6 +75,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_805i7")
 theme_override_font_sizes/normal_font_size = 50
 fit_content = true
 metadata/_edit_use_anchors_ = true
+
+[node name="Juosta" type="Sprite2D" parent="."]
+position = Vector2(736, 433)
+texture = ExtResource("2_rn30p")

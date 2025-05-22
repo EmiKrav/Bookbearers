@@ -66,6 +66,7 @@ var atspaust = false
 var spacepressed = false
 func _ready():
 	get_tree().paused = false;
+	Music.SoundStop()
 	if Global.autopereiti:
 		maxplayermovementPoints = 20
 		playermovementPoints = maxplayermovementPoints
@@ -238,20 +239,20 @@ func _process(_delta):
 	if changetotreehouse:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
-			get_tree().change_scene_to_packed(treehouse)
+			get_tree().change_scene_to_packed(treehouse) 
 	if changetometalhouse:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			get_tree().change_scene_to_packed(metalhouse)
-	if changetofight:
-		Global.grafspot = playercurrentgraphspot
-		get_tree().change_scene_to_packed(boss)
 	if changetocamp:
 		if Input.is_action_just_pressed("space"):
 			Global.grafspot = playercurrentgraphspot
 			Global.health = 10
 			$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 10 - Global.health
 			$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = str(Global.health) + "/10"
+			if !Global.bookbearer:
+				$CanvasLayer/Panel/VBoxContainer2/ProgressBar.value = 0
+				$CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label.text = "1/1"
 			sky["albedo_color"] = Color(0, 0, 0, 0)
 			$DirectionalLight3D["light_energy"] = 0
 			$CanvasLayer/Panel["modulate"] = Color(0, 0, 0)
@@ -369,10 +370,11 @@ func movethere(pos, langelistomove,grafnumr):
 		
 		playercurrentgraphspot = tra[grafnumr][v]
 		Global.grafspot = playercurrentgraphspot
-		
+		Music.playsoundwalking()
 		var tween = create_tween()
 		tween.tween_property(player, "position", Vector3(posic.x, 1, posic.z), 1)
 		await tween.finished
+		Music.SoundStop()
 		#print(movpoint)
 		playermovementPoints -= movpoint
 	#var tween = create_tween()
@@ -553,25 +555,31 @@ func mainas():
 	dijekstra(number, playercurrentgraphspot);
 
 func updatequests():
+	$QuestEnemies/questenemy.visible = false
+	$QuestEnemies/questenemy2.visible = false
+	$QuestEnemies/questenemy3.visible = false
+	$QuestEnemies/questenemy4.visible = false
 	Global.quests = null;
+	$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text =""
 	for i in Global.posiblequests.size():
 		if Global.posiblequests[i][2] == true:
-			if Global.quests != null:
-				Global.quests += Global.posiblequests[i][1]
-				Global.questheight += 80
-			else:
-				Global.quests = Global.posiblequests[i][1]
-	if Global.quests != null:
-		$CanvasLayer/Panel/VBoxContainer/TextureRect2.texture.height = Global.questheight
-		$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text = str(Global.quests)
-		if Global.questnr.has(0) or Global.questnr.has(4):
-			$QuestEnemies/questenemy.visible = true;
-		else:
-			$QuestEnemies/questenemy.visible = false;
-		if Global.questnr.has(2):
-			$QuestEnemies/questenemy2.visible = true;
-		else:
-			$QuestEnemies/questenemy2.visible = false;
+			$CanvasLayer/Panel/VBoxContainer/TextureRect2/VBoxContainer/RichTextLabel.text += str(Global.posiblequests[i][1])
+	if (Global.posiblequests[0][2] or Global.posiblequests[4][2]):
+		$QuestEnemies/questenemy.visible = true;
+	else:
+		$QuestEnemies/questenemy.visible = false;
+	if Global.posiblequests[2][2]:
+		$QuestEnemies/questenemy2.visible = true;
+	else:
+		$QuestEnemies/questenemy2.visible = false;
+	if Global.posiblequests[6][2] and !Global.posiblequests[7][3]:
+		$QuestEnemies/questenemy3.visible = true;
+	else:
+		$QuestEnemies/questenemy3.visible = false;
+	if Global.posiblequests[8][2]:
+		$QuestEnemies/questenemy4.visible = true;
+	else:
+		$QuestEnemies/questenemy4.visible = false;
 func _on_were_house_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
 	if playercurrentgraphspot == 8:
 		$VilkoNamai/Label3D.visible = true;
@@ -639,10 +647,14 @@ func _input(event):
 			var w = menu.instantiate()
 			$".".add_child(w)
 			paused = true
+			Music.SoundStop()
+			Music.MusicStop()
 			get_tree().paused = true;
 		else:
-			get_tree().paused = false;
+			get_tree().paused = false; 
 			paused = false
+			if Music.mpaused:
+				Music.MusicResume()
 	if event is InputEventMouseButton:
 		spacepressed = false;
 	else:

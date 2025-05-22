@@ -1,4 +1,25 @@
 [
-	[0,1,"Please help!"],
-	[1,0,"Ok."],
+[0,1,"Who are you?! How dare you enter my forest"],
+[1,0,"I am sorry, I didn’t know trees could talk. Does that mean every forest is someone’s home? And how do you all share it? It is not like there is much space."],
+[1,1,"Stop asking questions and go away! Or the evil witch will curse you!"],
+[1,0,"A witch? That sounds so cool, I never met a witch before. You think she will like me? Maybe even teach me some magic?"],
+[1,1,"Hmmmm. Maybe she will. If you do her a favor."],
+[1,0,"Oh no, not again."],
+[1,1,"If you don’t like something the path is right there"],
+[1,0,"Well I would LOVE to, but I am kind of supposed to help this writer to write her fairytales. But I can’t seem to find her"],
+[1,1,"Aha! I knew it! You are here for my books. Well, you are not getting them."],
+[1,0,"Hey, you don’t have to publish them, if you don’t wang to. It is up to you what to share and with whom. Even if this whoooole land depends on you."],
+[1,1,"I know, I know. I will go back to writing once I am done with this."],
+[1,0,"Alright, I see where this is going. What do you need me to do?"],
+[1,1,"You are small, barely noticeable"],
+[1,0,"Well not that small-"],
+[1,1,"I bet you could hide behind those little trees and get me my potions from those evil soldiers"],
+[1,0,"I will try, but what for?"],
+[1,1,"My potions. They took my potions for my kids."],
+[1,0,"Whait, you have kids?!"],
+[1,1,"Three strong boys and a little girl"],
+[1,0,"That is hard to believe. Did you kidnap them?"],
+[1,1,"That is it, go do what you want, I don’t care."],
 ]
+
+

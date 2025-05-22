@@ -8,6 +8,7 @@ extends TextureButton
 
 
 func  _ready():
+	Music.SoundStop()
 	if Music.Mmuted == false:
 		Music.MusicResume()
 	if Music.sk != 2:
@@ -23,7 +24,6 @@ func _on_button_4_pressed():
 
 func _on_button_3_pressed():
 	get_tree().change_scene_to_file("res://Bookbearers/Scenes/settings.tscn")
-
 
 
 func _on_button_2_pressed():

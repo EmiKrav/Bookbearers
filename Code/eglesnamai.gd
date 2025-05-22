@@ -4,44 +4,33 @@ extends Node2D
 var kalbeti = false
 var dialogas
 var eilute = 0
-var questnr = 0
+var questnr = 6
 var goback = false
 @onready var firstfight = preload("res://Bookbearers/Scenes/firstfight.tscn")
 @onready var childhead = preload("res://Bookbearers/Textures/mousechild.png")
 @onready var head = preload("res://Bookbearers/Textures/egle.png")
 
 @onready var zemelapis = load("res://Bookbearers/Scenes/zemelapis.tscn")
-var pirmaspokalbis = "res://Bookbearers/Dialogai/dialogassuvilku.txt"
-var paskutinispokalbis = "res://Bookbearers/Dialogai/paskutinisdialogassuvilku.txt"
+var pirmaspokalbis = "res://Bookbearers/Dialogai/dialogassuegle.txt"
+var paskutinispokalbis = "res://Bookbearers/Dialogai/paskutinisdialogassuegle.txt"
 var pokalbis
 
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 func _ready():
-	if 	Global.posiblequests[5][3] == true:
+	Music.SoundStop()
+	if  Global.posiblequests[6][3] == false:
+		pokalbis = pirmaspokalbis
+		Global.posiblequests[6][2] = true
+	else:
+		Global.posiblequests[7][3] = true
+		Global.posiblequests[7][2] = false
+		Global.posiblequests[6][2] = false
 		pokalbis = paskutinispokalbis
-		Global.posiblequests[5][2] = false
-	elif Global.posiblequests[4][3] == true:
-		Global.posiblequests[5][3] = true
-		Global.posiblequests[4][2] = false
-		pokalbis = pirmaspokalbis
-	elif Global.posiblequests[2][3] == true:
-		Global.posiblequests[3][3] = true
-		Global.posiblequests[2][2] = false
-		questnr = 4
-		pokalbis = pirmaspokalbis
-	elif Global.posiblequests[0][3] == true:
-		Global.posiblequests[1][3] = true
-		Global.posiblequests[1][2] = false
-		questnr = 2
-		pokalbis = pirmaspokalbis
-	elif Global.posiblequests[0][3] == false:
-		questnr = 0
-		pokalbis = pirmaspokalbis
+		
 	mainas()
 	kalbeti = true
 func _physics_process(delta):
-
 	if kalbeti:
 		if dialogas[eilute][1] == 0:
 			$"CanvasLayer/Panel/TextureRect2".texture = childhead
@@ -69,15 +58,6 @@ func _physics_process(delta):
 				goback = true
 	if goback:
 		Global.day+=1;
-		if Global.quests != null:
-			if Global.posiblequests[questnr][2] == false:
-				Global.quests += Global.posiblequests[questnr][1]
-				Global.posiblequests[questnr][2] = true
-				Global.questnr.append(Global.posiblequests[questnr][0])
-		else:
-			Global.quests = Global.posiblequests[questnr][1]
-			Global.posiblequests[questnr][2] = true
-			Global.questnr.append(Global.posiblequests[questnr][0])
 		get_tree().change_scene_to_packed(zemelapis)
 
 

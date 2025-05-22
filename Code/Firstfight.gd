@@ -9,6 +9,7 @@ var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 
 @onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsvaikas.tscn")
+@onready var vaikasdodge = preload("res://Bookbearers/Cinematic/childdodge.tscn")
 
 
 @export var maxplayermovementPoints = 4
@@ -142,6 +143,8 @@ func _input(event):
 		else:
 			get_tree().paused = false;
 			paused = false
+			if Music.mpaused:
+				Music.MusicResume()
 	if event is InputEventMouseButton:
 		spacepressed = false;
 	else:
@@ -356,6 +359,8 @@ func enemyAttack(enemyi):
 	await get_tree().create_timer(1).timeout
 	if dodge == true:
 		dodge = false
+		var anim1 = vaikasdodge.instantiate()
+		$"..".add_child(anim1)
 	else:
 		var anim1 = enemyattackanim.instantiate()
 		$"..".add_child(anim1)
@@ -445,7 +450,7 @@ func _on_end_turn_pressed():
 		turn = false
 		if enemy != null:
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
-			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
+			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange and !invisible:
 				await enemyAttack(enemy)
 		turn = true
 		canmove = true
@@ -466,7 +471,7 @@ func _on_end_turn_pressed():
 		turnssurvived +=1
 		playermovementPointsx = maxplayermovementPoints
 		playermovementPointsz = maxplayermovementPoints
-
+		dodge = false
 
 func _on_area_3d_area_entered(area):
 	nearobj = true
@@ -475,6 +480,7 @@ func _on_area_3d_area_entered(area):
 
 func _on_area_3d_area_exited(area):
 	nearobj = false
+	invisible = false
 	$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
 	var tween = create_tween()
 	tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)

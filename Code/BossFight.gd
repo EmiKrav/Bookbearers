@@ -21,6 +21,8 @@ var playermovementPointsz = maxplayermovementPoints
 @export var enemymovementPoints = 0
 @export var enemyattackrange = 2
 
+var changetocinematic = false
+
 var selected = false
 var pcurrentpos : Vector3i
 var ecurrentpos: Vector3i
@@ -56,6 +58,9 @@ var nearchar = false
 var nearchar2 = false
 var nearchar3 = false
 func _ready():
+	Music.SoundStop()
+	if Music.sk != 5:
+		Music.play5()
 	#player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(player.position)
 	pcurrentpos = pos
@@ -65,6 +70,12 @@ func _ready():
 	cells = get_used_cells()
 	cells.sort()
 	othenemypos.clear()
+	if Global.posiblequests[9][3] == false:
+		$vilkas3.queue_free()
+	if Global.posiblequests[7][3] == false:
+		$vilkas2.queue_free()
+	if Global.posiblequests[5][3] == false:
+		$vilkas.queue_free()
 	#var kel = -1;
 	#for i in cells:
 		#kel+=1
@@ -91,12 +102,14 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
+	Music.playsoundwalking()
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
+	Music.SoundStop()
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
 	$"../StaticBody3D2".position.y = 3.0
@@ -112,6 +125,10 @@ func playermove(langelistomove):
 	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
 		canmove = false
 func _process(_delta):
+	
+	if changetocinematic:
+		get_tree().change_scene_to_packed(cinematic)
+	
 	if playerhealth <= 0:
 		if player != null:
 			player.queue_free()
@@ -462,11 +479,13 @@ func _on_end_turn_pressed():
 				var ugn = ugnis.instantiate()
 				get_parent().add_child(ugn)
 				ugn.position = player.position
+				Music.playsoundfire()
 				var tween = create_tween()
 				for u in ugn.get_children():
 					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 2)
 					tween.set_parallel()
 				await tween.finished
+				Music.SoundStop()
 				playerhealth= playerhealth-2
 				$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
 				$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
@@ -487,11 +506,13 @@ func _on_end_turn_pressed():
 				var pozoftree = map_to_local(local_to_map(tr.position))
 				ugn.position = map_to_local(local_to_map(tr.position))
 				ugn.position.y -= 1.5
+				Music.playsoundfire()
 				var tween = create_tween()
 				for u in ugn.get_children():
 					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
 					tween.set_parallel()
 				await tween.finished
+				Music.SoundStop()
 				ugn.queue_free()
 				tr.queue_free()
 				var kelmas = kelmas.instantiate()
@@ -509,13 +530,15 @@ func _on_end_turn_pressed():
 				get_parent().add_child(ugn)
 				ugn.position = map_to_local(local_to_map($vilkas.position))
 				ugn.position.y -= 1.5
+				Music.playsoundfire()
 				var tween = create_tween()
 				for u in ugn.get_children():
 					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
 					tween.set_parallel()
 				await tween.finished
+				Music.SoundStop()
 				ugn.queue_free()
-				$vilkas.queue_free()
+				$vilkas.position.z -=100
 				nearchar = false
 			elif nearchar2:
 				$"../StaticBody3D2".position.x = $vilkas2.position.x - 0.355
@@ -526,13 +549,15 @@ func _on_end_turn_pressed():
 				get_parent().add_child(ugn)
 				ugn.position = map_to_local(local_to_map($vilkas2.position))
 				ugn.position.y -= 1.5
+				Music.playsoundfire()
 				var tween = create_tween()
 				for u in ugn.get_children():
 					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
 					tween.set_parallel()
 				await tween.finished
+				Music.SoundStop()
 				ugn.queue_free()
-				$vilkas2.queue_free()
+				$vilkas2.position.z -=100
 				nearchar2 = false
 			elif nearchar3:
 				$"../StaticBody3D2".position.x = $vilkas3.position.x - 0.355
@@ -543,13 +568,15 @@ func _on_end_turn_pressed():
 				get_parent().add_child(ugn)
 				ugn.position = map_to_local(local_to_map($vilkas3.position))
 				ugn.position.y -= 1.5
+				Music.playsoundfire()
 				var tween = create_tween()
 				for u in ugn.get_children():
 					tween.tween_property(u, "scale",Vector3(2.0,2.0,2.0), 5)
 					tween.set_parallel()
 				await tween.finished
+				Music.SoundStop()
 				ugn.queue_free()
-				$vilkas3.queue_free()
+				$vilkas3.position.z -=100
 				nearchar3 = false
 		turn = true
 		canmove = true
@@ -641,4 +668,4 @@ func _on_char_3_area_3d_area_exited(area):
 
 
 func _on_win_area_area_entered(area):
-	get_tree().change_scene_to_packed(cinematic)
+	changetocinematic = true

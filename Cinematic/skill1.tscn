@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://c3whn8lw0482i"]
 
+[ext_resource type="Script" path="res://Bookbearers/Code/knygnskill1.gd" id="1_ciupb"]
 [ext_resource type="VideoStream" path="res://Bookbearers/Cinematic/animknyg.ogv" id="1_rmgfg"]
-[ext_resource type="Script" path="res://Bookbearers/Code/skill1.gd" id="1_smp4k"]
 
 [node name="Skill1" type="Node2D"]
-script = ExtResource("1_smp4k")
+script = ExtResource("1_ciupb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -11,7 +11,10 @@ var music7 = load("res://Bookbearers/Sounds/sad-documentary.mp3")
 
 @onready var sound = [load("res://Bookbearers/Sounds/sword-cut-type-1-230552.mp3"), 
 load("res://Bookbearers/Sounds/creepy-fall-329227.mp3"),
-load("res://Bookbearers/Sounds/running-on-dry-leaves-295847.mp3")
+load("res://Bookbearers/Sounds/running-on-dry-leaves-295847.mp3"),
+load("res://Bookbearers/Sounds/short-fire-whoosh_1-317280.mp3"),
+load("res://Bookbearers/Sounds/magic-spell-333896.mp3")
+
 ]
 
 @onready var audio = load("res://Bookbearers/Scenes/audio.tscn")
@@ -21,7 +24,7 @@ var Mmuted = false
 var Smuted = false
 var MV = -20
 var SV = -20
-
+var mpaused = false
 func  play1():
 	if Mmuted == false:
 		$Muzika.stream = music1
@@ -62,19 +65,22 @@ func  play6():
 func  play7():
 	if Mmuted == false:
 		$Muzika.stream = music7
-		$Muzika.volume_db = MV - 30;
+		$Muzika.volume_db = MV - 20;
 		$Muzika.play()
 	sk = 7
 	
 func MusicStop():
 	$Muzika.stream_paused = true
+	mpaused = true
 	
 func MusicResume():
 	$Muzika.stream_paused = false
+	mpaused = false
 	
 func SoundStop():
 	$Sound.stream_paused = true
-
+func SoundResume():
+	$Sound.stream_paused = false
 func current():
 	return sk
 
@@ -102,7 +108,7 @@ func  playsoundwalking():
 	if Smuted == false:
 		sound[2].loop = true
 		$Sound.stream = sound[2]
-		$Sound.volume_db = SV - 20;
+		$Sound.volume_db = SV - 30;
 		$Sound.play()
 
 func  playsoundattacking():
@@ -111,4 +117,15 @@ func  playsoundattacking():
 		$Sound.stream = sound[0]
 		$Sound.volume_db = SV - 20;
 		$Sound.play()
-	
+func  playsoundfire():
+	if Smuted == false:
+		sound[0].loop = true
+		$Sound.stream = sound[3]
+		$Sound.volume_db = SV - 30;
+		$Sound.play()
+func  playsoundmagicspell():
+	if Smuted == false:
+		sound[0].loop = false
+		$Sound.stream = sound[4]
+		$Sound.volume_db = SV - 20;
+		$Sound.play()

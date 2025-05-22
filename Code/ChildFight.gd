@@ -59,6 +59,10 @@ var chestcurrentlabel = null
 var endturn = false
 var spacepressed = false
 
+
+@onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsvaikas.tscn")
+@onready var vaikasdodge = preload("res://Bookbearers/Cinematic/childdodge.tscn")
+
 var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var randomnrzz = [-15, -13, -11, -9, -7, -5, -3, -1, 15, 13, 11, 9, 7, 5, 3, 1]
@@ -74,6 +78,9 @@ var ches5x = [-8, -6, -4, -2, 0, 2, 4, 6, 8, 10]
 var ches5z = [14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6]
 
 func _ready():
+	Music.SoundStop()
+	if Music.sk != 5:
+		Music.play5()
 	player.position = Vector3(1,1.5,15)
 	var pos = local_to_map(Vector3(1,0,15))
 	pcurrentpos = pos
@@ -172,12 +179,14 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
+	Music.playsoundwalking()
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 1.5, pos.z), 1)
 	await tween2.finished
+	Music.SoundStop()
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
 	$"../StaticBody3D2".position.y = 3.0
@@ -193,26 +202,36 @@ func playermove(langelistomove):
 	if playermovementPointsx <= 0 and playermovementPointsz <= 0:
 		canmove = false
 func _process(_delta):
-	if playerhealth <= 0:
-		if player != null:
-			player.queue_free()
-		get_tree().change_scene_to_packed(mirtis)
 	if $"../CanvasLayer/Panel/TextureRect/Label".text == str(5) or Global.autopereiti:
-		Global.quests = null;
-		Global.posiblequests[questnr][2] = false
-		Global.posiblequests[questnr+1][2] = true
-		for i in Global.posiblequests.size():
-			if Global.posiblequests[i][2] == true:
-				if Global.quests != null:
-					Global.quests += Global.posiblequests[i][1]
-				else:
-					Global.quests = Global.posiblequests[i][1]
-		Global.questnr.erase(questnr)
-		Global.questnr.append(Global.posiblequests[questnr+1][0])
-		Global.posiblequests[questnr][3] = true
+		if Global.grafspot == 4 and !Global.posiblequests[0][3]: 
+			Global.posiblequests[0][2] = false
+			Global.posiblequests[0][3] = true
+			Global.posiblequests[1][2] = true
+		if Global.grafspot == 4 and Global.posiblequests[4][2] == true and Global.posiblequests[4][3] == false:
+			Global.posiblequests[4][2] = false
+			Global.posiblequests[4][3] = true
+			Global.posiblequests[5][2] = true
+		if Global.grafspot == 14:
+			Global.posiblequests[2][2] = false
+			Global.posiblequests[2][3] = true
+			Global.posiblequests[3][2] = true
+		if Global.grafspot == 31 and Global.posiblequests[6][2] == true and Global.posiblequests[6][3] == false: 
+			Global.posiblequests[6][2] = false
+			Global.posiblequests[6][3] = true
+			Global.posiblequests[7][2] = true
+		if Global.grafspot == 55 and Global.posiblequests[8][2] == true and Global.posiblequests[8][3] == false:
+			Global.posiblequests[8][2] = false
+			Global.posiblequests[8][3] = true
+			Global.posiblequests[9][2] = true
 		get_tree().paused = true;
-		await get_tree().create_timer(3).timeout
-		get_tree().change_scene_to_packed(zemelapis)		
+		await get_tree().create_timer(2).timeout
+		get_tree().change_scene_to_packed(zemelapis)	
+	if Global.animationplaying:
+		$"../CanvasLayer".visible = false
+	if !Global.animationplaying:
+		$"../CanvasLayer".visible = true
+	if playerhealth <= 0 and !Global.animationplaying:
+		get_tree().change_scene_to_packed(mirtis)
 	if redraw:
 		if selected:
 			redraw = false
@@ -250,9 +269,13 @@ func _input(event):
 			var w = menu.instantiate()
 			$".".add_child(w)
 			paused = true
+			Music.SoundStop()
+			Music.MusicStop()
 			get_tree().paused = true;
 		else:
 			get_tree().paused = false;
+			if Music.mpaused:
+				Music.MusicResume()
 			paused = false
 	if event is InputEventMouseButton:
 		spacepressed = false;
@@ -451,12 +474,15 @@ func enemyMove(ecurrentposi, enemyi):
 		$"../StaticBody3D2/Camera3D".current = false
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
+		if locsel.x != enemyi.position.x or locsel.z != enemyi.position.z:
+			Music.playsoundwalking()
+			var tween = create_tween()
+			tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+			await tween.finished
+			var tween2 = create_tween()
+			tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+			await tween2.finished
+			Music.SoundStop()
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
 		return ecurrentposi
@@ -467,13 +493,17 @@ func enemyAttack(enemyi):
 	await get_tree().create_timer(1).timeout
 	if dodge == true:
 		dodge = false
+		var anim1 = vaikasdodge.instantiate()
+		$"..".add_child(anim1)
 	else:
+		var anim1 = enemyattackanim.instantiate()
+		$"..".add_child(anim1)
 		playerhealth= playerhealth-2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value += 2
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar/Label".text = str(playerhealth) + "/1"
-	if player != null:
+	if player != null and playerhealth > 0:
 		$player/Camera3D2.current = false
-	$"../StaticBody3D2/Camera3D".current = true
+		$"../StaticBody3D2/Camera3D".current = true
 	
 func showMovement(playermovementPointsx,playermovementPointsz):
 #draw around
@@ -557,18 +587,22 @@ func _on_end_turn_pressed():
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
 			if !invisible and abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
 				await enemyAttack(enemy)
+				await get_tree().create_timer(1).timeout
 		if enemy2 != null:
 			ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
 			if !invisible and abs(pcurrentpos.x - ecurrentpos2.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos2.z) <= enemyattackrange:
 				await enemyAttack(enemy)
+				await get_tree().create_timer(1).timeout
 		if enemy3 != null:
 			ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
 			if !invisible and abs(pcurrentpos.x - ecurrentpos3.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos3.z) <= enemyattackrange:
 				await enemyAttack(enemy3)
+				await get_tree().create_timer(1).timeout
 		if enemy4 != null:
 			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
 			if !invisible and abs(pcurrentpos.x - ecurrentpos4.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
 				await enemyAttack(enemy4)
+				await get_tree().create_timer(1).timeout
 		turn = true
 		canmove = true
 		skillusage = true
@@ -589,6 +623,8 @@ func _on_end_turn_pressed():
 		playermovementPointsx = maxplayermovementPoints
 		playermovementPointsz = maxplayermovementPoints
 		endturn = false
+		invisible  = false
+		
 
 
 func _on_area_3d_area_entered(area):
@@ -602,6 +638,7 @@ func _on_area_3d_area_exited(area):
 	var tween = create_tween()
 	tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
 	await tween.finished
+	invisible = false
 
 
 
@@ -644,3 +681,11 @@ func _on_skill_mouse_entered():
 func _on_skill_2_mouse_entered():
 	selected = false
 	redraw = true
+
+
+func _on_skill_mouse_exited():
+	pass # Replace with function body.
+
+
+func _on_skill_2_mouse_exited():
+	pass # Replace with function body.

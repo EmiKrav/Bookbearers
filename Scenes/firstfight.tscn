@@ -1,12 +1,17 @@
-[gd_scene load_steps=37 format=3 uid="uid://drr7ucpwcu0lj"]
+[gd_scene load_steps=32 format=3 uid="uid://drr7ucpwcu0lj"]
 
 [ext_resource type="Script" path="res://Bookbearers/Code/Camera3D.gd" id="1_33vwa"]
 [ext_resource type="MeshLibrary" uid="uid://dicskwn4gwl6f" path="res://Bookbearers/Tiles/TilesFirstFight.tres" id="2_7nybw"]
+[ext_resource type="Texture2D" uid="uid://bknodjdamcv6d" path="res://Bookbearers/Textures/juosta.png" id="2_qva8p"]
 [ext_resource type="Texture2D" uid="uid://b0mhmqtqotks0" path="res://Bookbearers/Textures/mousechildhead.png" id="2_ugrfa"]
 [ext_resource type="Script" path="res://Bookbearers/Code/Firstfight.gd" id="3_41r68"]
+[ext_resource type="Texture2D" uid="uid://dxbuf174on1qq" path="res://Bookbearers/Textures/cover.png" id="3_f5i0k"]
+[ext_resource type="FontFile" uid="uid://cel5ry8majh6m" path="res://Bookbearers/Textures/KeramiqueScript_PERSONAL_USE_ONLY.otf" id="3_ox3pu"]
 [ext_resource type="Material" uid="uid://bs3r8ldvhlw1r" path="res://Bookbearers/Materials/child.tres" id="4_d532o"]
 [ext_resource type="Material" uid="uid://waivying8h2e" path="res://Bookbearers/Materials/zandar.tres" id="5_55ece"]
 [ext_resource type="Material" uid="uid://c5pj6y3xqvsrr" path="res://Bookbearers/Materials/gridmapunderneath.tres" id="6_cowm5"]
+[ext_resource type="Texture2D" uid="uid://dbr7dojdtxyk1" path="res://Bookbearers/Textures/book.png" id="6_xr1hl"]
+[ext_resource type="FontFile" uid="uid://mchrktj88wp" path="res://Bookbearers/Textures/font.tres" id="7_1cvhy"]
 [ext_resource type="Environment" uid="uid://dl2acpk2i6h63" path="res://Bookbearers/Materials/envirment.tres" id="7_ok7xg"]
 [ext_resource type="Texture2D" uid="uid://ctv2ny2uy6may" path="res://Bookbearers/Textures/cloudkrita.png" id="8_5if25"]
 [ext_resource type="ArrayMesh" uid="uid://dhifn2fafftsd" path="res://Bookbearers/Blender/tree.obj" id="9_l3rbj"]
@@ -14,51 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://brux6wtfrbpjx" path="res://Bookbearers/Scenes/grass.tscn" id="11_kt2xm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chial"]
-
-[sub_resource type="Gradient" id="Gradient_4axik"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gkqt0"]
-gradient = SubResource("Gradient_4axik")
-width = 100
-height = 50
-fill_to = Vector2(0, 0)
-
-[sub_resource type="Gradient" id="Gradient_awbuu"]
-offsets = PackedFloat32Array(0, 0.00526316)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7g3nn"]
-gradient = SubResource("Gradient_awbuu")
-width = 150
-height = 20
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_q7gh4"]
-offsets = PackedFloat32Array(0.994737, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_omj71"]
-gradient = SubResource("Gradient_q7gh4")
-width = 100
-height = 20
-fill_from = Vector2(1, 0)
-
-[sub_resource type="Gradient" id="Gradient_8xlvv"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xpu62"]
-gradient = SubResource("Gradient_8xlvv")
-width = 100
-height = 80
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_eiel7"]
-offsets = PackedFloat32Array(0.990385, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_00jhf"]
-gradient = SubResource("Gradient_eiel7")
-width = 100
-height = 80
-fill_from = Vector2(1, 1)
-fill_to = Vector2(1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1yk0b"]
 size = Vector3(4.36224, 1.91614, 1.04297)
@@ -163,29 +123,38 @@ mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="EndTurn" type="TextureButton" parent="CanvasLayer/Panel"]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.902778
-anchor_top = 0.910494
-anchor_right = 0.989584
-anchor_bottom = 0.987654
-offset_top = -0.000366211
-offset_right = -0.000610352
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -100.0
 grow_horizontal = 0
 grow_vertical = 0
-texture_normal = SubResource("GradientTexture2D_gkqt0")
+texture_normal = ExtResource("2_qva8p")
+ignore_texture_size = true
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/EndTurn"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.15
-anchor_top = 0.27
-anchor_right = 0.85
-anchor_bottom = 0.73
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -40.0
+offset_right = 123.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ox3pu")
+theme_override_font_sizes/font_size = 61
 text = "End Turn"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -193,32 +162,32 @@ metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.731481
-anchor_right = 0.130208
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-offset_right = 0.00038147
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+offset_top = -504.0
+offset_right = 300.0
+grow_vertical = 0
+theme_override_constants/separation = -70
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("2_ugrfa")
 expand_mode = 1
 
 [node name="ProgressBar" type="TextureProgressBar" parent="CanvasLayer/Panel/VBoxContainer2"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 200)
 layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 max_value = 1.0
+value = 1.0
 nine_patch_stretch = true
-stretch_margin_left = 150
-stretch_margin_top = 10
-stretch_margin_bottom = 10
-texture_under = SubResource("GradientTexture2D_7g3nn")
-texture_progress = SubResource("GradientTexture2D_omj71")
+texture_under = ExtResource("3_f5i0k")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer2/ProgressBar"]
@@ -231,53 +200,107 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 51
 text = "1/1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.411
-anchor_top = 0.877
-anchor_right = 0.589
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 0.527985
-offset_top = -0.296021
-offset_right = -0.528076
+offset_left = -302.0
+offset_top = -200.0
+offset_right = 302.0
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Skill" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("GradientTexture2D_xpu62")
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_xr1hl")
+ignore_texture_size = true
 stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9
-anchor_right = 1.0
-anchor_bottom = 0.2875
-grow_horizontal = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.087
+offset_top = 20.515
+offset_right = 34.913
+offset_bottom = 67.515
+grow_horizontal = 2
+scale = Vector2(1.185, 1.185)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
 text = "⌛0/1"
 
+[node name="Label3" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_top = -87.0
+offset_right = 94.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1cvhy")
+theme_override_font_sizes/font_size = 71
+text = "Dodge"
+
 [node name="Skill2" type="TextureButton" parent="CanvasLayer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("GradientTexture2D_00jhf")
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_xr1hl")
+ignore_texture_size = true
 stretch_mode = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill2"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9
-anchor_right = 1.0
-anchor_bottom = 0.2875
-grow_horizontal = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.087
+offset_top = 20.515
+offset_right = 34.913
+offset_bottom = 67.515
+grow_horizontal = 2
+scale = Vector2(1.185, 1.185)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
 text = "⌛0/1"
+
+[node name="Label3" type="Label" parent="CanvasLayer/Panel/VBoxContainer/Skill2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_top = -87.0
+offset_right = 94.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_1cvhy")
+theme_override_font_sizes/font_size = 71
+text = "Hide"
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="."]
 transform = Transform3D(43.36, 0, 0, 0, 43.36, 0, 0, 0, 43.36, 0, 0, -49.8416)

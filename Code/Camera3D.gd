@@ -25,7 +25,6 @@ func _process(delta):
 		if Input.is_action_pressed("backward"):
 			transform.origin += backward.cross(Vector3.UP) / 35
 			
-			
 		if Input.is_action_pressed("up") :
 			if position.y + speedupdown * delta < upriba:
 				position.y += speedupdown * delta
@@ -35,8 +34,7 @@ func _process(delta):
 			if position.y - speedupdown * delta > dpriba:
 				position.y -= speedupdown * delta
 			else:
-				position.y = dpriba
-			
+				position.y = dpriba			
 		if Input.is_action_pressed("rotate_down"):
 			if rotation.x + rotationspeed * delta < rdriba:
 				rotation.x += rotationspeed * delta

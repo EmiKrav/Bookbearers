@@ -9,6 +9,7 @@ var ch = true
 var tekstas
 
 func _ready():
+	Music.SoundStop()
 	if Music.sk != 4:
 		Music.play4()
 	Global.bookbearer = false
@@ -31,8 +32,6 @@ func _ready():
 	%Timer.wait_time = %Textas.text.length()
 	%Timer.start()
 func _process(delta):
-	if $Panel2.visible == true:
-		$Panel2.visible = false
 	if !ch:
 		if %Textas["visible_characters"] != -1:
 			%Textas["visible_characters"] = (%Timer.wait_time - %Timer.time_left) * 20
@@ -47,6 +46,7 @@ func _process(delta):
 		if %Textas.visible_ratio == 1.0:
 			button()
 	if Input.is_action_just_pressed("Skip"):
+		Global.grafspot -= 1
 		get_tree().change_scene_to_packed(menu)
 
 func button():

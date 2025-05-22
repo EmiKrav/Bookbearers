@@ -10,6 +10,7 @@ var ch = true
 var tekstas
 
 func _ready():
+	Music.SoundStop()
 	if Music.sk != 4:
 		Music.play4()
 	mainas()

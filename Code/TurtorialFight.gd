@@ -68,6 +68,7 @@ var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var spacepressed = false
 var paused = false
 func _ready():
+	get_tree().paused = false;
 	if Music.sk != 5:
 		Music.play5()
 	player.position = Vector3(1,2,15)
@@ -154,10 +155,14 @@ func _input(event):
 			var w = menu.instantiate()
 			get_parent().add_child(w)
 			paused = true
+			Music.SoundStop()
+			Music.MusicStop()
 			get_tree().paused = true;
 		else:
 			get_tree().paused = false;
 			paused = false
+			if Music.mpaused:
+				Music.MusicResume()
 	if event is InputEventMouseButton:
 		spacepressed = false;
 	else:
@@ -241,7 +246,7 @@ func _process(_delta):
 		useskill3()
 		
 func enemyhurt(langelistomove, dmg):
-	Global.animationplaying = true
+	#Global.animationplaying = true
 	await get_tree().create_timer(1).timeout
 	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
 		if dmg == 2:
@@ -320,7 +325,7 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 			
-	
+	#Global.animationplaying = false
 	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)

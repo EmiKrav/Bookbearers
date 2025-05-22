@@ -10,7 +10,9 @@ extends GridMap
 @onready var tree =  preload("res://Bookbearers/Scenes/kelmas.tscn")
 
 @onready var skill1cin = preload("res://Bookbearers/Cinematic/skill1.tscn")
-@onready var zandarattack = preload("res://Bookbearers/Cinematic/zandarasvsknyg.tscn")
+@onready var skill2cin = preload("res://Bookbearers/Cinematic/skill2.tscn")
+@onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsknyg.tscn")
+
 
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
@@ -68,6 +70,9 @@ var randomnrz = [-15, -13, -11, -9, -7, -5, -3, -1]
 var randomnrx = [15, 13, 11, 9, 7, 5, 3, 1, -1, -3, -5, -7, -9, -11, -13, -15]
 var spacepressed = false
 func _ready():
+	Music.SoundStop()
+	if Music.sk != 5:
+		Music.play5()
 	player.position = Vector3(1,2,15)
 	var pos = local_to_map(Vector3(1,1.5,15))
 	pcurrentpos = pos
@@ -152,9 +157,13 @@ func _input(event):
 			var w = menu.instantiate()
 			get_parent().add_child(w)
 			paused = true
+			Music.SoundStop()
+			Music.MusicStop()
 			get_tree().paused = true;
 		else:
 			get_tree().paused = false;
+			if Music.mpaused:
+				Music.MusicResume()
 			paused = false
 	if event is InputEventMouseButton:
 		spacepressed = false;
@@ -175,13 +184,14 @@ func playermove(langelistomove):
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
+	Music.playsoundwalking()
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
 	await tween.finished
 	var tween2 = create_tween()
 	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
 	await tween2.finished
-	
+	Music.SoundStop()
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
 	$"../StaticBody3D2".position.y = 5.0
@@ -202,6 +212,10 @@ func _process(_delta):
 		if player != null:
 			player.queue_free()
 		get_tree().change_scene_to_packed(mirtis)
+	if Global.animationplaying:
+		$"../CanvasLayer".visible = false
+	if !Global.animationplaying:
+		$"../CanvasLayer".visible = true
 	if enemieskilled == 4 or Global.autopereiti:
 		await get_tree().create_timer(3).timeout
 		get_tree().change_scene_to_packed(zemelapis)
@@ -232,10 +246,14 @@ func _process(_delta):
 		useskill3()
 		
 func enemyhurt(langelistomove, dmg):
-	$"../CanvasLayer".visible = false
+	await get_tree().create_timer(1).timeout
 	if enemy != null && langelistomove[0] == ecurrentpos.x && langelistomove[1] == ecurrentpos.y && langelistomove[2] == ecurrentpos.z:
-		var anim1 = skill1cin.instantiate()
-		$"..".add_child(anim1)
+		if dmg == 2:
+			var anim1 = skill1cin.instantiate()
+			$"..".add_child(anim1)
+		else:
+			var anim2 = skill2cin.instantiate()
+			$"..".add_child(anim2)
 		await get_tree().create_timer(1).timeout
 		var gyv = enemy.get_child(1).text
 		enemy.get_child(1).text = str(str_to_var(gyv) - dmg) 
@@ -249,8 +267,12 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy2 != null && langelistomove[0] == ecurrentpos2.x && langelistomove[1] == ecurrentpos2.y && langelistomove[2] == ecurrentpos2.z:
-		var anim1 = skill1cin.instantiate()
-		$"..".add_child(anim1)
+		if dmg == 2:
+			var anim1 = skill1cin.instantiate()
+			$"..".add_child(anim1)
+		else:
+			var anim2 = skill2cin.instantiate()
+			$"..".add_child(anim2)
 		await get_tree().create_timer(1).timeout
 		var gyv = enemy2.get_child(1).text
 		enemy2.get_child(1).text = str(str_to_var(gyv) - dmg) 
@@ -264,8 +286,12 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy3 != null && langelistomove[0] == ecurrentpos3.x && langelistomove[1] == ecurrentpos3.y && langelistomove[2] == ecurrentpos3.z:
-		var anim1 = skill1cin.instantiate()
-		$"..".add_child(anim1)
+		if dmg == 2:
+			var anim1 = skill1cin.instantiate()
+			$"..".add_child(anim1)
+		else:
+			var anim2 = skill2cin.instantiate()
+			$"..".add_child(anim2)
 		await get_tree().create_timer(1).timeout
 		var gyv = enemy3.get_child(1).text
 		enemy3.get_child(1).text = str(str_to_var(gyv) - dmg) 
@@ -279,8 +305,12 @@ func enemyhurt(langelistomove, dmg):
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
 	elif enemy4 != null && langelistomove[0] == ecurrentpos4.x && langelistomove[1] == ecurrentpos4.y && langelistomove[2] == ecurrentpos4.z:
-		var anim1 = skill1cin.instantiate()
-		$"..".add_child(anim1)
+		if dmg == 2:
+			var anim1 = skill1cin.instantiate()
+			$"..".add_child(anim1)
+		else:
+			var anim2 = skill2cin.instantiate()
+			$"..".add_child(anim2)
 		await get_tree().create_timer(1).timeout
 		var gyv = enemy4.get_child(1).text
 		enemy4.get_child(1).text = str(str_to_var(gyv) - dmg) 
@@ -293,8 +323,8 @@ func enemyhurt(langelistomove, dmg):
 			lang.position = pos2
 			lang["material_override"] = langelimiromat
 			enemieskilled +=1
-			
-	$"../CanvasLayer".visible = true
+	
+	
 	$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
 	$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - int(playerhealth)
@@ -633,12 +663,15 @@ func enemyMove(ecurrentposi, enemyi):
 		$"../StaticBody3D2/Camera3D".current = false
 		enemyi.get_child(0).current = true
 		var locsel = map_to_local(Vector3(ecurrentposi.x,0,ecurrentposi.z))
-		var tween = create_tween()
-		tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
-		await tween.finished
-		var tween2 = create_tween()
-		tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
-		await tween2.finished
+		if locsel.x != enemyi.position.x or locsel.z != enemyi.position.z:
+			Music.playsoundwalking()
+			var tween = create_tween()
+			tween.tween_property(enemyi, "position", Vector3(locsel.x, 2, enemyi.position.z), 1)
+			await tween.finished
+			var tween2 = create_tween()
+			tween2.tween_property(enemyi, "position", Vector3(enemyi.position.x, 2, locsel.z), 1)
+			await tween2.finished
+			Music.SoundStop()
 		enemyi.get_child(0).current = false
 		$"../StaticBody3D2/Camera3D".current = true
 		
@@ -648,7 +681,7 @@ func enemyAttack(enemyi):
 	$"../CanvasLayer".visible = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
-	var anim1 = zandarattack.instantiate()
+	var anim1 = enemyattackanim.instantiate()
 	$"..".add_child(anim1)
 	await get_tree().create_timer(1).timeout
 	playerhealth = playerhealth-2
