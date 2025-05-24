@@ -101,6 +101,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_4itab")
 
 [node name="Area3D" type="Area3D" parent="GridMap/player"]
+collision_mask = 33
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/player/Area3D"]
 shape = SubResource("BoxShape3D_3tbtm")
@@ -133,6 +134,8 @@ mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="EnemyArea3D" type="Area3D" parent="GridMap/enemy"]
+collision_layer = 2
+collision_mask = 33
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy/EnemyArea3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
@@ -158,6 +161,7 @@ mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="Enemy2Area3D" type="Area3D" parent="GridMap/enemy2"]
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy2/Enemy2Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
@@ -183,6 +187,7 @@ mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="Enemy3Area3D" type="Area3D" parent="GridMap/enemy3"]
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy3/Enemy3Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)
@@ -208,6 +213,7 @@ mesh = SubResource("CylinderMesh_fdhe6")
 surface_material_override/0 = SubResource("StandardMaterial3D_85odk")
 
 [node name="Enemy4Area3D" type="Area3D" parent="GridMap/enemy4"]
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/enemy4/Enemy4Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120605, 0, 0.133606)

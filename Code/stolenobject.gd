@@ -15,6 +15,7 @@ func _ready():
 		$CanvasLayer/Panel2/TextureRect.texture = load("res://Bookbearers/Textures/flowers(1).png")
 	
 	await get_tree().create_timer(3).timeout
+	Global.animationplaying = false
 	queue_free()
 
 

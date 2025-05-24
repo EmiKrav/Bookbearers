@@ -67,6 +67,7 @@ var spacepressed = false
 func _ready():
 	get_tree().paused = false;
 	Music.SoundStop()
+	Global.animationplaying = false
 	if Global.autopereiti:
 		maxplayermovementPoints = 20
 		playermovementPoints = maxplayermovementPoints
@@ -451,7 +452,6 @@ func movethere(pos, langelistomove,grafnumr):
 			#if pos2.x == y.position.x and pos2.z == y.position.z && ppos.x >= pos2.x -4.0 && ppos.x <= pos2.x + 4.0 && ppos.z >= pos2.z -4.0 && ppos.z <= pos2.z + 4.0:
 				#y.queue_free()
 func _on_texture_rect_pressed():
-	print(Global.currentquest)
 	if !moving 	and !spacepressed:
 		canmove = false
 		skillusage = false

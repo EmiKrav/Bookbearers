@@ -41,6 +41,9 @@ var dodge = false
 var invisible = false
 var nearobj = false
 
+var treeposition = null
+var chippossition = null
+
 @onready var player = $player
 @onready var enemy = $enemy
 @onready var langeliai = $Node3D
@@ -76,6 +79,17 @@ func playermove(langelistomove):
 	redraw = true
 	var prad = pcurrentpos
 	Music.playsoundwalking()
+	if invisible:
+		var tween = create_tween()
+		tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
+		tween.tween_property(player, "position", Vector3(player.position.x,chippossition.y,player.position.z), 1)
+		await tween.finished
+		tween = create_tween()
+		tween.tween_property(player, "position", Vector3(chippossition.x,player.position.y,chippossition.z), 1)
+		await tween.finished
+		player.get_child(0).top_level = false
+		player.get_child(2).top_level = false
+		invisible = false
 	var tween = create_tween()
 	tween.tween_property(player, "position", Vector3(pos.x, 1.5, player.position.z), 1)
 	await tween.finished
@@ -432,9 +446,18 @@ func _on_skill_2_pressed():
 		invisible = true			
 		$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff71"
 		$"../CanvasLayer/Panel/VBoxContainer/Skill2/Label".text = "⌛1/1"
+		player.get_child(0).top_level = true
+		player.get_child(2).top_level = true
+		chippossition = player.position
+		$"../StaticBody3D2/Camera3D".current = false
+		$player/Camera3D2.current = true
 		var tween = create_tween()
+		tween.tween_property(player, "position", Vector3(treeposition.x,player.position.y,treeposition.z), 1)
+		tween.tween_property(player, "position", Vector3(treeposition.x,treeposition.y+3.0,treeposition.z), 1)
 		tween.tween_property(player.mesh.material, "albedo_color:a", 0, 1)
 		await tween.finished
+		$player/Camera3D2.current = false
+		$"../StaticBody3D2/Camera3D".current = true
 
 
 func _on_end_turn_pressed():
@@ -461,10 +484,20 @@ func _on_end_turn_pressed():
 		$"../CanvasLayer/Panel/VBoxContainer/Skill/Label".text = "⌛0/1"
 		$"../CanvasLayer/Panel/VBoxContainer/Skill2/Label".text = "⌛0/1"
 		$"../CanvasLayer/Panel/VBoxContainer/Skill"["self_modulate"] = "ffffff"
-		if player.mesh.material.albedo_color.a == 0:
+		if invisible:
+			$"../StaticBody3D2/Camera3D".current = false
+			$player/Camera3D2.current = true
 			var tween = create_tween()
 			tween.tween_property(player.mesh.material, "albedo_color:a", 1, 1)
+			tween.tween_property(player, "position", Vector3(player.position.x,chippossition.y,player.position.z), 1)
 			await tween.finished
+			tween = create_tween()
+			tween.tween_property(player, "position", Vector3(chippossition.x,player.position.y,chippossition.z), 1)
+			await tween.finished
+			$player/Camera3D2.current = false
+			$"../StaticBody3D2/Camera3D".current = true
+			player.get_child(0).top_level = false
+			player.get_child(2).top_level = false
 		if nearobj:
 			$"../CanvasLayer/Panel/VBoxContainer/Skill2"["self_modulate"] = "ffffff"
 		Global.cameramove = true
@@ -508,3 +541,12 @@ func _on_skill_mouse_entered():
 func _on_skill_2_mouse_entered():
 	selected = false
 	redraw = true
+
+
+func _on_area_3d_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if area["collision_layer"] == 2:
+		treeposition = area.get_parent().position
+
+
+func _on_area_3d_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	pass # Replace with function body.

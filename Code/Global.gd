@@ -39,8 +39,8 @@ var posiblequests = [[0,"Steal back wheat \n",false,false],
 [9,"Return flowers to robot \n",false,false]]
 var quests
 var questnr = []
-var currentquest = -1
-var questheight = 100
+var currentquest = 0
+var questheight = 120
 
 var health = 10;
 var scrolls = []
@@ -59,7 +59,7 @@ func AddName(Name):
 	Global.childName = Name
 func CompletedGame():
 	bookbearer = true
-	childName = "?Name?"
+	childName = "Emilija"
 	turtorialcomplete = false
 	firstchildturtorialcomplete = false
 	grafspot = 0

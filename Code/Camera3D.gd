@@ -15,7 +15,6 @@ func _process(delta):
 		var left = transform.basis.z.normalized() * speedlr
 		var backward = transform.basis.x.normalized() * speedlr
 		
-		
 		if Input.is_action_pressed("left"):
 			transform.origin += left.cross(Vector3.UP) / 35
 		if Input.is_action_pressed("right"):

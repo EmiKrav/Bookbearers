@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://1w2g5hxrtxh3"]
+[gd_scene load_steps=5 format=3 uid="uid://1w2g5hxrtxh3"]
+
+[ext_resource type="Script" path="res://Bookbearers/Code/kelmas.gd" id="1_dulgn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y84mw"]
 resource_name = "Material.001"
@@ -27,9 +29,24 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tnl1h"]
+size = Vector3(1, 2, 1)
+
 [node name="Kelmas" type="Node3D"]
+script = ExtResource("1_dulgn")
 
 [node name="Cone" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71429, 0)
 mesh = SubResource("ArrayMesh_thida")
 skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="Cone"]
+collision_layer = 32
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cone/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.884141, 0)
+shape = SubResource("BoxShape3D_tnl1h")
+
+[connection signal="area_shape_entered" from="Cone/Area3D" to="." method="_on_area_3d_area_shape_entered"]
+[connection signal="area_shape_exited" from="Cone/Area3D" to="." method="_on_area_3d_area_shape_exited"]

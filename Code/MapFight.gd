@@ -13,7 +13,8 @@ extends GridMap
 @onready var skill2cin = preload("res://Bookbearers/Cinematic/skill2.tscn")
 @onready var enemyattackanim = preload("res://Bookbearers/Cinematic/zandarasvsknyg.tscn")
 
-
+var playermovepos
+var prevplpos = false
 @onready var menu = preload("res://Bookbearers/Scenes/menuback.tscn")
 var paused = false
 
@@ -179,18 +180,19 @@ func playermove(langelistomove):
 	Global.cameramove = false
 	$"../StaticBody3D2/Camera3D".current = false
 	$player/Camera3D2.current = true
-	var pos = map_to_local(langelistomove)
+	playermovepos = map_to_local(langelistomove)
 	moving = true
 	selected = false
 	redraw = true
 	var prad = pcurrentpos
 	Music.playsoundwalking()
-	var tween = create_tween()
-	tween.tween_property(player, "position", Vector3(pos.x, 2, player.position.z), 1)
-	await tween.finished
-	var tween2 = create_tween()
-	tween2.tween_property(player, "position", Vector3(player.position.x, 2, pos.z), 1)
-	await tween2.finished
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(player, "position", Vector3(playermovepos.x, 2, player.position.z), 1)
+	#await changeheight()
+	await tween.chain().finished
+	tween = create_tween().set_parallel(true)
+	tween.tween_property(player, "position", Vector3(player.position.x, 2, playermovepos.z), 1)
+	await tween.chain().finished
 	Music.SoundStop()
 	$player/Camera3D2.current = false
 	$"../StaticBody3D2".position.x = player.position.x - 0.355
@@ -765,18 +767,22 @@ func _on_texture_rect_pressed():
 			ecurrentpos = await enemyMove(ecurrentpos, enemy)
 			if abs(pcurrentpos.x - ecurrentpos.x) <= enemyattackrange and  abs(pcurrentpos.z -ecurrentpos.z) <= enemyattackrange:
 				await enemyAttack(enemy)
+			await get_tree().create_timer(1).timeout
 		if enemy2 != null:
 			ecurrentpos2 = await enemyMove(ecurrentpos2, enemy2)
 			if abs(pcurrentpos.x -ecurrentpos2.x) <= enemyattackrange and abs(pcurrentpos.z -ecurrentpos2.z) <= enemyattackrange:
 				await enemyAttack(enemy2)
+			await get_tree().create_timer(1).timeout
 		if enemy3 != null:
 			ecurrentpos3 = await enemyMove(ecurrentpos3, enemy3)
 			if abs(pcurrentpos.x -ecurrentpos3.x) <= enemyattackrange and abs(pcurrentpos.z -ecurrentpos3.z) <= enemyattackrange:
 				await enemyAttack(enemy3)
+			await get_tree().create_timer(1).timeout
 		if enemy4 != null:
 			ecurrentpos4 = await enemyMove(ecurrentpos4, enemy4)
 			if abs(pcurrentpos.x -ecurrentpos4.x )<= enemyattackrange and abs(pcurrentpos.z -ecurrentpos4.z) <= enemyattackrange:
 				await enemyAttack(enemy4)
+			await get_tree().create_timer(1).timeout
 		$"../CanvasLayer/Panel/VBoxContainer2/TextureRect".texture  = playeryhead
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".max_value = 10
 		$"../CanvasLayer/Panel/VBoxContainer2/ProgressBar".value = 10 - playerhealth
@@ -978,4 +984,10 @@ func _on_texture_rect_mouse_entered():
 	if $"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] == Color("ffffffbd"):
 		$"../CanvasLayer/Panel/VBoxContainer/TextureButton3"["self_modulate"] = "ffffffff"
 	
+
+#func changeheight():
+	#if prevplpos:
+		#var tween = create_tween().set_parallel(true)
+		#tween.tween_property(player, "position", Vector3(player.position.x,player.position.y+2.0,player.position.z), 1)
+		#await tween.finished
 

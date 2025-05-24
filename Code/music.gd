@@ -22,8 +22,8 @@ load("res://Bookbearers/Sounds/magic-spell-333896.mp3")
 var sk = 0
 var Mmuted = false
 var Smuted = false
-var MV = -20
-var SV = -20
+var MV = Global.MusicVol - 70
+var SV = Global.SoundVol - 70
 var mpaused = false
 func  play1():
 	if Mmuted == false:
@@ -87,21 +87,27 @@ func current():
 func MusicChangeVolume(volume):
 	if volume > 0:
 		$Muzika.volume_db += 2
+		MV +=2
 	else:
 		$Muzika.volume_db -= 2
+		MV -=2
 	
 func SoundChangeVolume(volume):
 	if volume > 0:
 		$Sound.volume_db += 2
+		SV +=2
 	else:
 		$Sound.volume_db -= 2
+		SV -=2
 
 func Volume():
 	return $Sound.volume_db
 func MusicReset():
 	$Muzika.volume_db = -20
+	MV =  Global.MusicVol - 70
 func SoundReset():
 	$Sound.volume_db = -20
+	SV = Global.SoundVol - 70
 
 
 func  playsoundwalking():

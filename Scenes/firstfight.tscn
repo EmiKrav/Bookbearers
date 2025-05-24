@@ -336,6 +336,7 @@ mesh = SubResource("PlaneMesh_lot75")
 skeleton = NodePath("")
 
 [node name="Area3D" type="Area3D" parent="GridMap/player"]
+collision_mask = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/player/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012687, 0, 0.019104)
@@ -369,6 +370,7 @@ transform = Transform3D(1, 0, 0, 0, 1.55, 0, 0, 0, 1, 4.92744, 3.63135, 12.8024)
 mesh = SubResource("ArrayMesh_y61no")
 
 [node name="Area3D" type="Area3D" parent="GridMap/HidingTree"]
+collision_layer = 2
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/HidingTree/Area3D"]
@@ -22673,6 +22675,8 @@ transform = Transform3D(0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, -14.6108, 0.997581, 
 [connection signal="mouse_entered" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/Skill2" to="GridMap" method="_on_skill_2_pressed"]
+[connection signal="area_shape_entered" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_area_shape_entered"]
+[connection signal="area_shape_exited" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_area_shape_exited"]
 [connection signal="input_event" from="GridMap/player/Area3D" to="GridMap" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="GridMap/HidingTree/Area3D" to="GridMap" method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="GridMap/HidingTree/Area3D" to="GridMap" method="_on_area_3d_area_exited"]
