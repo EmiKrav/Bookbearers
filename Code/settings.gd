@@ -21,6 +21,7 @@ func _on_texture_rect_5_pressed():
 func _on_texture_rect_2_pressed():
 	Global.MusicVol = mvolume
 	Global.SoundVol = sfxvolume
+	Global.save_to_file()
 	get_tree().change_scene_to_file("res://Bookbearers/Scenes/mainmenu.tscn")
 
 

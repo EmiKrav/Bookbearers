@@ -59,7 +59,7 @@ func AddName(Name):
 	Global.childName = Name
 func CompletedGame():
 	bookbearer = true
-	childName = "Emilija"
+	childName = "?Name?"
 	turtorialcomplete = false
 	firstchildturtorialcomplete = false
 	grafspot = 0
@@ -74,12 +74,48 @@ func CompletedGame():
 
 
 
-func save_to_file(content):
-	var file = FileAccess.open("user://save_game.dat", FileAccess.WRITE)
-	file.store_string(content)
+func save_to_file():
+	var file = FileAccess.open("user://save_game.save", FileAccess.WRITE)
+	var Data: Dictionary = {
+		"grafspot": grafspot,
+		"MusicVolume": MusicVol,
+		"SoundVolume": SoundVol,
+		"ChildName": childName,
+		"TurtorialComplete" : turtorialcomplete,
+		"FirstChildTurtorialComplete": firstchildturtorialcomplete,
+		"Autopass": autopereiti,
+		"Quests": posiblequests,
+		"Health": health,
+		"Scrolls": scrolls,
+		"UsedScrolls": usedscrolls,
+		"Enemy": enemy,
+		"Day": day,
+		"CameraPosition": camerapos,
+		"Knygnesys": bookbearer,
+	}
+	var jstr = JSON.stringify(Data)
+	file.store_line(jstr)
 
 func load_from_file():
-	var file = FileAccess.open("user://save_game.dat", FileAccess.READ)
-	var content = file.get_as_text()
-	return content
-
+	var file = FileAccess.open("user://save_game.save", FileAccess.READ)
+	if not file or file == null:
+		return
+	if FileAccess.file_exists("user://save_game.save") == true:
+		if not file.eof_reached():
+			var currentline= JSON.parse_string(file.get_line())
+			if currentline:
+				grafspot = currentline["grafspot"]
+				MusicVol = currentline["MusicVolume"]
+				SoundVol = currentline["SoundVolume"]
+				childName = currentline["ChildName"]
+				turtorialcomplete = currentline["TurtorialComplete"]
+				firstchildturtorialcomplete = currentline["FirstChildTurtorialComplete"]
+				autopereiti = currentline["Autopass"]
+				posiblequests = currentline["Quests"]
+				health = currentline["Health"]
+				scrolls = currentline["Scrolls"]
+				usedscrolls = currentline["UsedScrolls"]
+				enemy = currentline["Enemy"]
+				day = currentline["Day"]
+				camerapos = currentline["CameraPosition"]
+				bookbearer = currentline["Knygnesys"]

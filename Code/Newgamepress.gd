@@ -19,6 +19,7 @@ func _on_pressed():
 
 
 func _on_button_4_pressed():
+	Global.save_to_file()
 	get_tree().quit()
 
 
